@@ -2,6 +2,7 @@
 name: factory
 description: "Orchestrate a software factory: intake work from GitHub, Sentry, Jira, or Linear, route each task to the best harness and model for its effort level, run agents headlessly in cheap shared-cache worktrees, review results, and hand back the final link. Use when the user wants to route work across Claude Code, Codex, OpenCode, Amp, or Copilot, spawn parallel agents, pick cheaper models or effort levels, or run factory setup to probe and configure CLIs."
 license: MIT
+compatibility: Requires git and at least one installed agent CLI (Claude Code, Codex, OpenCode, Amp, or GitHub Copilot) reachable with a --version flag.
 metadata:
   trigger: factory, factory setup, route work, spawn agents, run agents, cheaper model, effort level, worktree, parallel agents, farm out issues
 ---
