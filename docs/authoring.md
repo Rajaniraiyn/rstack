@@ -31,7 +31,7 @@ uv run python -m unittest discover -s tests
 
 `package` validates before exporting. Use `check` alone for validation without ZIPs. Archives preserve bundled resources and executable permissions, with stable ordering and timestamps. The packager rejects symlinks, environment files, and common caches. Distribute the filenames printed by the latest run; `dist/` can contain older versions.
 
-The tooling handles one bundle, `rstack`. Extend it only when separate plugin installation becomes necessary. Choose a license before public distribution; none has been assigned yet. Development uses uv; run `uv sync` once for an environment.
+The tooling handles one bundle, `rstack`. Extend it only when separate plugin installation becomes necessary. Development uses uv; run `uv sync` once for an environment.
 
 ## Add integrations
 
