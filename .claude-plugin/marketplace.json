@@ -1,0 +1,16 @@
+{
+  "name": "rstack",
+  "owner": {
+    "name": "Rajaniraiyn"
+  },
+  "metadata": {
+    "description": "Personal skills and workflows for coding agents."
+  },
+  "plugins": [
+    {
+      "name": "rstack",
+      "source": "./plugins/rstack",
+      "description": "Personal skills and workflows for coding agents."
+    }
+  ]
+}

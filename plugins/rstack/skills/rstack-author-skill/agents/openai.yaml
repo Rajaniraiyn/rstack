@@ -1,0 +1,4 @@
+interface:
+  display_name: "Author an R Stack skill"
+  short_description: "Create portable skills for your personal workflows"
+  default_prompt: "Use $rstack-author-skill to add a reusable workflow to R Stack."

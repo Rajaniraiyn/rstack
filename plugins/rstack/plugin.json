@@ -1,0 +1,10 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "rstack",
+  "version": "0.1.0",
+  "description": "Personal skills and workflows for coding agents.",
+  "author": {
+    "name": "Rajaniraiyn"
+  },
+  "repository": "https://github.com/Rajaniraiyn/rstack"
+}

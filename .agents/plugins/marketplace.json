@@ -1,0 +1,20 @@
+{
+  "name": "rstack",
+  "interface": {
+    "displayName": "R Stack"
+  },
+  "plugins": [
+    {
+      "name": "rstack",
+      "source": {
+        "source": "local",
+        "path": "./plugins/rstack"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
