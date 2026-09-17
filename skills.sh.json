@@ -1,0 +1,13 @@
+{
+  "$schema": "https://skills.sh/schemas/skills.sh.schema.json",
+  "notGrouped": "bottom",
+  "groupings": [
+    {
+      "title": "Authoring",
+      "description": "Create or revise a portable skill for R Stack.",
+      "skills": [
+        "rstack-author-skill"
+      ]
+    }
+  ]
+}
