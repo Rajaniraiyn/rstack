@@ -27,8 +27,10 @@ For each task, pick a harness, a model, and an effort level. Rules of thumb:
 
 - Mechanical work (renames, small refactors, boilerplate): cheapest workhorse model, low effort.
 - Normal implementation: workhorse model, medium effort.
-- Hard architecture, debugging, or long-horizon work: frontier model, high effort.
-- Escalate to a frontier model (Fable 5.1, GPT-6 Astra, Opus 5) only when the workhorse tried and failed, or the task is known-hard.
+- Hard architecture, debugging, or long-horizon work: frontier model, starting at low or medium effort and raising only when the task needs it.
+- Escalate to a frontier model (Fable 5.1, GPT-6 Astra, Opus 5) when the workhorse tried and failed, when the task is known-hard, or when its cost per finished task is lower.
+
+Judge routes by cost per finished task, not token price: a model that finishes in fewer tool calls and less rework can be cheaper overall. GPT-6 Astra usually runs well at low effort and Fable 5.1 at low or medium; use high effort only when needed or asked. Trust measured cost and practitioner write-ups over benchmarks.
 
 Match the harness to the machine: Claude Code for Claude models and rich tooling, Codex for OpenAI models, OpenCode for provider freedom or shareable sessions, Amp or Copilot when the user prefers them. See [references/routing.md](references/routing.md) for tiers, prices, and effort tables.
 
@@ -38,7 +40,7 @@ Give each agent its own git worktree so agents run in parallel without merge con
 
 ## Run
 
-Invoke each harness headlessly from inside your own session, and collect results back. Claude Code: `claude -p`, Codex: `codex exec`, OpenCode: `opencode run`, Amp: `amp --execute`, Copilot: `copilot -p`. Pass the model, effort, thinking, and budget flags that harness understands. See [references/harnesses.md](references/harnesses.md) for the per-harness tables.
+Invoke each harness headlessly from inside your own session, and collect results back. Claude Code: `claude -p`, Codex: `codex exec`, OpenCode: `opencode run`, Amp: `amp --execute`, Copilot: `copilot -p`. Pass the model, effort, thinking, and budget flags that harness understands. Pick the approval mode deliberately: auto-approve where available, bypass only where the user approved it in a disposable environment, and keep a sandbox on for runs that edit or execute. See [references/harnesses.md](references/harnesses.md) for the per-harness tables.
 
 The factory needs no separate runner: the harness you are already in is a running agent, so re-invoke its own binary headlessly instead of installing an orchestrator.
 
@@ -50,7 +52,7 @@ Before handing work back, run a review gate with a different harness or model th
 
 ## Hand back
 
-Report the final URL: the pull request, a share link (`opencode run --share` or a session share), or the review report. Summarize in one short paragraph what shipped and on which branch or worktree.
+Report the final URL: the pull request, a session share link, or the review report. Summarize in one short paragraph what shipped and on which branch or worktree.
 
 ## Guardrails
 

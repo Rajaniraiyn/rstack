@@ -1,6 +1,6 @@
 # Routing
 
-Route each task to a harness, a model, and an effort level. The cheapest workable option wins; escalate only when the workhorse tier fails or the task is known-hard.
+Route each task to a harness, a model, and an effort level. The lowest cost per finished task wins; escalate only when the workhorse tier fails or the task is known-hard.
 
 ## Effort levels
 
@@ -9,9 +9,9 @@ Effort selects how much reasoning the model spends. Treat the scale as transitiv
 - `low`: mechanical edits, renames, boilerplate, simple factual answers.
 - `medium`: normal implementation, tests, conventional refactors.
 - `high`: architecture, tricky bugs, multi-step plans, reviews.
-- `xhigh` / `max` / `ultracode` (Claude) or `max` (OpenCode `--variant`): frontier problems, long-horizon agent work.
+- `xhigh` / `max` / `ultracode` (Claude) or `max` (OpenCode `provider/model#variant`): frontier problems, long-horizon agent work.
 
-Match the knob per harness: Claude Code `--effort`, OpenCode `--variant`, Codex reasoning via its model or profile settings, Amp and Copilot through their model and mode settings. Do not quote level names across harnesses; translate the intent.
+Match the knob per harness: Claude Code `--effort`, OpenCode variants via `provider/model#variant` (for example `openai/gpt-5.5#high`), Codex reasoning via its model or profile settings, Amp and Copilot through their model and mode settings. Do not quote level names across harnesses; translate the intent. Low or medium effort is the default on frontier models; see [Cost per task, not per token](#cost-per-task-not-per-token).
 
 Always-on thinking models (for example Claude Fable) cannot disable thinking, so they are wrong for high-volume cheap work even when their price is fine.
 
@@ -21,13 +21,25 @@ The exact model list changes every few months. The tiers are the durable part:
 
 - **Cheap tier**: high-volume, mechanical work. Haiku-class models, or the cheapest family member of the provider in use. Low effort. Good for bulk triage, summaries, renames.
 - **Workhorse tier**: normal implementation. Sonnet-class models on Claude, the standard GPT model in the provider's harness (for example the GPT family served by Codex). Medium effort. This is the default for most tasks.
-- **Frontier tier**: hard reasoning, long-horizon agentic work, adversarial review, rare bugs. Top models (Claude Fable 5.1, GPT-6 Astra, Opus-class) with high or max effort. Price per token is several times the workhorse tier, so use it only when the workhorse failed or the task is known-hard.
+- **Frontier tier**: hard reasoning, long-horizon agentic work, adversarial review, rare bugs. Top models (Claude Fable 5.1, GPT-6 Astra, Opus-class) at the effort the task needs, often low or medium; raise only when the task needs it or the user asked. Use it when the workhorse failed, the task is known-hard, or its cost per finished task is lower; see [Cost per task](#cost-per-task-not-per-token).
+
+## Cost per task, not per token
+
+Price per token is not cost. A model that finishes a task in fewer tool calls and less rework can be cheaper overall than a model with a lower token price that wanders, over-thinks, or fails and needs a rerun. Judge routes by what a finished task costs, not by the price list.
+
+Defaults that usually win on cost:
+
+- Frontier models at low or medium effort. GPT-6 Astra usually runs well at low effort; Fable 5.1 usually at low or medium. Raise effort only when the task needs it or the user asked.
+- Workhorse models at medium effort for normal implementation.
+- Cheap models at low effort for mechanical batches.
+
+Pick routes from practice, not leaderboards. Benchmarks rarely predict agentic cost or completion on your repo. Practitioner write-ups, other routing skills, and your own measured cost per task are better evidence. Track what each route actually spends per finished task and adjust the defaults from that record.
 
 ## Routing rules
 
 1. Classify the task: mechanical, normal, or hard.
-2. Assign the cheapest tier that can plausibly finish it.
-3. Run. If the result is wrong, stuck, or the task turns out harder than classified, escalate one tier and rerun that step. Prefer forking the failed session at the higher tier where the harness supports it instead of restarting cold; see [subagents.md](subagents.md).
+2. Assign the route with the lowest likely cost per finished task, not the lowest token price.
+3. Run. If the result is wrong, stuck, or the task turns out harder than classified, escalate one tier and rerun that step, usually at low or medium effort first. Prefer forking the failed session at the higher tier where the harness supports it instead of restarting cold; see [subagents.md](subagents.md).
 4. For work that has to be right (releases, security, user-facing copy), spend one extra tier up front: run the review gate from [reviews.md](reviews.md) with a different harness or model at high effort.
 5. Parallelize independent tasks across worktrees so cheap models finish batches while one frontier model handles the hard core. See [worktrees.md](worktrees.md).
 
@@ -43,7 +55,7 @@ The exact model list changes every few months. The tiers are the durable part:
 Mechanical bugfix on an unfamiliar codebase:
 
 1. Workhorse, medium effort, one worktree.
-2. If diagnosis is wrong: frontier tier, high effort, same worktree.
+2. If diagnosis is wrong: frontier tier at low or medium effort first, same worktree; raise effort only if the retry also fails.
 3. If the fix is risky: add a review gate with a second harness at high effort before handing back.
 
 Report the route you took and why, so the user sees the cost decision and can change the defaults.

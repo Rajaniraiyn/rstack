@@ -7,8 +7,8 @@ Wire the factory once, before routing work at scale. The goal is a decided confi
 Ask the user for what the machine cannot tell you:
 
 - Which harnesses they use or want: Claude Code, Codex, OpenCode, Amp, GitHub Copilot.
-- Which models they can reach: Claude Opus or Sonnet, Fable, Haiku, GPT-5.x family, or other providers through their subscriptions.
-- Which sources feed the factory: GitHub issues, Sentry, Jira, Linear, or MCP servers they already wired.
+- Which models they can reach: Claude Opus or Sonnet, Fable 5.1, Haiku, GPT-6 Astra, the GPT-5.x family, or other providers through their subscriptions.
+- Which sources feed the factory: GitHub issues, Sentry, Jira via `acli`, Linear, or MCP servers they already wired.
 - Any budget or effort preferences: a per-task or per-session dollar cap, and when to escalate to a frontier model.
 
 Only ask for decisions that change behavior. Do not ask a dozen setup questions when probing answers most of them.
@@ -25,6 +25,7 @@ amp --version
 copilot --version
 gh --version
 sentry-cli --version
+acli --version
 ```
 
 Or run the portable helper, which probes all of these and prints versions:

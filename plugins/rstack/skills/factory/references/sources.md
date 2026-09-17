@@ -23,8 +23,11 @@ Classify by frequency, impact, and stack: a top issue is a fix task, not a desig
 
 ## Jira
 
+Use the Atlassian CLI (`acli`), which owns Jira Cloud access. The older standalone `jira` CLI is a fallback when the user still has it wired.
+
 ```sh
-jira issue list --query 'project = X and status = Open' --limit 25
+acli jira workitem search --jql "project = X AND status = Open" --limit 25 --json
+acli jira workitem view KEY-123 --json
 ```
 
 Pull the ticket, its acceptance criteria, and linked issues. Route a ticket's sub-tasks to different tiers when it mixes mechanical and hard work.
@@ -36,6 +39,10 @@ Use the Linear CLI or MCP the user has installed. List open issues or a single i
 ## MCP servers
 
 If the user pointed at an MCP server for a source, use its tools directly. MCP is the escape hatch for sources without a CLI here: Notion, Slack, internal trackers. Prefer the configured or named source over probing for one.
+
+## More sources
+
+The factory is not limited to the sources above. Users install and manage their own CLIs; route to whatever is installed and authenticated on their machine (more issue trackers, more reporters, team-specific tools). Probe with `--version` or `--help`, confirm the list and view commands against its docs, and treat it like any other source: fetch raw, classify, route. When no CLI reaches a source, say so instead of fabricating.
 
 ## Open-ended intake
 

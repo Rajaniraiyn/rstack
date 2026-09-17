@@ -24,13 +24,13 @@ Forking copies a previous session and its full context into a new session with i
 
 Use when a worker's result is wrong or stuck and you want to retry at a higher tier without losing what it already learned, when you want to A/B two approaches against the same investigation, or when you want a branch of a long session that stays out of the main context.
 
-Which CLI can fork (verified September 2026; confirm with `<cli> --help`):
+Which CLI can fork (checked 17 September 2026; confirm with `<cli> --help`):
 
 - **Claude Code**: `claude --continue --fork-session` or `claude --resume <session-id> --fork-session`. In-session `/branch <name>` copies the conversation; `/fork` runs a background agent with your entire context and returns the result to you. `claude --list-sessions` prints session IDs.
-- **Codex**: `codex fork` opens a picker and `codex fork --last` forks the latest session into a new thread. `codex exec resume <session-id>` and `codex exec resume --last` continue an exec session (resume, not fork).
+- **Codex**: `codex fork` opens a picker and `codex fork --last` forks the latest interactive session into a new thread. Headlessly, `codex exec fork <session-id> [prompt]` forks into a new session with an optional follow-up prompt. `codex exec resume <session-id>` and `codex exec resume --last` continue an exec session (resume, not fork).
 - **OpenCode**: `opencode run -c --fork` or `opencode run -s <session-id> --fork` forks the session into a new one. `-c` and `-s` without `--fork` continue in place.
 - **Amp**: the Fork command was removed in January 2026. Threads are durable: reopen a thread by its threadID and continue it, or start a new thread when you want a branch.
-- **Copilot CLI**: `copilot --resume` and `copilot --continue` reopen sessions, and a session can rewind to a previous prompt. There is no fork flag; branch by starting a new session and carrying over the context you need.
+- **Copilot CLI**: `copilot --resume` and `copilot --continue` reopen sessions, `/fork` branches a session with an optional name, and a session can rewind to a previous prompt. Branch by forking or by starting a new session and carrying over the context you need.
 
 ### 4. Fresh session
 

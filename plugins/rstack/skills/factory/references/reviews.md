@@ -21,7 +21,7 @@ codex exec "Review the uncommitted changes for correctness, tests, and edge case
   --sandbox read-only --ask-for-approval never -o review.txt
 
 # OpenCode review with a different model family
-opencode run "Review the current branch against main." -m openai/gpt-5.5 --variant high
+opencode run "Review the current branch against main." -m openai/gpt-5.5#high
 
 # Copilot with a dedicated review agent
 copilot -p "review the current diff" --agent code-review
@@ -48,7 +48,7 @@ copilot -p "review the current diff" --agent code-review
 End with the link the user can act on:
 
 - The pull request, for code.
-- A share link from the session (`opencode run --share`, or the harness's share command) for long-running or review-output sessions.
+- A share link from the session (the harness's session share command) for long-running or review-output sessions.
 - The review report file for analysis-only runs.
 
 Summarize in one paragraph: what shipped, on which branch or worktree, what the gate found, and the cost tier used. That is the factory's accounting back to the user.

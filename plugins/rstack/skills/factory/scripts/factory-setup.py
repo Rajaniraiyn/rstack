@@ -26,6 +26,7 @@ HARNESSES = {
     "copilot": ["copilot", "--version"],
     "gh": ["gh", "--version"],
     "sentry-cli": ["sentry-cli", "--version"],
+    "acli": ["acli", "--version"],
     "jira": ["jira", "--version"],
 }
 
