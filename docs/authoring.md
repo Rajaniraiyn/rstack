@@ -33,6 +33,8 @@ uv run python -m unittest discover -s tests
 
 The tooling handles one bundle, `rstack`. Extend it only when separate plugin installation becomes necessary. Development uses uv; run `uv sync` once for an environment.
 
+The [skills.sh](https://skills.sh) repo page groups skills into sections from a root-level `skills.sh.json` (`groupings`, `notGrouped`). It only changes page display, never CLI installs. See the [customize docs](https://skills.sh/docs/customize).
+
 ## Add integrations
 
 Shared skill syntax does not standardize all host configuration. Add integrations for a concrete workflow and verify them in each intended client.
