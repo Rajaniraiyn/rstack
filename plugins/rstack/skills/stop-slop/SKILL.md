@@ -7,6 +7,8 @@ description: Cut AI tells from anything you write or say. Use when drafting, edi
 
 Edit text to remove AI patterns. Use when drafting, editing, or reviewing anything you write or say, from chat replies and emails to docs and reports.
 
+When the text lives inside code (comments, docstrings, error messages, commit messages) or your output includes code, pair this with the `clean-slop` skill: it owns the code-side patterns.
+
 ## Process
 
 1. Scan for the patterns below and in the reference files.

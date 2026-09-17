@@ -47,15 +47,19 @@ See [references/code.md](references/code.md) for the full list.
 - Add screenshots or illustrations only when the change is visual or the reviewer truly needs them, and label what to look at.
 - If a PR covers more than one coherent change, split it. GitHub supports stacked pull requests; use them instead of one giant PR.
 
+The prose in commit messages, titles, and PR bodies is writing: invoke the `stop-slop` skill alongside this one when drafting or editing them.
+
 See [references/commits-and-prs.md](references/commits-and-prs.md) for the full guide.
 
 ## Documents and reports
 
 - Restated sections: "as we saw above", a conclusion that repeats the body.
-- Stone signs showing: bold-first bullets, emoji headings, headers over tiny sections.
+- Formatting tells: bold-first bullets, emoji headings, headers over tiny sections.
 - Filler transitions: "it's worth noting", "importantly", "in conclusion".
 - Punctuation tells: em dashes, colon reveals, curly quotes.
 - Generic structure: every section the same shape.
+
+The language rules for the prose itself live in the `stop-slop` skill; invoke it alongside this one when the document runs long.
 
 See [references/documents.md](references/documents.md).
 
@@ -67,6 +71,8 @@ See [references/documents.md](references/documents.md).
 - Patronizing analogies: "think of it as", "it's like a".
 - Stacked tricolons and punchy fragments for manufactured emphasis.
 - Copy that could sit unchanged on any competitor's site.
+
+The prose patterns for copy, from tone to rhythm, live in the `stop-slop` skill; use it for the writing, this one for the claims and proof.
 
 See [references/copy.md](references/copy.md).
 

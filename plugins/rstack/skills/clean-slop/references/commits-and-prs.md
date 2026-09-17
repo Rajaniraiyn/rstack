@@ -2,6 +2,8 @@
 
 Keep commits and PRs short, concrete, and unpolished in the right ways. The goal is that a reviewer or future reader can orient in seconds, not that the agent explains itself.
 
+The prose in these messages is writing: pair this reference with the `stop-slop` skill when drafting.
+
 ## Commit messages
 
 - One commit per coherent change. If a diff contains unrelated changes, split it.
