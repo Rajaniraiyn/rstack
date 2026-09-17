@@ -27,7 +27,7 @@ The exact model list changes every few months. The tiers are the durable part:
 
 1. Classify the task: mechanical, normal, or hard.
 2. Assign the cheapest tier that can plausibly finish it.
-3. Run. If the result is wrong, stuck, or the task turns out harder than classified, escalate one tier and rerun that step.
+3. Run. If the result is wrong, stuck, or the task turns out harder than classified, escalate one tier and rerun that step. Prefer forking the failed session at the higher tier where the harness supports it instead of restarting cold; see [subagents.md](subagents.md).
 4. For work that has to be right (releases, security, user-facing copy), spend one extra tier up front: run the review gate from [reviews.md](reviews.md) with a different harness or model at high effort.
 5. Parallelize independent tasks across worktrees so cheap models finish batches while one frontier model handles the hard core. See [worktrees.md](worktrees.md).
 

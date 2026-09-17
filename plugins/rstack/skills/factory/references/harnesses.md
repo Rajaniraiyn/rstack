@@ -121,3 +121,7 @@ A skill bundle installed once (for example `npx skills add Rajaniraiyn/rstack`) 
 - Copilot and Amp: follow their skill or toolbox conventions.
 
 When a harness cannot see a skill the user wants, pass the SKILL.md content into the prompt directly (`--append-system-prompt "$(cat SKILL.md)"` in Claude Code, or read the file into the task text) as an ephemeral fallback. Prefer that over giving the harness filesystem paths it cannot reach.
+
+## Sessions, forks, and sub-agents
+
+Every harness here also has session and delegation mechanics: built-in sub-agent tools, session resume, and in some cases session forking (`claude --fork-session`, `codex fork --last`, `opencode run --fork`, Copilot `--resume` with rewind). Amp removed its Fork command and uses durable, resumable threads instead. The strategic choice between the built-in sub-agent tool, a headless spawn, a fork, and a fresh session is in [subagents.md](subagents.md).

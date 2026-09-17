@@ -40,6 +40,10 @@ Give each agent its own git worktree so agents run in parallel without merge con
 
 Invoke each harness headlessly from inside your own session, and collect results back. Claude Code: `claude -p`, Codex: `codex exec`, OpenCode: `opencode run`, Amp: `amp --execute`, Copilot: `copilot -p`. Pass the model, effort, thinking, and budget flags that harness understands. See [references/harnesses.md](references/harnesses.md) for the per-harness tables.
 
+The factory needs no separate runner: the harness you are already in is a running agent, so re-invoke its own binary headlessly instead of installing an orchestrator.
+
+Choose how a task reaches its worker before spawning: the host's built-in sub-agent tool for small in-session sub-tasks, a headless spawn for isolated work that needs full flag control, a session fork to retry or escalate with inherited context, or a fresh session when the old context is noise. See [references/subagents.md](references/subagents.md) for the routes and which CLI can fork.
+
 ## Review
 
 Before handing work back, run a review gate with a different harness or model than the one that wrote the work, read-only. Fix what the review finds, then re-run the gate. See [references/reviews.md](references/reviews.md).
@@ -53,6 +57,7 @@ Report the final URL: the pull request, a share link (`opencode run --share` or 
 - Never authenticate for the user. Setup detects and configures only. The user manages subscriptions, tokens, and logins.
 - Route only to harnesses that are installed and configured. Offer to install what is missing, but ask before installing anything that costs money.
 - Default to the cheapest workable routing. Escalate deliberately, and say when you did and why.
+- Prefer the built-in sub-agent tool for small in-session sub-tasks. Spawn or fork only when isolation, model freedom, budget control, or inherited context justifies a full session.
 - Share caches, never active state. Two agents writing the same build directory corrupt each other's work.
 - Helpers and examples in this skill are portable: stdlib-only Python and plain markdown, never shell that requires bash. Windows may not have bash.
 - Before handing back generated code or prose, run the `clean-slop` skill on the artifacts. It owns the edit pass for produced work.
@@ -61,6 +66,7 @@ Report the final URL: the pull request, a share link (`opencode run --share` or 
 
 - [references/setup.md](references/setup.md)
 - [references/harnesses.md](references/harnesses.md)
+- [references/subagents.md](references/subagents.md)
 - [references/routing.md](references/routing.md)
 - [references/worktrees.md](references/worktrees.md)
 - [references/sources.md](references/sources.md)
