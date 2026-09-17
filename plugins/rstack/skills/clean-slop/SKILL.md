@@ -39,6 +39,16 @@ Checking a branch against main, reviewing generated code, documents, reports, we
 
 See [references/code.md](references/code.md) for the full list.
 
+## Commits and pull requests
+
+- Commit messages name the outcome, not the effort: "cut deploy time from 40 minutes to 4", not "improve performance".
+- A PR body is how the developer talks to the team, not how the agent reports back to the person who asked. Proof and verification stay in your reply in the chat; the PR holds a short title and a few outcome bullets.
+- Keep PR titles and bodies short: the title states the outcome, the body lists what changed in a few bullets. No paragraphs of rationale, no praise of the work, no "please review".
+- Add screenshots or illustrations only when the change is visual or the reviewer truly needs them, and label what to look at.
+- If a PR covers more than one coherent change, split it. GitHub supports stacked pull requests; use them instead of one giant PR.
+
+See [references/commits-and-prs.md](references/commits-and-prs.md) for the full guide.
+
 ## Documents and reports
 
 - Restated sections: "as we saw above", a conclusion that repeats the body.
@@ -74,6 +84,7 @@ See [references/design.md](references/design.md).
 ## Reference files
 
 - [references/code.md](references/code.md)
+- [references/commits-and-prs.md](references/commits-and-prs.md)
 - [references/documents.md](references/documents.md)
 - [references/copy.md](references/copy.md)
 - [references/design.md](references/design.md)
