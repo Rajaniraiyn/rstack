@@ -1,6 +1,8 @@
 # R Stack
 
+<!-- skills.sh badge, shown once the repo is listed with install counts:
 [![skills.sh](https://skills.sh/b/Rajaniraiyn/rstack)](https://skills.sh/Rajaniraiyn/rstack)
+-->
 
 My personal skills and workflows for coding agents.
 
@@ -15,10 +17,10 @@ Portable `SKILL.md` files that work with Claude Code, Codex, Cursor, GitHub Copi
 Use the [installation guide](docs/installation.md) for each agent's native commands, or the shared fallback:
 
 ```sh
-npx skills add ./plugins/rstack
+npx skills add Rajaniraiyn/rstack
 ```
 
-From GitHub: `npx skills add Rajaniraiyn/rstack`. Add `--global` to install across projects.
+Add `--global` to install across projects.
 
 ## Contributing
 

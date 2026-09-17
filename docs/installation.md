@@ -2,25 +2,25 @@
 
 Use your agent's native method below when available. [Vercel's skills CLI](#shared-fallback-with-skillssh) is the fallback for installing the same skills across agents or from GitHub.
 
-Commands use a local R Stack checkout. Run them from its root unless noted. Choose one method per agent to avoid duplicate skills. Native commands vary by installed version; check `<command> --help` if your CLI does not recognize one.
+Most commands install from this repository. The native plugin commands run from a local checkout; run them from its root unless noted. Choose one method per agent to avoid duplicate skills. Native commands vary by installed version; check `<command> --help` if your CLI does not recognize one.
 
 ## Claude Code
 
 Install the native plugin through this repository's marketplace:
 
 ```sh
-claude plugin marketplace add .
+claude plugin marketplace add Rajaniraiyn/rstack
 claude plugin install rstack@rstack
 ```
 
-For a single development session, use `claude --plugin-dir ./plugins/rstack`. The starter skill is `/rstack:rstack-author-skill`. From GitHub, add the marketplace with the repository name and install as above. See [Claude's marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces).
+For a single development session, use `claude --plugin-dir ./plugins/rstack` from a checkout. The starter skill is `/rstack:rstack-author-skill`. See [Claude's marketplace guide](https://code.claude.com/docs/en/plugin-marketplaces).
 
 ## Codex
 
 Recent Codex CLIs can register and install the plugin:
 
 ```sh
-codex plugin marketplace add .
+codex plugin marketplace add Rajaniraiyn/rstack
 codex plugin add rstack@rstack
 codex plugin list
 ```
@@ -63,11 +63,11 @@ For Copilot's cloud agent, commit project skills to the repository it uses. A gl
 Amp has a native skill installer:
 
 ```sh
-amp skill add ./plugins/rstack
+amp skill add Rajaniraiyn/rstack
 amp skills list
 ```
 
-Use `amp skill add ./plugins/rstack --global` for a machine-wide install. The source can also be a GitHub repository or Git URL. Existing sessions may need a skill reload. Hosted personal and workspace skill repositories have separate import and layout rules. See [Amp's skill documentation](https://ampcode.com/docs/customize/skills).
+Use `amp skill add Rajaniraiyn/rstack --global` for a machine-wide install. Existing sessions may need a skill reload. Hosted personal and workspace skill repositories have separate import and layout rules. See [Amp's skill documentation](https://ampcode.com/docs/customize/skills).
 
 ## OpenCode and Crush
 
@@ -97,17 +97,17 @@ An upload does not provide a local checkout, Python environment, or MCP connecti
 
 [Vercel's skills.sh](https://skills.sh/docs) provides the `skills` CLI. It discovers the same skill folders and installs them into each selected agent's supported location. Node.js with `npx` is required; [uv](https://docs.astral.sh/uv/) is only needed to develop or package R Stack.
 
-From the checkout, list or choose skills and agents interactively:
+Install from this repository, listing or choosing skills and agents interactively:
 
 ```sh
-npx skills add ./plugins/rstack --list
-npx skills add ./plugins/rstack
+npx skills add Rajaniraiyn/rstack --list
+npx skills add Rajaniraiyn/rstack
 ```
 
 Or select agents explicitly:
 
 ```sh
-npx skills add ./plugins/rstack --agent claude-code codex cursor github-copilot amp opencode crush
+npx skills add Rajaniraiyn/rstack --agent claude-code codex cursor github-copilot amp opencode crush
 ```
 
 | Client | `--agent` value |
@@ -120,15 +120,7 @@ npx skills add ./plugins/rstack --agent claude-code codex cursor github-copilot 
 | OpenCode | `opencode` |
 | Crush | `crush` |
 
-Add `--global` to install across projects, `--skill rstack-author-skill` for one skill, or `--copy` to copy instead of symlink. Project installs target the current directory. To install into another project, run there and pass the absolute path to this checkout's `plugins/rstack` directory.
-
-From GitHub, the CLI installs straight from the repository:
-
-```sh
-npx skills add Rajaniraiyn/rstack
-```
-
-You can also use the full GitHub URL or a direct URL to `plugins/rstack`.
+Add `--global` to install across projects, `--skill rstack-author-skill` for one skill, or `--copy` to copy instead of symlink. You can also pass the full GitHub URL or, from a checkout, the path to `plugins/rstack`.
 
 Other installer targets include Cline, Continue, Gemini CLI, Goose, and Windsurf. Use interactive selection or the [maintained agent list](https://github.com/vercel-labs/skills#supported-agents); R Stack does not duplicate that registry.
 
