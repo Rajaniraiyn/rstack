@@ -1,6 +1,6 @@
 # Worktrees
 
-Give each parallel agent its own git worktree: isolated working copy, shared git objects, no merge conflicts. Then make each worktree cheap by sharing install and build caches, not by sharing state.
+Give each parallel writer its own git worktree. Separate working copies prevent agents from overwriting each other's files during execution, but their changes can still conflict when merged. Worktrees share git objects and repository configuration; they are not a security sandbox. Reduce install costs with package-manager caches, not shared writable dependency trees.
 
 ## Create
 
@@ -14,7 +14,7 @@ One worktree per task or per agent. Name it after the task or the agent that own
 git worktree remove ../wt-task-42
 ```
 
-Keep a small pool of recycled worktrees (for example `wt-1` through `wt-4`) when tasks are short: reset and reuse instead of creating and destroying.
+Keep a small pool of recycled worktrees when tasks are short. Before reuse, stop all workers, inspect tracked and untracked changes, and preserve the previous task's commits and artifacts. Never reset, clean, or remove a worktree containing unreviewed or user-owned work. Assign one writer at a time.
 
 ## The sharing rule
 
@@ -24,19 +24,15 @@ Isolation boundaries matter more than disk savings. Wrong sharing breaks builds 
 
 ## node_modules
 
-- Identical lockfile across worktrees: symlink into one shared `node_modules` or, better, use a package manager with a content-addressed store.
-- Different lockfiles: do not symlink. Two branches with different dependencies are exactly what breaks symlinked `node_modules`.
+Install a separate dependency tree in each worktree using the package manager's shared cache. Matching lockfiles alone do not make a shared `node_modules` safe: install scripts, native builds, workspace links, and tools that write caches there can depend on the working directory.
+
+Only share a dependency tree when it is immutable and the repository has verified that all consumers are read-only and relocatable. Never share it while either worker installs, rebuilds, or patches packages.
 
 ## pnpm
 
-The global virtual store is the cheapest setup: packages live once in a content-addressable store, and each worktree's `node_modules` is symlinks into it. Configure it once:
+Use pnpm's content-addressed store to reuse package downloads across worktrees, while keeping each worktree's dependency links separate. Let pnpm manage links and its store layout; do not hardlink writable source files yourself.
 
-```ini
-# .npmrc
-virtual-store-dir-max-length=120
-```
-
-Supported by default on recent pnpm. Second and later worktrees then cost almost nothing to install.
+A global virtual store is a separate, version-dependent feature. Check the installed pnpm documentation before enabling it. `virtual-store-dir-max-length` only controls directory-name length; it does not enable a global virtual store. Cached installs still need per-worktree linking and may run build scripts.
 
 ## npm
 
