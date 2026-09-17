@@ -3,6 +3,14 @@
   "notGrouped": "bottom",
   "groupings": [
     {
+      "title": "Unslop",
+      "description": "Remove AI slop from writing, code, documents, and design.",
+      "skills": [
+        "stop-slop",
+        "clean-slop"
+      ]
+    },
+    {
       "title": "Authoring",
       "description": "Create or revise a portable skill for R Stack.",
       "skills": [

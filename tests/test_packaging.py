@@ -25,7 +25,8 @@ class PackagingTests(unittest.TestCase):
         first = {path.name: path.read_bytes() for path in paths}
         self.assertEqual(first, {path.name: path.read_bytes() for path in rstack.package(self.root)})
         skill = self.root / "plugins/rstack/skills/rstack-author-skill"
-        with zipfile.ZipFile(paths[1]) as archive:
+        archive_path = next(path for path in paths if path.name == f"{skill.name}-0.1.0.zip")
+        with zipfile.ZipFile(archive_path) as archive:
             for source in skill.rglob("*"):
                 if source.is_file():
                     self.assertEqual(archive.read(source.relative_to(skill.parent).as_posix()), source.read_bytes())

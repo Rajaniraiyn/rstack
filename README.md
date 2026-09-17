@@ -10,8 +10,9 @@ Portable `SKILL.md` files that work with Claude Code, Codex, Cursor, GitHub Copi
 
 ## Skills
 
+- [stop-slop](plugins/rstack/skills/stop-slop/SKILL.md): cut AI tells from anything you write or say.
+- [clean-slop](plugins/rstack/skills/clean-slop/SKILL.md): remove AI slop from code, diffs, documents, copy, and design output.
 - [rstack-author-skill](plugins/rstack/skills/rstack-author-skill/SKILL.md): create or revise a portable skill for this repository.
-- [unslop](plugins/rstack/skills/unslop/SKILL.md): cut AI tells from any writing (vendored from [pstack](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop), MIT).
 
 ## Install
 
