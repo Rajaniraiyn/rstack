@@ -11,6 +11,7 @@ Portable `SKILL.md` files that work with Claude Code, Codex, Cursor, GitHub Copi
 ## Skills
 
 - [rstack-author-skill](plugins/rstack/skills/rstack-author-skill/SKILL.md): create or revise a portable skill for this repository.
+- [unslop](plugins/rstack/skills/unslop/SKILL.md): cut AI tells from any writing (vendored from [pstack](https://github.com/cursor/plugins/tree/main/pstack/skills/unslop), MIT).
 
 ## Install
 
