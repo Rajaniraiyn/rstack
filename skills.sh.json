@@ -16,6 +16,13 @@
       "skills": [
         "rstack-author-skill"
       ]
+    },
+    {
+      "title": "Factory",
+      "description": "Route work across agent harnesses, models, and worktrees.",
+      "skills": [
+        "factory"
+      ]
     }
   ]
 }
