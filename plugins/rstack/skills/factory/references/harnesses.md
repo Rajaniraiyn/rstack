@@ -4,6 +4,8 @@ Verified September 2026. These CLIs ship updates constantly; confirm flags with 
 
 ## Claude Code
 
+For unattended work, prefer `--permission-mode auto` where available: Claude Code uses a classifier to review actions. This differs from `bypassPermissions`, which skips permission checks, and from sandboxing, which limits filesystem and network access. Auto mode is not a sandbox or a guarantee of safety; keep the user's approved scope and managed restrictions in force.
+
 Headless (print mode):
 
 ```sh
