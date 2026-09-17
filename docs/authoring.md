@@ -7,7 +7,10 @@ Create `plugins/rstack/skills/your-skill/SKILL.md`:
 ```markdown
 ---
 name: your-skill
-description: Describe the repeatable task and when the agent should use it.
+description: What the skill does, then when to use it. Name the exact requests that should load it: user actions and phrases, in quotes.
+license: MIT
+metadata:
+  trigger: comma, separated, trigger, phrases
 ---
 
 # Your workflow
@@ -15,7 +18,7 @@ description: Describe the repeatable task and when the agent should use it.
 Describe the expected result and the decisions specific to this task.
 ```
 
-Keep `name` and `description` portable. Put references, executable helpers, and output templates inside the skill directory, and use relative links. Add directories only when needed. Optional Codex display metadata belongs in `agents/openai.yaml`; essential instructions must work without it.
+The `description` is what the agent sees before loading the SKILL.md (only name, description, and path are visible up front), so it must say when to read the file, not just what the skill is for. Keep it one or two sentences, and include the phrases or actions that should trigger it, like a user saying "make this sound human" or "review this branch". Keep `name` and `description` portable. `license` and `metadata.trigger` are portable frontmatter from the [Agent Skills specification](https://agentskills.io/specification). Provider-specific knobs (like `disable-model-invocation`, `user-invocable`, or `argument-hint`) are optional; do not rely on a provider-specific field for essential behavior. Put references, executable helpers, and output templates inside the skill directory, and use relative links. Add directories only when needed. Optional Codex display metadata belongs in `agents/openai.yaml`; essential instructions must work without it.
 
 The included `rstack-author-skill` can guide this process. Check a matching request and a nearby request that should not trigger the skill. Test executable helpers with representative inputs.
 

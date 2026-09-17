@@ -1,6 +1,9 @@
 ---
 name: stop-slop
-description: Cut AI tells from anything you write or say. Use when drafting, editing, or reviewing text to remove predictable AI patterns and keep the writer's voice.
+description: Cut AI tells from any writing or speaking. Use when drafting, editing, or reviewing prose, or when the user asks to make text sound human, unslop, de-AI, or strip AI patterns from reports, docs, emails, and chat replies.
+license: MIT
+metadata:
+  trigger: draft, edit, review, writing, prose, unslop, de-AI, make it sound human, humanize, remove AI patterns
 ---
 
 # Stop Slop

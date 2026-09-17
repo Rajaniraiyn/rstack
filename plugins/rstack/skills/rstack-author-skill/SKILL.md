@@ -1,6 +1,9 @@
 ---
 name: rstack-author-skill
-description: Create or revise a portable skill for a personal skills repository, including its supporting resources and installation checks. Use when adding a reusable agent workflow to R Stack.
+description: Create or revise a portable skill in R Stack. Use when adding a new reusable agent workflow, writing or editing SKILL.md, or structuring a skill for this repository.
+license: MIT
+metadata:
+  trigger: add a skill, write a skill, create SKILL.md, authoring, new agent workflow, rstack
 ---
 
 # Author a skill
@@ -9,7 +12,7 @@ Identify the repeatable task, the requests that should trigger it, and the expec
 
 Inspect the target repository's authoring instructions and an existing skill before choosing a location. In R Stack, use `plugins/rstack/skills/<skill-name>/`.
 
-Write a `SKILL.md` with a matching lowercase, hyphenated name and a description that identifies the task and trigger. Keep the body focused on decisions an agent would otherwise get wrong. Preserve the user's scope and avoid introducing extra approval steps.
+Write a `SKILL.md` with a matching lowercase, hyphenated name and a description that identifies the task and trigger. The description is what the agent sees before loading the skill, so write it for the agent: one or two sentences, what the skill does, then the exact requests or phrases that should load it (for example, a user saying "make this sound human" or "review this branch"). Keep the body focused on decisions an agent would otherwise get wrong. Preserve the user's scope and avoid introducing extra approval steps.
 
 Use [the portability checklist](references/portability.md) when the skill must work across clients. Put supporting references, executable helpers, and output templates inside the skill directory. Link references where the agent needs them. Do not require another installed skill unless that dependency is intentional and documented.
 
