@@ -1,9 +1,8 @@
 ---
 name: rstack-author-skill
-description: Create or revise a portable skill in R Stack. Use when adding a new reusable agent workflow, writing or editing SKILL.md, or structuring a skill for this repository.
+description: Create or revise a portable skill in R Stack, for this repository's own authors only. Use when adding a new reusable agent workflow, writing or editing SKILL.md, or structuring a skill for this repository.
 license: MIT
-metadata:
-  trigger: add a skill, write a skill, create SKILL.md, authoring, new agent workflow, rstack
+disable-model-invocation: true
 ---
 
 # Author a skill
