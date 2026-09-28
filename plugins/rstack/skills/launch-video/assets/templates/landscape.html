@@ -1,0 +1,311 @@
+<!doctype html>
+<!-- Worked example, 1920x1080, 22.5s @ 120 bpm: hook -> app window with camera -> tool rows, diff, terminal -> PR card -> model picker -> outro.
+     Replace every product-specific string, time, and component with your product's real ones. See references/scenes.md. -->
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="kit.css">
+<style>
+html, body { width: 1920px; height: 1080px; }
+.ln { display: block; overflow: hidden; padding-bottom: 0.07em; margin-bottom: -0.07em; }
+.ln > span { display: inline-block; }
+
+/* hook */
+#clock { left: 166px; top: 300px; font-size: 30px; }
+.word { position: absolute; font-size: 210px; }
+#handoff { left: 160px; top: 420px; font-size: 210px; }
+
+/* app window */
+#cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+#win { left: 110px; top: 80px; width: 1700px; height: 920px; border-radius: 16px; overflow: hidden; background: var(--ink-2); border: 1px solid var(--line-2);
+  box-shadow: 0 60px 140px rgba(0,0,0,.7); }
+.side { position: absolute; left: 0; top: 0; bottom: 0; width: 272px; background: var(--surface); border-right: 1px solid var(--line); padding: 18px 14px; }
+.lights { display: flex; gap: 8px; } .lights i { width: 12px; height: 12px; border-radius: 50%; display: block; background: #3a3a40; }
+.sec { font-size: 13px; color: var(--text-3); margin: 26px 10px 8px; font-family: var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.item { display: flex; gap: 10px; align-items: center; padding: 9px 10px; border-radius: 8px; font-size: 15.5px; color: var(--text-2); }
+.item.act { background: var(--surface-2); color: var(--text); }
+.main { position: absolute; left: 272px; right: 0; top: 0; bottom: 0; }
+.topbar { height: 52px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 10px; padding: 0 20px; font-size: 14.5px; color: var(--text-2); }
+#welcome { position: absolute; left: 0; right: 0; top: 210px; text-align: center; }
+#greet { font-size: 20px; color: var(--text-3); font-family: var(--mono); }
+#ask { font-size: 52px; font-weight: 600; letter-spacing: -0.035em; margin-top: 14px; }
+.composer { position: absolute; width: 900px; border: 1px solid var(--line-2); border-radius: 18px; background: var(--surface); padding: 20px 22px 14px; }
+#typed { font-size: 24px; line-height: 1.45; min-height: 70px; letter-spacing: -0.01em; }
+.caret { display: inline-block; width: 2px; height: 27px; background: var(--text); vertical-align: -5px; margin-left: 2px; }
+.chips { display: flex; gap: 8px; align-items: center; margin-top: 12px; }
+.chipx { height: 34px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface-2); display: flex; align-items: center; gap: 8px; padding: 0 12px; font-size: 15px; color: var(--text-2); }
+.send { margin-left: auto; width: 40px; height: 40px; border-radius: 50%; background: var(--text); display: flex; align-items: center; justify-content: center; }
+
+#chat { position: absolute; left: 0; right: 0; top: 52px; bottom: 0; }
+.ubub { position: absolute; right: 50px; top: 34px; max-width: 700px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 16px; padding: 14px 20px; font-size: 21px; line-height: 1.45; }
+.atext { position: absolute; left: 60px; width: 760px; font-size: 21px; line-height: 1.55; color: #dcdce0; }
+.trow { position: absolute; left: 60px; display: flex; align-items: center; gap: 12px; font-size: 20px; color: var(--text-2); }
+.trow .act { color: var(--text); font-weight: 500; }
+.trow .tg { font-family: var(--mono); font-size: 17px; color: var(--text-3); }
+.shim { background: linear-gradient(90deg, #6b6b74 0%, #fff 50%, #6b6b74 100%); background-size: 200% 100%; -webkit-background-clip: text; background-clip: text; color: transparent !important; }
+#diff { left: 60px; width: 780px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.dh { height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 16px; font-family: var(--mono); font-size: 15px; border-bottom: 1px solid var(--line); color: var(--text-2); }
+.dl { font-family: var(--mono); font-size: 16px; line-height: 29px; white-space: pre; padding: 0 16px; color: #d4d4d8; }
+.dl.a { background: var(--add-bg); } .dl.d { background: var(--del-bg); }
+.dl .s { display: inline-block; width: 22px; } .dl.a .s { color: var(--add); } .dl.d .s { color: var(--del); }
+.k { color: #f0a0b0; } .p { color: #a5c8ff; } .y { color: #f5c98b; } .c { color: #6b6b74; }
+#term { position: absolute; top: 52px; bottom: 0; right: 0; width: 600px; background: #0b0b0d; border-left: 1px solid var(--line); }
+.tt { height: 42px; display: flex; align-items: center; gap: 10px; padding: 0 16px; font-size: 13.5px; color: var(--text-3); border-bottom: 1px solid var(--line); font-family: var(--mono); }
+#tbody { padding: 16px 18px; font-family: var(--mono); font-size: 15px; line-height: 26px; color: #c8c8cf; white-space: pre; }
+
+#toast { left: 1210px; top: 108px; height: 58px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line-2); display: flex; align-items: center; gap: 12px; padding: 0 20px; font-size: 17px; box-shadow: 0 20px 50px rgba(0,0,0,.5); z-index: 5; }
+#dim { inset: 0; background: rgba(9,9,11,.72); opacity: 0; z-index: 4; }
+#pr { left: 460px; top: 320px; width: 1000px; border-radius: 16px; background: #0d1117; border: 1px solid #30363d; padding: 38px 44px; z-index: 6; box-shadow: 0 60px 140px rgba(0,0,0,.8); font-family: system-ui; }
+.badge { display: inline-flex; align-items: center; gap: 8px; background: #238636; color: #fff; font-weight: 600; font-size: 18px; border-radius: 999px; padding: 7px 16px; }
+
+/* models */
+#picker { left: 1040px; top: 190px; width: 720px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line-2); padding: 10px; box-shadow: 0 50px 120px rgba(0,0,0,.6); }
+.mrow { height: 84px; border-radius: 12px; display: flex; align-items: center; gap: 20px; padding: 0 22px; font-size: 27px; color: var(--text-2); letter-spacing: -0.01em; }
+.mrow .ico { width: 48px; height: 48px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); display: flex; align-items: center; justify-content: center; }
+.mrow .tag { margin-left: auto; font-family: var(--mono); font-size: 15px; letter-spacing: .08em; color: var(--text-3); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; }
+.mrow.on { background: var(--surface-2); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2); }
+.mrow.on .tag { color: var(--tint); border-color: rgba(226,166,236,.35); }
+.mw { left: 160px; font-size: 118px; }
+
+#cursor { left: 0; top: 0; width: 34px; height: 34px; z-index: 70; opacity: 0; filter: drop-shadow(0 3px 6px rgba(0,0,0,.5)); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="grid"></div>
+
+  <!-- S1 -->
+  <div class="scene" id="s1">
+    <div class="abs kicker" id="clock"><span id="clk">02:07</span> <span>AM</span> <span style="color:var(--text-3)">· abacusai-bot</span></div>
+    <div class="head word" id="w1">Committing</div>
+    <div class="head word" id="w2">at</div>
+    <div class="head word tint" id="w3">2am?</div>
+    <div class="abs head" id="handoff"><span class="ln"><span>Hand it off.</span></span></div>
+  </div>
+
+  <!-- S2–S4 app -->
+  <div class="scene" id="sApp">
+    <div id="cam">
+      <div class="abs" id="win">
+        <div class="side">
+          <div class="lights"><i></i><i></i><i></i></div>
+          <div id="brandRow" style="display:flex;align-items:center;gap:10px;margin:22px 10px 0;font-size:16.5px;font-weight:600;letter-spacing:-0.01em"></div>
+          <div class="sec">Bots</div>
+          <div class="item" id="botItem"></div>
+          <div class="sec">Sessions</div>
+          <div class="item act" id="sessItem" style="opacity:0"></div>
+          <div class="item" id="s2i"></div>
+          <div class="item" id="s3i"></div>
+          <div id="sideFoot" style="position:absolute;bottom:18px;left:14px;right:14px"></div>
+        </div>
+        <div class="main">
+          <div class="topbar" id="topbar"></div>
+          <div id="welcome">
+            <div id="greet">Committing at 2am</div>
+            <div id="ask">What should we build in <span class="tint">abacusai-bot</span>?</div>
+          </div>
+          <div class="composer" id="comp" style="left:264px;top:390px;">
+            <div id="typed"></div>
+            <div class="chips" id="chips"></div>
+          </div>
+          <div id="chat" style="opacity:0">
+            <div class="ubub" id="ububble"></div>
+            <div class="atext" id="at1" style="top:146px"></div>
+            <div class="trow" id="tr0" style="top:232px"></div>
+            <div class="trow" id="tr1" style="top:278px"></div>
+            <div class="trow" id="tr2" style="top:324px"></div>
+            <div class="abs" id="diff" style="top:370px"><div class="dh" id="dhead"></div><div id="dlines"></div></div>
+            <div class="trow" id="tr3" style="top:700px"></div>
+            <div class="atext" id="at2" style="top:752px"></div>
+          </div>
+          <div id="term"><div class="tt" id="ttab"></div><div id="tbody"></div></div>
+        </div>
+      </div>
+      <div class="abs" id="dim"></div>
+      <div class="abs" id="toast"></div>
+      <div class="abs" id="pr"></div>
+    </div>
+  </div>
+
+  <!-- S5 models -->
+  <div class="scene" id="s5">
+    <div class="abs kicker" style="left:160px;top:250px;font-size:24px" id="k5"><b>BYO</b> — MODELS</div>
+    <div class="abs head mw" id="m1" style="top:310px">Any model.</div>
+    <div class="abs head mw" id="m2" style="top:440px"><span class="tint">Free</span> ones.</div>
+    <div class="abs head mw" id="m3" style="top:570px">Local ones.</div>
+    <div class="abs" id="picker"></div>
+  </div>
+
+  <!-- S6 outro -->
+  <div class="scene" id="s6">
+    <div class="abs head" id="o1" style="left:160px;top:290px;font-size:170px"><span class="ln"><span>Ship it and</span></span><span class="ln"><span class="tint">sleep.</span></span></div>
+    <div class="abs" id="o2" style="left:160px;top:740px;display:flex;align-items:center;gap:40px">
+      <div id="obrand" style="display:flex;align-items:center;gap:22px"></div>
+      <div style="width:1px;height:70px;background:var(--line-2)"></div>
+      <div style="height:76px;padding:0 36px;border-radius:38px;background:var(--text);color:var(--ink);display:flex;align-items:center;font-size:32px;font-weight:600;letter-spacing:-0.02em">bot.abacus.ai</div>
+      <div style="font-family:var(--mono);font-size:22px;color:var(--text-2);letter-spacing:.08em">FREE · OPEN SOURCE · MIT</div>
+    </div>
+  </div>
+
+  <svg class="abs" id="cursor" viewBox="0 0 24 24"><path d="M5 2.8v16.6l4.3-4.1 2.8 6.4 2.7-1.2-2.8-6.3 6-.2z" fill="#fff" stroke="#000" stroke-width="1.1" stroke-linejoin="round"/></svg>
+</div>
+
+<script src="icons.js"></script>
+<script src="kit.js"></script>
+<script>
+// ===== CONTENT: everything below is the worked example's content. Replace it with your product's real copy, logo, times, and UI. =====
+window.LOGO = `<svg viewBox="0 0 400 400" fill="none"><rect width="400" height="400" rx="96" fill="#16161a"/><rect x=".75" y=".75" width="398.5" height="398.5" rx="95" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/><rect x="70" y="88" width="36" height="96" rx="18" fill="#fff"/><circle cx="88" cy="225" r="27" fill="#2A82E8"/><rect x="70" y="272" width="36" height="60" rx="18" fill="#D6E1F5"/><rect x="149" y="45" width="36" height="72" rx="18" fill="#D6E1F5"/><circle cx="167" cy="156" r="28" fill="#D62D97"/><rect x="149" y="203" width="36" height="152" rx="18" fill="#fff"/><rect x="228" y="40" width="36" height="152" rx="18" fill="#fff"/><circle cx="246" cy="248" r="28" fill="#2EE6D6"/><rect x="228" y="290" width="36" height="65" rx="18" fill="#D6E1F5"/><rect x="307" y="88" width="36" height="64" rx="18" fill="#D6E1F5"/><circle cx="325" cy="200" r="28" fill="#A233FB"/><rect x="307" y="245" width="36" height="87" rx="18" fill="#fff"/></svg>`; // the product's real mark, from its source
+// ---------- static content ----------
+$("brandRow").innerHTML = `${logo(26)}AbacusAI Bot`;
+$("botItem").innerHTML = `${ic("message-circle", 17, "#a1a1aa")} Chief of Staff`;
+$("sessItem").innerHTML = `<span id="sessDot" style="width:7px;height:7px;border-radius:50%;background:var(--tint);display:block"></span>Fix the model pool`;
+$("s2i").innerHTML = `${ic("git-pull-request", 17, "#6b6b74")} Review my pull requests`;
+$("s3i").innerHTML = `${ic("file-text", 17, "#6b6b74")} Restyle Excalidraw`;
+$("sideFoot").innerHTML = ["Artifacts:box", "Routines:moon", "Connectors:key-round"].map((s) => { const [n, i] = s.split(":"); return `<div class="item" style="padding:7px 10px">${ic(i === "box" ? "file-text" : i, 16, "#6b6b74")} ${n}</div>`; }).join("");
+$("topbar").innerHTML = `${ic("folder-git-2", 17, "#a1a1aa")} abacusai-bot <span class="dim">/</span> ${ic("git-branch", 16, "#a1a1aa")} <span id="branch">main</span>`;
+$("chips").innerHTML = `<div class="chipx">${ic("git-branch", 16, "#a1a1aa")} main</div><div class="chipx">${ic("shield-check", 16, "#a1a1aa")} Auto</div><div class="chipx">${ic("cpu", 16, "#a1a1aa")} RouteLLM - Open</div><div class="send" id="sendBtn">${ic("arrow-up", 20, "#09090b", 2.4)}</div>`;
+$("dhead").innerHTML = `${ic("file-text", 16, "#a1a1aa")} packages/agent/src/session.ts <span style="margin-left:auto"><span style="color:var(--add)">+6</span> <span style="color:var(--del)">−2</span></span>`;
+$("ttab").innerHTML = `${ic("terminal", 15, "#a1a1aa")} zsh — abacusai-bot`;
+$("toast").innerHTML = `${ic("git-branch", 20, "#ededef", 1.8)} Created and switched to <b style="font-family:var(--mono);font-weight:500;font-size:16px">fix/model-pool</b>`;
+$("pr").innerHTML = `
+  <div style="display:flex;align-items:center;gap:12px;color:#8b949e;font-size:20px">${brand("github", 30, "#e6edf3")} abacusai / abacusai-bot · Pull request opened</div>
+  <div style="font-size:46px;font-weight:600;letter-spacing:-0.02em;line-height:1.18;margin-top:20px;color:#e6edf3">The pool is walked to its end, not to a count <span style="color:#8b949e;font-weight:400">#29</span></div>
+  <div style="display:flex;align-items:center;gap:16px;margin-top:24px;font-size:19px;color:#8b949e">
+    <span class="badge">${ic("git-pull-request", 18, "#fff", 2)} Open</span>
+    <span style="font-family:var(--mono);font-size:18px">fix/model-pool → main</span>
+    <span style="margin-left:auto;font-family:var(--mono);font-size:18px"><span style="color:#3fb950">+19</span> <span style="color:#f85149">−27</span> · 3 files</span></div>
+  <div id="checks" style="margin-top:22px;padding-top:20px;border-top:1px solid #30363d;display:flex;align-items:center;gap:12px;font-size:19px;color:#c9d1d9">${ic("circle-check", 22, "#3fb950", 2)} Tests · 91 passed</div>`;
+$("obrand").innerHTML = `${logo(84)}<div class="head" style="font-size:60px;letter-spacing:-0.04em">AbacusAI Bot</div>`;
+
+const PROMPT = "Fix the model pool giving up after five tries. Run the tests, then open a PR.";
+const A1 = "A turn stops after a fixed count of model switches. I'll make it walk the whole pool instead.";
+const A2 = "Done. The pool now runs to its end, and all 91 tests pass.";
+const ROWS = [
+  { t: 8.0, ic: "file-text", run: "Reading", done: "Read", tg: "session.ts" },
+  { t: 8.5, ic: "search", run: "Searching codebase", done: "Searched codebase", tg: "openLlmRotationsThisTurn" },
+  { t: 9.0, ic: "pencil", run: "Editing", done: "Edited", tg: "session.ts", extra: ` <span style="font-family:var(--mono);font-size:17px"><span style="color:var(--add)">+6</span> <span style="color:var(--del)">−2</span></span>` },
+  { t: 10.5, ic: "terminal", run: "Running", done: "Ran", tg: "pnpm test" },
+];
+const DIFF = [
+  ["d", '  <span class="c">/** Model switches spent on provider failures this turn. */</span>'],
+  ["d", '  <span class="k">private</span> <span class="p">openLlmRotationsThisTurn</span> = <span class="y">0</span>;'],
+  ["a", '  <span class="c">/**</span>'],
+  ["a", '  <span class="c"> * Models that failed this turn. A rotation never returns to one,</span>'],
+  ["a", '  <span class="c"> * so a turn ends once the whole pool has been asked.</span>'],
+  ["a", '  <span class="c"> */</span>'],
+  ["a", '  <span class="k">private readonly</span> <span class="p">openLlmFailedThisTurn</span> = <span class="k">new</span> <span class="y">Set</span>&lt;<span class="y">string</span>&gt;();'],
+  ["c", '    <span class="k">if</span> (failedId != <span class="k">null</span>) {'],
+  ["c", '      <span class="k">this</span>.openLlmRotation.markFailed(failedId);'],
+];
+$("dlines").innerHTML = DIFF.map(([k, h], i) => `<div class="dl ${k === "c" ? "" : k}" id="dl${i}"><span class="s">${k === "a" ? "+" : k === "d" ? "−" : ""}</span>${h}</div>`).join("");
+const G = (s) => `<span style="color:var(--add)">${s}</span>`, M = (s) => `<span style="color:#6b6b74">${s}</span>`;
+const TERM = [
+  [`${M("$")} pnpm test`, 0], ["", 0.15], [`${M("RUN")}  v4.1.11 packages/agent`, 0.2], ["", 0.25],
+  [`${G("✓")} which models are in the pool`, 0.35], [`  ${G("✓")} keeps OpenRouter's free tier`, 0.45], [`  ${G("✓")} pools the models on this machine`, 0.55],
+  [`  ${G("✓")} orders the sources: Abacus,`, 0.65], ["    Gemini, OpenRouter", 0.65], [`  ${G("✓")} still pools every :free model`, 0.75],
+  [`${M("[openllm]")} openrouter/dead-model failed`, 0.9], ["  (429) — routing to gemini/flash…", 0.9], [`${M("[openllm]")} no model left in the pool.`, 1.05], ["", 1.1],
+  [`${M(" Test Files")}  ${G("3 passed")} (3)`, 1.45], [`${M("      Tests")}  ${G("91 passed")} (91)`, 1.5], [`${M("   Duration")}  1.65s`, 1.55],
+];
+$("tbody").innerHTML = TERM.map(([h], i) => `<div id="tl${i}" style="opacity:0">${h || " "}</div>`).join("");
+const MODELS = [
+  ["cloud", "RouteLLM - Open", "FREE POOL"], ["cloud", "Claude", "YOUR KEY"], ["cloud", "OpenAI / Codex", "SUBSCRIPTION"],
+  ["cloud", "Google Gemini", "FREE TIER"], ["cloud", "OpenRouter", "FREE MODELS"], ["hard-drive", "llama.cpp", "THIS MACHINE"],
+];
+$("picker").innerHTML = MODELS.map(([i, n, tag], k) => `<div class="mrow" id="mr${k}"><div class="ico">${ic(i, 24, "#a1a1aa")}</div>${n}<span class="tag">${tag}</span></div>`).join("");
+
+// ---------- timeline ----------
+const T = { s1: [0, 3.5], app: [3.5, 16.5], s5: [16.5, 19.5], s6: [19.5, 23] };
+const SEND = 7.0;
+let laid = false;
+
+window.render = function (t) {
+  // S1
+  vis($("s1"), t < T.s1[1]);
+  if (!laid) {
+    const ws = [$("w1"), $("w2"), $("w3")], wd = ws.map((e) => e.offsetWidth);
+    ws[0].style.left = "160px"; ws[0].style.top = "350px";
+    ws[1].style.left = "160px"; ws[1].style.top = "560px";
+    ws[2].style.left = 160 + wd[1] + 52 + "px"; ws[2].style.top = "560px"; laid = true;
+  }
+  const hook = t < 2.0;
+  ["w1", "w2", "w3"].forEach((id, i) => { vis($(id), hook); stamp($(id), t, 0.5 * (i + 1)); });
+  vis($("clock"), hook); $("clock").style.opacity = 1;
+  $("clk").textContent = Math.floor(t * 2) % 2 ? "02 07" : "02:07";
+  vis($("handoff"), t >= 2.0 && t < 3.5); lines($("handoff"), t, 2.0, 0, 0.45);
+  if (t >= 3.2) $("handoff").style.transform = `translateY(${-eInOut(prog(t, 3.2, 0.3)) * 40}px)`, $("handoff").style.opacity = 1 - prog(t, 3.2, 0.3);
+  else $("handoff").style.transform = "", $("handoff").style.opacity = 1;
+
+  // APP
+  vis($("sApp"), t >= T.app[0] && t < T.app[1]);
+  const ta = T.app[0];
+  const pin = eOut5(prog(t, ta, 0.55));
+  $("win").style.transform = `translateY(${(1 - pin) * 80}px) scale(${lerp(0.96, 1, pin)})`;
+  $("win").style.opacity = clamp(prog(t, ta, 0.15));
+  const cam = camAt(t, [
+    [ta, 1, 960, 540], [ta + 0.6, 1, 960, 540], [ta + 1.3, 1.36, 1080, 600], [SEND - 0.1, 1.42, 1070, 600],
+    [SEND + 0.4, 1, 960, 540], [8.9, 1, 960, 540], [9.4, 1.28, 880, 620], [10.3, 1.28, 880, 620],
+    [10.8, 1.42, 1500, 430], [12.3, 1.42, 1500, 470], [12.9, 1, 960, 540], [13.5, 1, 960, 540], [16.5, 1.04, 960, 540]]);
+  $("cam").style.transform = `translate(${960 - cam[2] * cam[1]}px, ${540 - cam[3] * cam[1]}px) scale(${cam[1]})`;
+
+  const wOut = eInOut(prog(t, SEND + 0.05, 0.3));
+  enter($("welcome"), t, ta + 0.3, 0.5, 20); $("welcome").style.opacity *= 1 - wOut;
+  enter($("comp"), t, ta + 0.4, 0.5, 24); $("comp").style.opacity *= 1 - wOut;
+  const t0 = ta + 1.1, t1 = SEND - 0.45;
+  const n = Math.floor(clamp((t - t0) / (t1 - t0)) * PROMPT.length);
+  const blink = Math.floor(t * 2.5) % 2 === 0 || (t > t0 && t < t1);
+  $("typed").innerHTML = (n === 0 ? '<span style="color:#6b6b74">Ask anything, @ to mention files…</span>' : PROMPT.slice(0, n)) + (blink ? '<span class="caret"></span>' : "");
+  $("sendBtn").style.transform = `scale(${t >= SEND && t < SEND + 0.14 ? 0.88 : 1})`;
+  enter($("sessItem"), t, SEND + 0.2, 0.4, 8);
+  $("sessDot").style.background = t < 13.0 ? "var(--tint)" : "var(--ok)";
+  $("sessDot").style.opacity = t < 13.0 ? 0.45 + 0.55 * Math.abs(Math.sin(t * 3.2)) : 1;
+  $("branch").textContent = t >= 13.55 ? "fix/model-pool" : "main";
+
+  $("chat").style.opacity = clamp(prog(t, SEND + 0.3, 0.25));
+  $("ububble").textContent = PROMPT; enter($("ububble"), t, SEND + 0.3, 0.4, 16);
+  $("at1").textContent = A1.slice(0, Math.floor(clamp((t - 7.55) / 0.4) * A1.length));
+  ROWS.forEach((r, i) => {
+    const el = $("tr" + i), done = t >= (i === 3 ? 12.5 : r.t + 0.35);
+    el.innerHTML = `${ic(r.ic, 20, done ? "#a1a1aa" : "#ededef")}<span class="act ${done ? "" : "shim"}" style="background-position:${-t * 200}% 0">${done ? r.done : r.run}</span><span class="tg">${r.tg}</span>${done && r.extra ? r.extra : ""}`;
+    enter(el, t, r.t, 0.35, 10);
+  });
+  const pd = eOut5(prog(t, 9.1, 0.45));
+  $("diff").style.opacity = clamp(prog(t, 9.1, 0.12));
+  $("diff").style.clipPath = `inset(0 0 ${(1 - pd) * 100}% 0 round 12px)`;
+  $("at2").textContent = A2.slice(0, Math.floor(clamp((t - 12.8) / 0.5) * A2.length));
+  const pt = eOut5(prog(t, 10.45, 0.5));
+  $("term").style.transform = `translateX(${(1 - pt) * 620}px)`;
+  $("ububble").style.right = 50 + 600 * pt + "px";
+  TERM.forEach(([, d], i) => { $("tl" + i).style.opacity = t >= 10.75 + d ? 1 : 0; });
+
+  enter($("toast"), t, 13.55, 0.45, -24); $("toast").style.opacity *= 1 - prog(t, 15.9, 0.3);
+  $("dim").style.opacity = clamp(prog(t, 13.95, 0.35));
+  enter($("pr"), t, 14.0, 0.55, 50);
+  enter($("checks"), t, 14.5, 0.4, 8);
+
+  // S5
+  vis($("s5"), t >= T.s5[0] && t < T.s5[1]);
+  stamp($("m1"), t, 16.5); stamp($("m2"), t, 17.5); stamp($("m3"), t, 18.5);
+  enter($("k5"), t, 16.5, 0.3, 8);
+  enter($("picker"), t, 16.55, 0.55, 40);
+  const hiRow = t < 17.5 ? 1 : t < 18.5 ? 0 : 5;
+  MODELS.forEach((_, k) => $("mr" + k).classList.toggle("on", k === hiRow || (t >= 17.5 && t < 18.5 && (k === 3 || k === 4))));
+
+  // S6
+  vis($("s6"), t >= T.s6[0]);
+  lines($("o1"), t, 19.5, 0.08, 0.5);
+  enter($("o2"), t, 20.4, 0.6, 30);
+
+  // cursor → send
+  const cEl = $("cursor");
+  if (t > 6.0 && t < SEND + 0.35) {
+    const bx = 110 + 272 + 264 + 900 - 22 - 20, by = 80 + 390 + 20 + 70 + 12 + 20 + 2;
+    const sx = 960 + (bx - cam[2]) * cam[1], sy = 540 + (by - cam[3]) * cam[1];
+    const p = camAt(t, [[6.0, sx + 200, sy + 180], [SEND - 0.08, sx, sy], [SEND + 0.4, sx, sy]]);
+    cEl.style.opacity = clamp((t - 6.0) / 0.15) * (1 - clamp((t - SEND - 0.15) / 0.2));
+    cEl.style.transform = `translate(${p[1] - 6}px, ${p[2] - 3}px) scale(${t >= SEND && t < SEND + 0.14 ? 0.88 : 1})`;
+  } else cEl.style.opacity = 0;
+};
+window.ready = kitReady().then(() => { laid = false; render(0); });
+</script>
+</body>
+</html>

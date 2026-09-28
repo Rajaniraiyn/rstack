@@ -1,0 +1,154 @@
+{
+ "_about": "Voiceover for launch videos. Each line: id, start (s), max (latest end, s), text as the voice should read it (spell out numbers and acronyms: 'two a.m.', 'Abacus A.I.'). A {\"ref\": id} reuses a line from another track, so shared lines are generated once. 'voice' configures generation (see scripts/vo_gen.py); 'mix' configures ducking and music automation (see scripts/mix.py). Optional 'must' lists words vo_check.py must hear exactly (use it for the product name).",
+ "voice": {
+  "engine": "chatterbox",
+  "exaggeration": 0.5,
+  "cfg_weight": 0.4,
+  "temperature": 0.75,
+  "takes": 4
+ },
+ "mix": {
+  "duck_db": -9.5,
+  "fx_duck_db": -3.5,
+  "voice_db": 1.5,
+  "fade_out": 1.4,
+  "music_automation": [
+   [
+    0,
+    -2.5
+   ],
+   [
+    3.3,
+    -2.5
+   ],
+   [
+    3.5,
+    0
+   ],
+   [
+    18.9,
+    0
+   ],
+   [
+    19.45,
+    -7
+   ],
+   [
+    19.5,
+    -2
+   ],
+   [
+    20.2,
+    0
+   ]
+  ]
+ },
+ "tracks": {
+  "wa": [
+   {
+    "id": "W1",
+    "start": 0.2,
+    "max": 1.95,
+    "text": "I shipped this PR from dinner."
+   },
+   {
+    "id": "W2",
+    "start": 2.15,
+    "max": 3.4,
+    "text": "Here's how."
+   },
+   {
+    "id": "W3",
+    "start": 3.9,
+    "max": 5.9,
+    "text": "I just texted my own WhatsApp."
+   },
+   {
+    "id": "X4",
+    "start": 6.1,
+    "max": 9.85,
+    "text": "My agent picked it up on my laptop, found the bug, and fixed it."
+   },
+   {
+    "id": "X5",
+    "start": 10.1,
+    "max": 11.95,
+    "text": "Ran the tests on my own machine,"
+   },
+   {
+    "id": "X6",
+    "start": 12.2,
+    "max": 13.95,
+    "text": "and had the PR up before dessert."
+   },
+   {
+    "id": "X7",
+    "start": 14.1,
+    "max": 16.4,
+    "text": "It runs on your computer. Not someone else's."
+   },
+   {
+    "id": "X8",
+    "start": 16.45,
+    "max": 18.35,
+    "text": "Use a local model if you want."
+   },
+   {
+    "id": "X8b",
+    "start": 18.4,
+    "max": 19.6,
+    "text": "Free. Open source."
+   },
+   {
+    "id": "X9",
+    "start": 20.05,
+    "max": 22.2,
+    "text": "Abacus A.I. Bot.",
+    "must": [
+     "Bot"
+    ]
+   }
+  ],
+  "tg": [
+   {
+    "id": "T1",
+    "start": 0.2,
+    "max": 1.5,
+    "text": "Out for dinner."
+   },
+   {
+    "id": "T2",
+    "start": 1.95,
+    "max": 3.4,
+    "text": "And my PR still shipped."
+   },
+   {
+    "id": "T3",
+    "start": 3.9,
+    "max": 5.9,
+    "text": "I just messaged my agent on Telegram."
+   },
+   {
+    "ref": "X4"
+   },
+   {
+    "ref": "X5"
+   },
+   {
+    "ref": "X6"
+   },
+   {
+    "ref": "X7"
+   },
+   {
+    "ref": "X8"
+   },
+   {
+    "ref": "X8b"
+   },
+   {
+    "ref": "X9"
+   }
+  ]
+ }
+}

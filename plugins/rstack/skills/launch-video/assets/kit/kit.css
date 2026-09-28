@@ -1,0 +1,46 @@
+/* Launch-video kit: neutral ink with a single restrained tint of the brand color.
+   Override --tint (and --tint-ink) per product; keep everything else neutral.
+   Fonts are fetched into the work folder by scripts/fetch_assets.py. */
+@font-face { font-family: "Geist"; src: url(Geist-Regular.woff2) format("woff2"); font-weight: 400; }
+@font-face { font-family: "Geist"; src: url(Geist-Medium.woff2) format("woff2"); font-weight: 500; }
+@font-face { font-family: "Geist"; src: url(Geist-SemiBold.woff2) format("woff2"); font-weight: 600; }
+@font-face { font-family: "Geist"; src: url(Geist-Bold.woff2) format("woff2"); font-weight: 700; }
+@font-face { font-family: "Geist Mono"; src: url(GeistMono-Regular.woff2) format("woff2"); font-weight: 400; }
+@font-face { font-family: "Geist Mono"; src: url(GeistMono-Medium.woff2) format("woff2"); font-weight: 500; }
+@font-face { font-family: "Geist Mono"; src: url(GeistMono-SemiBold.woff2) format("woff2"); font-weight: 600; }
+
+:root {
+  --ink: #09090b;          /* stage */
+  --ink-2: #0f0f12;        /* app background */
+  --surface: #151518;      /* cards, sidebars */
+  --surface-2: #1c1c20;    /* raised controls */
+  --line: rgba(255,255,255,.08);
+  --line-2: rgba(255,255,255,.14);
+  --text: #ededef;
+  --text-2: #a1a1aa;
+  --text-3: #6b6b74;
+  --tint: #e2a6ec;         /* the brand color, desaturated toward the text color; at most one word or indicator per frame */
+  --tint-ink: #2a1b2e;
+  --ok: #4ade80;
+  --add: #3fb950; --del: #f85149;
+  --add-bg: rgba(46,160,67,.13); --del-bg: rgba(248,81,73,.12);
+  --sans: "Geist", system-ui, sans-serif;
+  --mono: "Geist Mono", ui-monospace, monospace;
+  --ios: system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow: hidden; background: var(--ink); }
+body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; font-feature-settings: "ss01", "cv11"; }
+.abs { position: absolute; }
+.scene { position: absolute; inset: 0; visibility: hidden; }
+.stage { position: absolute; inset: 0; overflow: hidden; background: var(--ink); }
+/* quiet backdrop: a hairline grid that fades toward the edges */
+.grid { position: absolute; inset: 0; opacity: .5;
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 80px 80px; -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 20%, transparent 75%); }
+.head { font-weight: 600; letter-spacing: -0.045em; line-height: 0.98; }
+.kicker { font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--text-3); display: flex; align-items: center; gap: 14px; }
+.kicker b { color: var(--tint); font-weight: 500; }
+.tint { color: var(--tint); }
+.dim { color: var(--text-3); }
+.ic { display: inline-flex; flex: none; }

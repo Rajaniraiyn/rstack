@@ -13,6 +13,7 @@ Portable `SKILL.md` files that work with Claude Code, Codex, Cursor, GitHub Copi
 - [stop-slop](plugins/rstack/skills/stop-slop/SKILL.md): cut AI tells from anything you write or say.
 - [clean-slop](plugins/rstack/skills/clean-slop/SKILL.md): remove AI slop from code, diffs, documents, copy, and design output.
 - [factory](plugins/rstack/skills/factory/SKILL.md): route work across agent harnesses, models, and worktrees, and run them headlessly.
+- [launch-video](plugins/rstack/skills/launch-video/SKILL.md): make polished launch and promo videos (landscape, vertical, square) with motion, music, and an optional voiceover.
 - [rstack-author-skill](plugins/rstack/skills/rstack-author-skill/SKILL.md): create or revise a portable skill for this repository.
 
 ## Install

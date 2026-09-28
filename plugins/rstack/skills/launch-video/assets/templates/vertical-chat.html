@@ -1,0 +1,413 @@
+<!doctype html>
+<!-- Worked example, 1080x1920, 22.5s @ 120 bpm: a faithful iOS WhatsApp (?p=wa) or Telegram (?p=tg) chat in an iPhone, plus laptop, value rows, outro.
+     Replace every product-specific string and time. Chat tokens and platform rules: references/ui-mocks.md. -->
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="kit.css">
+<style>
+html, body { width: 1080px; height: 1920px; }
+
+/* ad type */
+.kick { left: 72px; top: 104px; font-size: 24px; }
+.hl { left: 72px; right: 60px; top: 148px; font-size: 92px; }
+.ln { display: block; overflow: hidden; padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.ln > span { display: inline-block; }
+
+/* device */
+#device { left: 185px; top: 356px; width: 710px; height: 1540px; border-radius: 108px; background: #1d1d20;
+  box-shadow: inset 0 0 0 2px #3a3a3f, inset 0 0 0 7px #111113, 0 50px 120px rgba(0,0,0,.65), 0 10px 30px rgba(0,0,0,.4); }
+#device .btn { position: absolute; width: 5px; background: #2a2a2e; border-radius: 3px; }
+#screen { position: absolute; left: 12px; top: 12px; width: 686px; height: 1516px; border-radius: 96px; overflow: hidden; }
+.pt { position: absolute; left: 0; top: 0; width: 393px; height: 869px; transform-origin: 0 0; font-family: var(--ios); }
+.island { position: absolute; left: 134px; top: 11px; width: 125px; height: 37px; border-radius: 20px; background: #000; z-index: 20; }
+.sbar { position: absolute; left: 0; right: 0; top: 0; height: 54px; z-index: 19; display: flex; justify-content: space-between; align-items: center; padding: 6px 32px 0 42px; font-size: 17px; font-weight: 600; letter-spacing: -0.02em; }
+.sbar .r { display: flex; gap: 6px; align-items: center; }
+.home { position: absolute; left: 130px; bottom: 8px; width: 134px; height: 5px; border-radius: 3px; background: #fff; z-index: 20; }
+
+/* WhatsApp (iOS, dark) */
+.wa { --wa-bg: #0b141a; --wa-bar: #111b21; --wa-out: #005c4b; --wa-in: #202c33; --wa-tx: #e9edef; --wa-tx2: #8696a0; --wa-tick: #53bdeb; --wa-green: #00a884; }
+.tg { --tg-bg: #0e1621; --tg-bar: #17212b; --tg-in: #182533; --tg-out: #2b5278; --tg-tx: #f5f5f5; --tg-tx2: #708499; --tg-acc: #6ab3f3; --tg-meta-out: #7da8d3; --tg-field: #242f3d; }
+.chatbg { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.nav { position: absolute; left: 0; right: 0; top: 54px; height: 54px; display: flex; align-items: center; z-index: 5; }
+.msgs { position: absolute; left: 0; right: 0; top: 0; }
+.vp { position: absolute; left: 0; right: 0; top: 108px; bottom: 84px; overflow: hidden; }
+.comp { position: absolute; left: 0; right: 0; bottom: 0; height: 84px; z-index: 5; }
+.bub { position: absolute; font-size: 16.5px; line-height: 21px; letter-spacing: -0.015em; padding: 6px 9px 7px 10px; max-width: 290px; word-wrap: break-word; }
+.bub .meta { float: right; margin: 7px -3px -4px 10px; font-size: 11px; line-height: 14px; display: flex; align-items: center; gap: 3px; white-space: nowrap; }
+.bub b { font-weight: 600; }
+.bub .mono { font-family: Menlo, "SF Mono", monospace; font-size: 13px; margin: 3px 0 1px; line-height: 19px; white-space: pre; letter-spacing: 0; display: block; }
+.tail { position: absolute; top: 0; width: 8px; height: 13px; }
+.chip { position: absolute; left: 50%; transform: translateX(-50%); font-size: 12.5px; padding: 4px 10px; border-radius: 8px; font-weight: 500; }
+.og { background: #fff; color: #24292f; font-family: system-ui; border-radius: 6px; overflow: hidden; }
+.og .in { padding: 14px 14px 12px; position: relative; height: 138px; }
+
+/* lock screen */
+#lock { inset: 0; }
+#lockPt { width: 393px; height: 699px; }
+.notif { position: absolute; left: 10px; right: 10px; top: 262px; border-radius: 22px; padding: 12px 14px 13px; display: flex; gap: 10px;
+  background: rgba(58,58,62,.62); backdrop-filter: blur(24px) saturate(1.6); box-shadow: 0 8px 30px rgba(0,0,0,.25); }
+.lockcap { left: 72px; right: 72px; top: 1330px; font-size: 96px; }
+
+/* laptop */
+#laptop { left: 60px; top: 420px; width: 960px; height: 1060px; border-radius: 26px; overflow: hidden; background: var(--ink-2); border: 1px solid var(--line-2);
+  box-shadow: 0 50px 120px rgba(0,0,0,.6); }
+.tbar { height: 64px; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; align-items: center; padding: 0 24px; gap: 10px; }
+.tbar i { width: 14px; height: 14px; border-radius: 50%; display: block; background: #3a3a40; }
+.dl { font-family: var(--mono); font-size: 25px; line-height: 50px; white-space: pre; padding: 0 28px; color: #d4d4d8; }
+.dl.a { background: var(--add-bg); } .dl.d { background: var(--del-bg); }
+.dl .s { display: inline-block; width: 26px; } .dl.a .s { color: var(--add); } .dl.d .s { color: var(--del); }
+.k { color: #f0a0b0; } .p { color: #a5c8ff; } .y { color: #f5c98b; }
+#term { position: absolute; left: 0; right: 0; bottom: 0; top: 520px; background: #0b0b0d; border-top: 1px solid var(--line); padding: 26px 28px; font-family: var(--mono); font-size: 26px; line-height: 50px; color: #c8c8cf; white-space: pre; }
+
+/* value rows */
+.row { left: 72px; right: 72px; height: 220px; border-radius: 28px; background: var(--surface); border: 1px solid var(--line); display: flex; align-items: center; gap: 36px; padding: 0 40px; }
+.row .tile { width: 116px; height: 116px; border-radius: 26px; background: var(--surface-2); border: 1px solid var(--line-2); display: flex; align-items: center; justify-content: center; flex: none; color: var(--text); }
+.row .t { font-size: 50px; font-weight: 600; letter-spacing: -0.03em; }
+.row .s { font-size: 32px; color: var(--text-2); margin-top: 8px; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="grid"></div>
+
+  <!-- ad type -->
+  <div class="abs kicker kick" id="kick"></div>
+  <div class="abs head hl" id="hl"></div>
+
+  <!-- device with chat -->
+  <div class="abs" id="device">
+    <div class="btn" style="left:-3px;top:260px;height:60px"></div><div class="btn" style="left:-3px;top:360px;height:100px"></div><div class="btn" style="left:-3px;top:480px;height:100px"></div><div class="btn" style="right:-3px;top:400px;height:150px"></div>
+    <div id="screen"><div class="pt" id="pt"></div></div>
+  </div>
+
+  <!-- laptop -->
+  <div class="abs" id="laptop">
+    <div class="tbar"><i></i><i></i><i></i><div style="flex:1;text-align:center;font-size:21px;color:var(--text-2);margin-right:60px;display:flex;justify-content:center;align-items:center;gap:10px" id="ltTitle"></div></div>
+    <div style="display:flex;align-items:center;gap:14px;padding:26px 28px 18px;font-size:22px;color:var(--text-2)" id="ltHead"></div>
+    <div id="diff"></div>
+    <div id="term"></div>
+  </div>
+
+  <!-- values -->
+  <div class="abs row" id="v1" style="top:560px"></div>
+  <div class="abs row" id="v2" style="top:810px"></div>
+  <div class="abs row" id="v3" style="top:1060px"></div>
+
+  <!-- outro -->
+  <div class="abs" id="outro" style="left:72px;right:72px;top:1180px;">
+    <div style="display:flex;align-items:center;gap:28px" id="brandRow"></div>
+    <div style="display:flex;gap:18px;margin-top:56px;align-items:center">
+      <div style="height:92px;padding:0 44px;border-radius:46px;background:var(--text);color:var(--ink);display:flex;align-items:center;font-size:42px;font-weight:600;letter-spacing:-0.02em">bot.abacus.ai</div>
+      <div style="height:92px;padding:0 34px;border-radius:46px;border:1px solid var(--line-2);display:flex;align-items:center;font-family:var(--mono);font-size:26px;color:var(--text-2);letter-spacing:.06em">FREE · MIT</div>
+    </div>
+  </div>
+
+  <!-- lock screen (Telegram hook) -->
+  <div class="abs" id="lock"><div class="pt" id="lockPt"></div></div>
+  <div class="abs head lockcap" id="lc1"><span class="ln"><span>Out for dinner.</span></span></div>
+  <div class="abs head lockcap" id="lc2"><span class="ln"><span>Your PR</span></span><span class="ln"><span class="tint">still shipped.</span></span></div>
+</div>
+
+<script src="icons.js"></script>
+<script src="kit.js"></script>
+<script>
+// ===== CONTENT: everything below is the worked example's content. Replace it with your product's real copy, logo, times, and UI. =====
+window.LOGO = `<svg viewBox="0 0 400 400" fill="none"><rect width="400" height="400" rx="96" fill="#16161a"/><rect x=".75" y=".75" width="398.5" height="398.5" rx="95" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/><rect x="70" y="88" width="36" height="96" rx="18" fill="#fff"/><circle cx="88" cy="225" r="27" fill="#2A82E8"/><rect x="70" y="272" width="36" height="60" rx="18" fill="#D6E1F5"/><rect x="149" y="45" width="36" height="72" rx="18" fill="#D6E1F5"/><circle cx="167" cy="156" r="28" fill="#D62D97"/><rect x="149" y="203" width="36" height="152" rx="18" fill="#fff"/><rect x="228" y="40" width="36" height="152" rx="18" fill="#fff"/><circle cx="246" cy="248" r="28" fill="#2EE6D6"/><rect x="228" y="290" width="36" height="65" rx="18" fill="#D6E1F5"/><rect x="307" y="88" width="36" height="64" rx="18" fill="#D6E1F5"/><circle cx="325" cy="200" r="28" fill="#A233FB"/><rect x="307" y="245" width="36" height="87" rx="18" fill="#fff"/></svg>`; // the product's real mark, from its source
+const P = new URLSearchParams(location.search).get("p") || "wa";
+const WA = P === "wa";
+const S = 686 / 393; // pt → px inside the device screen
+$("pt").style.transform = `scale(${S})`;
+$("lockPt").style.transform = `scale(${1080 / 393})`;
+
+// ---------- iOS chrome ----------
+const sig = `<svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#fff"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#fff"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#fff"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#fff"/></svg>`;
+const wifi = `<svg width="16" height="12" viewBox="0 0 16 12"><path d="M8 2.2c2.3 0 4.4.9 6 2.4l1.1-1.1A10 10 0 0 0 8 .6 10 10 0 0 0 .9 3.5L2 4.6a8.5 8.5 0 0 1 6-2.4Zm0 3.3c1.4 0 2.6.5 3.6 1.4l1.1-1.1A6.8 6.8 0 0 0 8 3.9a6.8 6.8 0 0 0-4.7 1.9l1.1 1.1c1-.9 2.2-1.4 3.6-1.4Zm0 3.3c.6 0 1.1.2 1.5.6L8 11 6.5 9.4c.4-.4.9-.6 1.5-.6Z" fill="#fff"/></svg>`;
+const batt = `<svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="22" height="12" rx="3.8" stroke="rgba(255,255,255,.4)" fill="none"/><rect x="2" y="2" width="16" height="9" rx="2.4" fill="#fff"/><path d="M24.5 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2Z" fill="rgba(255,255,255,.45)"/></svg>`;
+const statusBar = (time) => `<div class="island"></div><div class="sbar"><span>${time}</span><span class="r">${sig}${wifi}${batt}</span></div><div class="home"></div>`;
+
+// doodle wallpaper, drawn from Lucide glyphs at low contrast
+function doodle(color) {
+  const g = ["code", "git-branch", "terminal", "file-text", "cpu", "laptop", "moon", "send", "key-round", "flask-conical", "message-circle", "search"];
+  let s = "";
+  for (let i = 0; i < 24; i++) {
+    const x = (i % 4) * 30 + ((Math.floor(i / 4) % 2) * 15) + 4, y = Math.floor(i / 4) * 22 + 3, r = ((i * 47) % 50) - 25;
+    s += `<g transform="translate(${x} ${y}) rotate(${r} 6 6) scale(.5)" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICONS[g[i % g.length]]}</g>`;
+  }
+  return `url("data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='120' height='132'>${s}</svg>`)}")`;
+}
+
+// GitHub's own PR social card, recreated (light, as GitHub serves it)
+const ogCard = (h) => `<div class="og" style="height:${h}px"><div class="in">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <div style="font-size:11px;color:#57606a">abacusai/abacusai-bot</div>${brand("github", 18, "#24292f")}</div>
+  <div style="font-size:15.5px;font-weight:700;line-height:1.22;margin-top:6px;letter-spacing:-0.01em">The pool is walked to its end, not to a count <span style="color:#57606a;font-weight:400">#29</span></div>
+  <div style="position:absolute;left:14px;right:14px;bottom:12px;display:flex;gap:14px;font-size:10.5px;color:#57606a;align-items:center">
+    <span style="display:flex;align-items:center;gap:4px">${ic("git-pull-request", 12, "#1a7f37", 2)} Open</span><span>3 files</span><span><b style="color:#1a7f37">+19</b> <b style="color:#cf222e">−27</b></span></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,#3178c6 70%,#f1e05a 70% 85%,#e34c26 85%)"></div>
+</div></div>`;
+
+// ---------- chat content ----------
+const PROMPT = "model pool gives up after 5 tries. fix it, run the tests, open a PR";
+const DIFF_WA = "- openLlmRotationsThisTurn = 0;\n+ openLlmFailedThisTurn =\n+   new Set&lt;string&gt;();";
+const MSGS = [
+  { t: 5.45, me: 1, h: PROMPT, tm: "21:39" },
+  { t: 6.0, h: WA ? "On it. Working in <b>abacusai-bot</b> on your Mac." : "On it. Working in abacusai-bot on your Mac.", tm: "21:39" },
+  { t: 6.6, h: "Found it: a turn stops after 5 model switches, even with free models still left in the pool.", tm: "21:40" },
+  { t: 7.2, h: WA ? `Changed session.ts so a turn walks the whole pool:<span class="mono">${DIFF_WA}</span>` : `Changed session.ts so a turn walks the whole pool:<span class="mono" style="font-family:inherit;font-size:16.5px;line-height:21px;white-space:pre-wrap">- openLlmRotationsThisTurn = 0;\n+ openLlmFailedThisTurn = new Set&lt;string&gt;();</span>`, tm: "21:41" },
+  { t: 8.3, h: WA ? "pnpm test: <b>91 passed</b>. Opening the PR." : "pnpm test: 91 passed. Opening the PR.", tm: "21:42" },
+  { t: 12.2, link: 1, h: "Done. PR #29 is up:", tm: "21:43" },
+  { t: 13.3, me: 1, h: "legend", tm: "21:43" },
+];
+// On WhatsApp the agent writes as the linked account, so its replies are the user's own (outgoing).
+MSGS.forEach((m) => (m.out = WA ? true : !!m.me));
+
+function linkBlock() {
+  const url = "github.com/abacusai/abacusai-bot/pull/29";
+  if (WA) return `<div style="background:rgba(0,0,0,.2);border-radius:7px;overflow:hidden;margin:-2px -5px 6px">${ogCard(150)}
+      <div style="padding:7px 9px 8px"><div style="font-size:14px;font-weight:600;line-height:18px">The pool is walked to its end, not to a count by sreemanti-abacusai · Pull Request #29</div>
+      <div style="font-size:12.5px;color:rgba(233,237,239,.6);margin-top:3px">github.com</div></div></div>
+      Done. PR #29 is up:<br><span style="color:#53bdeb">https://${url}</span>`;
+  return `Done. PR #29 is up:<br><span style="color:var(--tg-acc)">https://${url}</span>
+    <div style="margin-top:6px;border-left:3px solid var(--tg-acc);padding:2px 0 2px 9px;border-radius:2px">
+      <div style="font-size:14px;font-weight:600;color:var(--tg-acc)">GitHub</div>
+      <div style="font-size:14px;font-weight:600;line-height:18px;margin-top:1px">The pool is walked to its end, not to a count by sreemanti-abacusai · Pull Request #29</div>
+      <div style="margin-top:7px">${ogCard(148)}</div></div>`;
+}
+
+function bubbleHTML(m, i, first) {
+  const out = m.out;
+  let bg, meta;
+  if (WA) {
+    bg = out ? "var(--wa-out)" : "var(--wa-in)";
+    meta = `<span class="meta" style="color:rgba(233,237,239,.6)">${m.tm}${out ? ic("check-check", 16, "#53bdeb", 2) : ""}</span>`;
+  } else {
+    bg = out ? "var(--tg-out)" : "var(--tg-in)";
+    meta = `<span class="meta" style="color:${out ? "var(--tg-meta-out)" : "var(--tg-tx2)"}">${m.tm}${out ? ic("check-check", 15, "#8fc2f0", 2) : ""}</span>`;
+  }
+  const body = m.link ? linkBlock() : m.h;
+  const tail = WA
+    ? (first ? (out ? `<svg class="tail" style="right:-7px" viewBox="0 0 8 13"><path d="M0 0h8L1.5 11.5A1 1 0 0 1 0 11V0Z" fill="${out ? "#005c4b" : "#202c33"}"/></svg>`
+                    : `<svg class="tail" style="left:-7px" viewBox="0 0 8 13"><path d="M8 0H0l6.5 11.5A1 1 0 0 0 8 11V0Z" fill="#202c33"/></svg>`) : "")
+    : "";
+  const rad = WA ? (first ? (out ? "8px 0 8px 8px" : "0 8px 8px 8px") : "8px") : "17px";
+  const pos = out ? `right:${WA ? 16 : 10}px` : `left:${WA ? 16 : 10}px`;
+  const w = m.link ? "width:290px;" : "";
+  return `<div class="bub" id="m${i}" style="${pos};${w}background:${bg};border-radius:${rad};color:${WA ? "var(--wa-tx)" : "var(--tg-tx)"}">${tail}${body}${meta}</div>`;
+}
+
+// ---------- screen ----------
+const pt = $("pt");
+pt.classList.add(WA ? "wa" : "tg");
+if (WA) {
+  pt.innerHTML = `
+  <div class="chatbg" style="background-color:var(--wa-bg);background-image:${doodle("rgba(255,255,255,.045)")};background-size:120px 132px"></div>
+  <div style="position:absolute;left:0;right:0;top:0;height:108px;background:var(--wa-bar);z-index:4;border-bottom:.5px solid rgba(255,255,255,.07)"></div>
+  ${statusBar("9:43")}
+  <div class="nav" style="color:var(--wa-tx)">
+    <div style="margin-left:6px">${ic("chevron-left", 30, "#e9edef", 2.2)}</div>
+    <div style="width:36px;height:36px;border-radius:50%;background:#6a7175;margin-left:2px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden">
+      <svg width="30" height="30" viewBox="0 0 24 24"><circle cx="12" cy="9" r="4.2" fill="#cfd4d6"/><path d="M3.5 22c1-4.6 4.3-7 8.5-7s7.5 2.4 8.5 7Z" fill="#cfd4d6"/></svg></div>
+    <div style="margin-left:10px;flex:1"><div style="font-size:16.5px;font-weight:600;letter-spacing:-0.02em">You</div><div style="font-size:12.5px;color:var(--wa-tx2);margin-top:1px">Message yourself</div></div>
+    <div style="display:flex;gap:26px;margin-right:18px">${ic("video", 25, "#e9edef", 1.8)}${ic("phone", 22, "#e9edef", 1.8)}</div>
+  </div>
+  <div class="vp"><div class="msgs" id="msgs"></div></div>
+  <div class="comp" style="background:var(--wa-bar);border-top:.5px solid rgba(255,255,255,.07)">
+    <div style="position:absolute;left:12px;top:10px">${ic("plus", 28, "#e9edef", 1.8)}</div>
+    <div id="field" style="position:absolute;left:50px;right:94px;top:8px;height:34px;border-radius:17px;background:#2a3942;padding:0 38px 0 13px;display:flex;align-items:center;font-size:16px;color:var(--wa-tx);white-space:nowrap;overflow:hidden"></div>
+    <div style="position:absolute;right:104px;top:14px">${ic("sticker", 22, "#8696a0", 1.8)}</div>
+    <div id="idleBtns" style="position:absolute;right:14px;top:11px;display:flex;gap:22px">${ic("camera", 25, "#e9edef", 1.8)}${ic("mic", 24, "#e9edef", 1.8)}</div>
+    <div id="sendBtn" style="position:absolute;right:14px;top:6px;width:38px;height:38px;border-radius:50%;background:var(--wa-green);display:flex;align-items:center;justify-content:center">${ic("send", 19, "#fff", 2)}</div>
+  </div>`;
+} else {
+  pt.innerHTML = `
+  <div class="chatbg" style="background-color:var(--tg-bg);background-image:${doodle("rgba(120,160,200,.07)")};background-size:120px 132px"></div>
+  <div style="position:absolute;left:0;right:0;top:0;height:108px;background:var(--tg-bar);z-index:4;border-bottom:.5px solid rgba(0,0,0,.4)"></div>
+  ${statusBar("9:43")}
+  <div class="nav" style="color:var(--tg-tx)">
+    <div style="margin-left:4px;display:flex;align-items:center;color:var(--tg-acc);font-size:17px;letter-spacing:-0.02em">${ic("chevron-left", 30, "#6ab3f3", 2.2)}<span style="margin-left:-4px">Chats</span></div>
+    <div style="position:absolute;left:0;right:0;text-align:center;pointer-events:none"><div style="font-size:16.5px;font-weight:600;letter-spacing:-0.02em">Abacus AI</div><div style="font-size:13px;color:var(--tg-tx2);margin-top:1px">bot</div></div>
+    <div style="margin-left:auto;margin-right:12px;width:36px;height:36px;border-radius:50%;overflow:hidden;background:#16161a;display:flex;align-items:center;justify-content:center">${logo(36)}</div>
+  </div>
+  <div class="vp"><div class="msgs" id="msgs"></div></div>
+  <div class="comp" style="background:var(--tg-bar)">
+    <div style="position:absolute;left:12px;top:12px">${ic("paperclip", 25, "#708499", 1.8)}</div>
+    <div id="field" style="position:absolute;left:48px;right:56px;top:8px;height:34px;border-radius:17px;background:var(--tg-field);border:.5px solid rgba(255,255,255,.06);padding:0 38px 0 13px;display:flex;align-items:center;font-size:16px;color:var(--tg-tx);white-space:nowrap;overflow:hidden"></div>
+    <div style="position:absolute;right:66px;top:14px">${ic("smile", 22, "#708499", 1.8)}</div>
+    <div id="idleBtns" style="position:absolute;right:16px;top:12px">${ic("mic", 25, "#708499", 1.8)}</div>
+    <div id="sendBtn" style="position:absolute;right:12px;top:8px;width:34px;height:34px;border-radius:50%;background:var(--tg-acc);display:flex;align-items:center;justify-content:center">${ic("arrow-up", 20, "#fff", 2.4)}</div>
+  </div>`;
+}
+const DATE_CHIP = WA
+  ? `<div class="chip" id="chip" style="top:10px;background:#182229;color:#8696a0">Today</div>`
+  : `<div class="chip" id="chip" style="top:10px;background:rgba(10,20,30,.55);color:#fff;border-radius:12px">Today</div>`;
+$("msgs").innerHTML = DATE_CHIP + MSGS.map((m, i) => bubbleHTML(m, i, i === 0 || MSGS[i - 1].out !== m.out)).join("");
+
+let LAY = null;
+function layout() {
+  let y = 48;
+  LAY = MSGS.map((m, i) => {
+    const first = i === 0 || MSGS[i - 1].out !== m.out;
+    if (first && i) y += 6;
+    const h = $("m" + i).offsetHeight; const r = [y, h]; y += h + 3; return r;
+  });
+}
+const VP = 869 - 108 - 84;
+const scrollFor = (k) => (k < 0 ? 0 : Math.max(0, LAY[k][0] + LAY[k][1] + 10 - VP));
+
+// ---------- lock screen (Telegram) ----------
+$("lockPt").innerHTML = `
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 70% at 30% 20%, #2a2130 0%, #141217 45%, #0b0b0d 100%)"></div>
+  <div style="position:absolute;inset:0;opacity:.07;background-image:radial-gradient(#fff .5px, transparent .6px);background-size:3px 3px"></div>
+  ${statusBar("")}
+  <div style="position:absolute;left:0;right:0;top:70px;text-align:center;display:flex;justify-content:center">${ic("lock", 18, "#fff", 2)}</div>
+  <div id="ldate" style="position:absolute;left:0;right:0;top:100px;text-align:center;font-size:20px;font-weight:600;color:rgba(255,255,255,.82)">Saturday 26 September</div>
+  <div id="ltime" style="position:absolute;left:0;right:0;top:118px;text-align:center;font-size:104px;font-weight:700;letter-spacing:-0.02em;color:rgba(255,255,255,.9);font-family:system-ui;font-feature-settings:'ss01'">21:43</div>
+  <div class="notif" id="notif">
+    <div style="width:38px;height:38px;border-radius:9px;background:linear-gradient(#37aee2,#1e96c8);display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M4.6 11.4 18.3 6.1c.64-.23 1.2.16.99.99l-2.33 11c-.17.78-.64.97-1.29.6l-3.57-2.63-1.72 1.66c-.19.19-.35.35-.72.35l.26-3.63 6.6-5.96c.29-.26-.06-.4-.44-.14l-8.16 5.14-3.52-1.1c-.76-.24-.78-.76.16-1.13Z" fill="#fff"/></svg></div>
+    <div style="flex:1;min-width:0;font-family:system-ui">
+      <div style="display:flex;justify-content:space-between;font-size:15px"><b style="font-weight:600">Abacus AI</b><span style="color:rgba(255,255,255,.55);font-size:13px">now</span></div>
+      <div style="font-size:15px;line-height:19px;margin-top:1px;color:rgba(255,255,255,.95)">Done. PR #29 is up. pnpm test: 91 passed.</div>
+    </div>
+  </div>
+  <div style="position:absolute;left:46px;bottom:48px;width:50px;height:50px;border-radius:50%;background:rgba(40,40,44,.55);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center">${ic("flashlight", 21, "#fff", 1.8)}</div>
+  <div style="position:absolute;right:46px;bottom:48px;width:50px;height:50px;border-radius:50%;background:rgba(40,40,44,.55);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center">${ic("camera", 22, "#fff", 1.8)}</div>
+  <div class="home" style="bottom:8px"></div>`;
+
+// ---------- laptop ----------
+$("ltTitle").innerHTML = `${ic("folder-git-2", 22, "#a1a1aa", 1.8)} abacusai-bot <span class="dim">·</span> ${ic("git-branch", 20, "#a1a1aa", 1.8)} fix/model-pool`;
+$("ltHead").innerHTML = `${ic("pencil", 24, "#a1a1aa", 1.8)} <span style="color:var(--text)">Edited</span> <span style="font-family:var(--mono)">packages/agent/src/session.ts</span> <span style="margin-left:auto;font-family:var(--mono)"><span style="color:var(--add)">+6</span> <span style="color:var(--del)">−2</span></span>`;
+$("diff").innerHTML = [
+  ["d", '<span class="k">private</span> <span class="p">openLlmRotationsThisTurn</span> = <span class="y">0</span>;'],
+  ["a", '<span class="k">private readonly</span> <span class="p">openLlmFailedThisTurn</span>'],
+  ["a", '  = <span class="k">new</span> <span class="y">Set</span>&lt;<span class="y">string</span>&gt;();'],
+  ["c", '<span class="k">if</span> (failedId != <span class="k">null</span>) {'],
+  ["a", '  <span class="k">this</span>.<span class="p">openLlmFailedThisTurn</span>.add(failedId);'],
+  ["c", "}"],
+].map(([k, h]) => `<div class="dl ${k === "c" ? "" : k}"><span class="s">${k === "a" ? "+" : k === "d" ? "−" : ""}</span>${h}</div>`).join("");
+const TERM = [
+  ['<span style="color:#71717a">$</span> pnpm test', 0],
+  ['<span style="color:#a1a1aa">RUN</span>  v4.1.11 packages/agent', 0.15],
+  ['<span style="color:var(--add)">✓</span> keeps OpenRouter\'s free tier', 0.3],
+  ['<span style="color:var(--add)">✓</span> pools the models on this machine', 0.4],
+  ['<span style="color:var(--add)">✓</span> still pools every :free model', 0.5],
+  [" ", 0.5],
+  ['<span style="color:#71717a">Test Files</span>  <span style="color:var(--add)">3 passed</span> (3)', 0.95],
+  ['<span style="color:#71717a">     Tests</span>  <span style="color:var(--add)">91 passed</span> (91)', 1.0],
+];
+$("term").innerHTML = TERM.map(([h], i) => `<div id="tl${i}">${h}</div>`).join("");
+
+// ---------- values + outro ----------
+const VAL = [
+  ["hard-drive", "Runs on your computer", "Memory and settings stay local."],
+  ["cpu", "Bring a local model", "No account. No key. No quota."],
+  ["code", "Free and open source", "Free models built in. MIT licensed."],
+];
+VAL.forEach(([icn, t, s], i) => { $("v" + (i + 1)).innerHTML = `<div class="tile">${ic(icn, 54, "#ededef", 1.5)}</div><div><div class="t">${t}</div><div class="s">${s}</div></div>`; });
+$("brandRow").innerHTML = `${logo(132)}<div class="head" style="font-size:84px;letter-spacing:-0.04em">AbacusAI Bot</div>`;
+
+// ---------- headlines per beat ----------
+const L = (a, b, tintB = true) => `<span class="ln"><span>${a}</span></span><span class="ln"><span class="${tintB ? "tint" : ""}">${b}</span></span>`;
+const HL = [
+  // [start, end, kicker, headline]
+  ...(WA ? [[0, 2.0, "SAT · 21:43", L("Shipped a PR", "from dinner.")], [2.0, 3.5, "REWIND", L("Here's how it", "went down.")]] : []),
+  [3.5, 10.0, `<b>01</b> — ASK`, L("Text your agent", WA ? "on WhatsApp." : "on Telegram.")],
+  [10.0, 12.0, `<b>02</b> — WORK`, L("It runs on your", "own computer.")],
+  [12.0, 14.0, `<b>03</b> — SHIP`, L("PR's up", "before dessert.")],
+  [14.0, 19.5, `WHY IT'S DIFFERENT`, L("Private. Free.", "Yours.")],
+  [19.5, 23, `AVAILABLE NOW`, L("Ship from", "anywhere.")],
+];
+let curHL = -1;
+
+const DESK = [10.0, 12.0];
+window.render = function (t) {
+  if (!LAY) layout();
+  // headline
+  const hi = HL.findIndex(([a, b]) => t >= a && t < b);
+  if (hi !== curHL) { curHL = hi; if (hi >= 0) { $("kick").innerHTML = HL[hi][2]; $("hl").innerHTML = HL[hi][3]; } }
+  const hlOn = hi >= 0;
+  vis($("kick"), hlOn); vis($("hl"), hlOn);
+  if (hlOn) {
+    const a = HL[hi][0];
+    lines($("hl"), t, a === 0 ? -1 : a + 0.02, 0.07, 0.5);
+    $("kick").style.opacity = clamp(prog(t, a, 0.2)) + (a === 0 ? 1 : 0);
+  }
+  // outro sits lower
+  $("hl").style.top = (t >= 19.5 ? 560 : 148) + "px"; $("kick").style.top = (t >= 19.5 ? 516 : 104) + "px";
+  if (t >= 19.5) $("hl").style.fontSize = "150px"; else $("hl").style.fontSize = "92px";
+
+  // lock screen (Telegram hook)
+  const lockOn = !WA && t < 3.5;
+  vis($("lock"), lockOn); vis($("lc1"), lockOn && t < 2.0); vis($("lc2"), lockOn && t >= 2.0);
+  if (lockOn) {
+    lines($("lc1"), t, -1); lines($("lc2"), t, 2.0, 0.08, 0.45);
+    const pn = eOut5(prog(t, 1.5, 0.45));
+    const shake = t > 1.5 && t < 1.85 ? Math.sin((t - 1.5) * 95) * 3 * (1 - (t - 1.5) / 0.35) : 0;
+    const n = $("notif"); n.style.opacity = clamp(prog(t, 1.5, 0.12)); n.style.transform = `translate(${shake}px, ${(1 - pn) * -40}px) scale(${lerp(0.94, 1, pn)})`;
+  }
+
+  // device: visible for chat phases
+  const chatOn = (WA ? t < DESK[0] : t >= 3.5 && t < DESK[0]) || (t >= DESK[1] && t < 14.0);
+  const dv = $("device");
+  vis(dv, chatOn || (t >= DESK[0] - 0.01 && t < DESK[0] + 0.3));
+  let dy = 0, dop = 1;
+  if (!WA && t >= 3.5 && t < DESK[0]) { const p = eOut5(prog(t, 3.5, 0.5)); dy = (1 - p) * 260; dop = clamp(prog(t, 3.5, 0.12)); }
+  if (t >= DESK[0] && t < DESK[0] + 0.3) { const p = eInOut(prog(t, DESK[0], 0.28)); dy = p * 400; dop = 1 - p; }
+  if (t >= DESK[1]) { const p = eOut5(prog(t, DESK[1], 0.5)); dy = (1 - p) * 300; dop = clamp(prog(t, DESK[1], 0.12)); }
+  const push = t < DESK[0] ? lerp(1, 1.03, eInOut(prog(t, 3.5, 6.5))) : lerp(1, 1.02, prog(t, DESK[1], 2));
+  dv.style.opacity = dop; dv.style.transform = `translateY(${dy}px) scale(${push})`;
+
+  // laptop
+  const lp = $("laptop");
+  vis(lp, t >= DESK[0] + 0.12 && t < DESK[1]);
+  const lin = eOut5(prog(t, DESK[0] + 0.14, 0.5)), lout = eInOut(prog(t, DESK[1] - 0.22, 0.22));
+  lp.style.opacity = clamp(prog(t, DESK[0] + 0.14, 0.12)) * (1 - lout);
+  lp.style.transform = `translateY(${(1 - lin) * 300 - lout * 120}px)`;
+  TERM.forEach(([, d], i) => { $("tl" + i).style.opacity = t >= DESK[0] + 0.5 + d ? 1 : 0; });
+
+  // typing
+  const typing = t >= 3.95 && t < 5.45;
+  const n = Math.floor(clamp((t - 3.95) / 1.35) * PROMPT.length);
+  let shown = PROMPT.slice(0, n); if (shown.length > 27) shown = shown.slice(-27);
+  const hasText = typing && n > 0;
+  const caret = Math.floor(t * 2.5) % 2 === 0 || typing ? `<span style="display:inline-block;width:2px;height:20px;background:${WA ? "#00a884" : "#6ab3f3"};margin-left:1px"></span>` : "";
+  $("field").innerHTML = (hasText ? shown : `<span style="color:${WA ? "#8696a0" : "#708499"}">${WA ? "" : "Message"}</span>`) + (t >= 3.5 && t < 5.45 ? caret : "");
+  $("idleBtns").style.opacity = hasText ? 0 : 1;
+  $("sendBtn").style.opacity = hasText ? 1 : 0;
+  $("sendBtn").style.transform = `scale(${t >= 5.4 && t < 5.5 ? 0.85 : 1})`;
+
+  // messages: which are visible
+  let visibleUpTo = -1;
+  if (WA && t < 3.5) {
+    // hook: full thread, then rewind 2.1 → 3.3 (messages leave newest first)
+    const rw = clamp((t - 2.1) / 1.2);
+    visibleUpTo = MSGS.length - 1 - Math.floor(rw * MSGS.length + (rw >= 1 ? 1 : 0));
+    if (t < 2.1) visibleUpTo = MSGS.length - 1;
+  } else MSGS.forEach((m, i) => { if (t >= m.t) visibleUpTo = i; });
+  MSGS.forEach((m, i) => {
+    const el = $("m" + i); el.style.top = LAY[i][0] + "px";
+    const on = i <= visibleUpTo;
+    if (WA && t < 3.5) { el.style.opacity = on ? 1 : 0; el.style.transform = ""; return; }
+    const p = eOut5(prog(t, m.t, 0.3));
+    el.style.opacity = on ? clamp(prog(t, m.t, 0.08)) : 0;
+    el.style.transformOrigin = m.out ? "100% 100%" : "0% 100%";
+    el.style.transform = `translateY(${(1 - p) * 18}px) scale(${lerp(0.94, 1, p)})`;
+  });
+  // scroll
+  let sc;
+  if (WA && t < 3.5) sc = scrollFor(visibleUpTo);
+  else { sc = 0; for (let i = 0; i < MSGS.length && t >= MSGS[i].t; i++) sc = lerp(scrollFor(i - 1), scrollFor(i), eInOut(prog(t, MSGS[i].t, 0.35))); }
+  $("msgs").style.transform = `translateY(${-sc}px)`;
+  $("chip").style.opacity = visibleUpTo >= 0 ? 1 : 0;
+
+  // values
+  const valOn = t >= 14.0 && t < 19.5;
+  ["v1", "v2", "v3"].forEach((id, i) => { vis($(id), valOn); if (valOn) enter($(id), t, 14.5 + i * 0.5, 0.5, 40); });
+  // outro
+  vis($("outro"), t >= 19.5);
+  if (t >= 19.5) enter($("outro"), t, 20.0, 0.6, 40);
+};
+window.ready = kitReady().then(() => { LAY = null; render(0); });
+</script>
+</body>
+</html>
