@@ -2,15 +2,13 @@
 name: stop-slop
 description: Cut AI tells from any writing or speaking. Use when drafting, editing, or reviewing prose, or when the user asks to make text sound human, unslop, de-AI, or strip AI patterns from reports, docs, emails, and chat replies.
 license: MIT
-metadata:
-  trigger: draft, edit, review, writing, prose, unslop, de-AI, make it sound human, humanize, remove AI patterns
 ---
 
 # Stop Slop
 
 Edit text to remove AI patterns. Use when drafting, editing, or reviewing anything you write or say, from chat replies and emails to docs and reports.
 
-When the text lives inside code (comments, docstrings, error messages, commit messages) or your output includes code, pair this with the `clean-slop` skill: it owns the code-side patterns.
+When text lives inside code, `clean-slop` covers code-side patterns if it is installed. This skill remains self-contained for prose. Without `clean-slop`, preserve meaning and remove only wording that obscures behavior.
 
 ## Process
 

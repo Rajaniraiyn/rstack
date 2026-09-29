@@ -8,9 +8,6 @@ Create `plugins/rstack/skills/your-skill/SKILL.md`:
 ---
 name: your-skill
 description: What the skill does, then when to use it. Name the exact requests that should load it: user actions and phrases, in quotes.
-license: MIT
-metadata:
-  trigger: comma, separated, trigger, phrases
 ---
 
 # Your workflow
@@ -18,11 +15,15 @@ metadata:
 Describe the expected result and the decisions specific to this task.
 ```
 
-The `description` is what the agent sees before loading the SKILL.md (only name, description, and path are visible up front), so it must say when to read the file, not just what the skill is for. Keep it one or two sentences, and include the phrases or actions that should trigger it, like a user saying "make this sound human" or "review this branch". Keep `name` and `description` portable. `license` and `metadata.trigger` are portable frontmatter from the [Agent Skills specification](https://agentskills.io/specification). Provider-specific knobs (like `disable-model-invocation`, `user-invocable`, or `argument-hint`) are optional; do not rely on a provider-specific field for essential behavior. Skills meant only for this repository's authors (not for consumers) set `disable-model-invocation: true` and omit `metadata.trigger`, like `rstack-author-skill`. For executable helpers, prefer stdlib-only Python or plain markdown over shell scripts: Windows may not have bash, and a portable skill should not force one OS's shell. Show shell commands inside references as examples, not as required execution paths. Put references, executable helpers, and output templates inside the skill directory, and use relative links. Add directories only when needed. Optional Codex display metadata belongs in `agents/openai.yaml`; essential instructions must work without it.
+The `description` is the routing text that agents see before loading `SKILL.md`. Keep it concise, describe the task and when to use it, and include words users are likely to say. The [Agent Skills specification](https://agentskills.io/specification) defines `name`, `description`, and optional `license`, `compatibility`, `metadata`, and experimental `allowed-tools`. `metadata` is an arbitrary string-to-string map, not a standard routing mechanism. Do not duplicate trigger phrases there.
 
-There is no standard pair of short and long description fields. The specification defines one `description` (1-1024 characters) and it is the only routing signal: agents load `name` and `description` at startup, the full body after activation, and references on demand. Keep `description` concise (a few sentences, imperative, naming the requests that should load it), and put the longer, more verbose description at the top of the body where it is read right after activation. Do not invent `metadata` keys like `long-description`: no runtime reads them, and the body already provides that content. Use the standard `compatibility` field only when the skill has real environment requirements, and keep it under 500 characters.
+Keep canonical frontmatter to the specification's fields. Add host-specific metadata only when that skill needs the behavior. Codex's optional `agents/openai.yaml` can set UI text and `policy.allow_implicit_invocation`; it does not define a subagent. Claude Code has separate invocation fields, which are not portable and may be rejected by other Agent Skills upload paths. Its `disable-model-invocation` controls automatic invocation, while `user-invocable` controls the user command menu. Those settings are distinct. If a workflow needs subagent behavior, use the target host's agent definition or invocation feature. Do not add an adapter file to every skill by default.
 
-The included `rstack-author-skill` can guide this process. Check a matching request and a nearby request that should not trigger the skill. Test executable helpers with representative inputs.
+The `license` field is optional metadata. Keep the applicable license notice in every distributed archive, including standalone skill archives. For executable helpers, prefer stdlib-only Python or plain markdown over shell scripts: Windows may not have bash, and a portable skill should not force one OS's shell. Put references, helpers, and output templates inside the skill directory, use relative links, and add directories only when needed.
+
+The specification defines one `description`, up to 1024 characters. Some hosts provide optional UI metadata with a shorter user-facing description; those fields do not replace the portable description and should be maintained in that host's adapter. Use `compatibility` only for real environment requirements, and keep it under 500 characters. Avoid invented metadata fields such as `long-description` unless a named consumer reads them.
+
+The included `rstack-author-skill` can guide this process. Check a matching request and a nearby request that should not trigger the skill. Test executable helpers with representative inputs. In this package, `rstack-author-skill` and `factory` are explicit-only in Codex. `launch-video` has Codex display text and can be invoked explicitly or selected by its description. `clean-slop` and `stop-slop` use their portable descriptions for automatic selection and remain available for direct requests. Other hosts may need separate adapters to enforce the same choices. Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
 
 ## Maintain the package
 
@@ -38,7 +39,7 @@ uv run python -m unittest discover -s tests
 
 The tooling handles one bundle, `rstack`. Extend it only when separate plugin installation becomes necessary. Development uses uv; run `uv sync` once for an environment.
 
-The [skills.sh](https://skills.sh) repo page groups skills into sections from a root-level `skills.sh.json` (`groupings`, `notGrouped`). It only changes page display, never CLI installs. See the [customize docs](https://skills.sh/docs/customize).
+The [skills.sh](https://skills.sh) repo page groups skills into sections from a root-level `skills.sh.json` (`groupings`, `notGrouped`). This file changes page display, not indexing or installs. skills.sh says it learns the grouping file after a CLI install with telemetry enabled, and repo pages are cached. A skill missing from the page may not yet have been observed or indexed; changing its grouping does not create an install record. See the [customize docs](https://skills.sh/docs/customize).
 
 ## Add integrations
 

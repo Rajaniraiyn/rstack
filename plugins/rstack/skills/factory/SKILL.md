@@ -1,10 +1,8 @@
 ---
 name: factory
-description: "Orchestrate a software factory: intake work from GitHub, Sentry, Jira, or Linear, route each task to the best harness and model for its effort level, run agents headlessly in cheap shared-cache worktrees, review results, and hand back the final link. Use when the user wants to route work across Claude Code, Codex, OpenCode, Amp, or Copilot, spawn parallel agents, pick cheaper models or effort levels, or run factory setup to probe and configure CLIs."
+description: "Route software tasks to installed agent CLIs, select a model and effort level, run parallel work in isolated worktrees, and review the results. Use when the user asks to farm out issues, run agents in parallel, choose a harness or model, or configure factory setup."
 license: MIT
 compatibility: Requires git and at least one installed agent CLI (Claude Code, Codex, OpenCode, Amp, or GitHub Copilot) reachable with a --version flag.
-metadata:
-  trigger: factory, factory setup, route work, spawn agents, run agents, cheaper model, effort level, worktree, parallel agents, farm out issues
 ---
 
 # Factory
@@ -62,7 +60,7 @@ Report the final URL: the pull request, a session share link, or the review repo
 - Prefer the built-in sub-agent tool for small in-session sub-tasks. Spawn or fork only when isolation, model freedom, budget control, or inherited context justifies a full session.
 - Share caches, never active state. Two agents writing the same build directory corrupt each other's work.
 - Helpers and examples in this skill are portable: stdlib-only Python and plain markdown, never shell that requires bash. Windows may not have bash.
-- Before handing back generated code or prose, run the `clean-slop` skill on the artifacts. It owns the edit pass for produced work.
+- Before handing back generated code or prose, review it for unnecessary or machine-like material. If `clean-slop` is installed, use it for that pass.
 
 ## Reference files
 

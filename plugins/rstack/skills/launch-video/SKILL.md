@@ -1,10 +1,8 @@
 ---
 name: launch-video
-description: "Make short, polished launch and promo videos for a project, product, or website: landscape, vertical, and square cuts with motion, a mixed soundtrack, optional human-sounding voiceover, a poster frame, and share copy, all rendered locally from HTML. Use when the user says \"make a launch video\", \"brag about this\", \"/brag\", \"promo video\", \"demo video\", \"make a vertical version\", \"Reels / TikTok / Shorts cut\", \"add a voiceover\", or wants to show off something they built."
+description: "Make a launch or promo video for a project, product, or website, with motion, music, optional voiceover, and share copy. Use when the user asks to make a launch, demo, or promo video, says \"brag about this\" or \"/brag\", or wants a vertical cut for Reels, TikTok, or Shorts."
 license: MIT
 compatibility: Needs Python 3.10+, Chrome or Chromium, and ffmpeg. Voiceover also needs uv plus a few GB for local Chatterbox and Whisper models, or a TTS API key.
-metadata:
-  trigger: launch video, brag, promo video, demo video, product video, vertical video, reels, tiktok, shorts, voiceover, show off, announce
 ---
 
 # Launch video
