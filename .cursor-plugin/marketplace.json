@@ -4,13 +4,13 @@
     "name": "Rajaniraiyn"
   },
   "metadata": {
-    "description": "Personal skills and workflows for coding agents."
+    "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents."
   },
   "plugins": [
     {
       "name": "rstack",
       "source": "./plugins/rstack",
-      "description": "Personal skills and workflows for coding agents."
+      "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents."
     }
   ]
 }

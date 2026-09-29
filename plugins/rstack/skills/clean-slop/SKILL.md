@@ -1,6 +1,6 @@
 ---
 name: clean-slop
-description: Remove AI slop from code, diffs, documents, copy, and design output. Use when reviewing a branch or PR, checking generated code against a diff, or when asked to clean up, de-slop, or match human style in produced artifacts.
+description: Remove AI-generated clutter from changed code, documents, copy, and design work. Use as a cleanup pass after generated work or when asked to de-slop an artifact. Do not use for a general correctness, security, or code review.
 license: MIT
 ---
 
@@ -10,7 +10,7 @@ Remove AI-generated slop from an artifact without changing what it does or says.
 
 ## When to use
 
-Checking a branch against main, reviewing generated code, documents, reports, website copy, or design output. Use after most non-trivial changes.
+Reviewing a diff for unnecessary generated material, or cleaning generated documents, reports, website copy, and design output. Use after non-trivial generated work when an AI-slop pass is wanted.
 
 ## Process
 

@@ -4,9 +4,9 @@
 [![skills.sh](https://skills.sh/b/Rajaniraiyn/rstack)](https://skills.sh/Rajaniraiyn/rstack)
 -->
 
-My personal skills and workflows for coding agents.
+Opinionated skills and workflows by Rajaniraiyn, published for anyone using coding agents.
 
-Portable `SKILL.md` files that work with Claude Code, Codex, Cursor, GitHub Copilot, Amp, OpenCode, and Crush. One copy of each skill lives in `plugins/rstack/skills/`.
+Reusable skills for Claude Code, Codex, Cursor, GitHub Copilot, Amp, OpenCode, and Crush. The workflows share one canonical copy; host-specific settings are added only when a skill needs them.
 
 ## Skills
 
