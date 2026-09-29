@@ -10,7 +10,14 @@
     {
       "name": "rstack",
       "source": "./plugins/rstack",
-      "description": "Personal skills and workflows for coding agents."
+      "description": "Personal skills and workflows for coding agents.",
+      "skills": [
+        "./skills/clean-slop",
+        "./skills/factory",
+        "./skills/launch-video",
+        "./skills/rstack-author-skill",
+        "./skills/stop-slop"
+      ]
     }
   ]
 }

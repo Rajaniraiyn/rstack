@@ -18,6 +18,7 @@ class PackagingTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         shutil.copytree(ROOT / "plugins", self.root / "plugins")
+        shutil.copy(ROOT / "LICENSE", self.root / "LICENSE")
         rstack.sync(self.root)
 
     def test_skill_export_is_complete_and_reproducible(self):
@@ -27,6 +28,7 @@ class PackagingTests(unittest.TestCase):
         skill = self.root / "plugins/rstack/skills/rstack-author-skill"
         archive_path = next(path for path in paths if path.name == f"{skill.name}-0.1.0.zip")
         with zipfile.ZipFile(archive_path) as archive:
+            self.assertEqual(archive.read("LICENSE"), (self.root / "LICENSE").read_bytes())
             for source in skill.rglob("*"):
                 if source.is_file():
                     self.assertEqual(archive.read(source.relative_to(skill.parent).as_posix()), source.read_bytes())
@@ -51,6 +53,12 @@ class PackagingTests(unittest.TestCase):
         for client in ("claude", "codex", "cursor"):
             manifest = self.root / f"plugins/rstack/.{client}-plugin/plugin.json"
             self.assertEqual(json.loads(manifest.read_text())["version"], "0.2.0")
+
+    def test_marketplace_declares_every_skill_path(self):
+        marketplace = json.loads((self.root / ".claude-plugin/marketplace.json").read_text())
+        declared = marketplace["plugins"][0]["skills"]
+        self.assertEqual(declared, [f"./skills/{path.name}" for path in sorted(
+            (self.root / "plugins/rstack/skills").iterdir()) if path.is_dir()])
 
     def test_missing_bundled_reference_fails(self):
         (self.root / "plugins/rstack/skills/rstack-author-skill/references/portability.md").unlink()
