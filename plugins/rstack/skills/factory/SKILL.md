@@ -3,6 +3,9 @@ name: factory
 description: "Route software tasks to installed agent CLIs, select a model and effort level, run parallel work in isolated worktrees, and review the results. Use when the user asks to farm out issues, run agents in parallel, choose a harness or model, or configure factory setup."
 license: MIT
 compatibility: Requires git and at least one installed agent CLI (Claude Code, Codex, OpenCode, Amp, or GitHub Copilot) reachable with a --version flag.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Factory

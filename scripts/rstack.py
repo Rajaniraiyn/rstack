@@ -122,10 +122,11 @@ def check(root):
         metadata, body = frontmatter(source)
         if not isinstance(metadata, dict) or metadata.get("name") != skill.name:
             raise ValueError(f"Skill name must match its directory: {source}")
-        supported = {"name", "description", "license", "compatibility", "metadata", "allowed-tools"}
+        supported = {"name", "description", "license", "compatibility", "metadata", "allowed-tools",
+                     "disable-model-invocation"}
         extra = set(metadata) - supported
         if extra:
-            raise ValueError(f"Non-portable frontmatter field(s) in {source}: {', '.join(sorted(extra))}")
+            raise ValueError(f"Unsupported frontmatter field(s) in {source}: {', '.join(sorted(extra))}")
         description = metadata.get("description")
         if not isinstance(description, str) or not 1 <= len(description.strip()) <= 1024:
             raise ValueError(f"Invalid description: {source}")
@@ -135,6 +136,8 @@ def check(root):
         fields = ("license", "allowed-tools")
         if any(key in metadata and not isinstance(metadata[key], str) for key in fields):
             raise ValueError(f"Invalid optional frontmatter field type: {source}")
+        if "disable-model-invocation" in metadata and not isinstance(metadata["disable-model-invocation"], bool):
+            raise ValueError(f"disable-model-invocation must be a boolean: {source}")
         extra_metadata = metadata.get("metadata", {})
         if not isinstance(extra_metadata, dict) or any(not isinstance(key, str) or not isinstance(value, str)
                                                        for key, value in extra_metadata.items()):
@@ -149,13 +152,22 @@ def check(root):
             interface = ui.get("interface", {})
             if not isinstance(interface, dict):
                 raise ValueError(f"Invalid Codex interface metadata: {openai}")
+            for key in ("display_name", "short_description"):
+                if not isinstance(interface.get(key), str) or not interface[key].strip():
+                    raise ValueError(f"Codex interface requires {key}: {openai}")
             for key in ("display_name", "short_description", "default_prompt"):
-                if key in interface and not isinstance(interface[key], str):
+                if key in interface and (not isinstance(interface[key], str) or not interface[key].strip()):
                     raise ValueError(f"Invalid Codex interface field {key}: {openai}")
             policy = ui.get("policy", {})
-            if not isinstance(policy, dict) or ("allow_implicit_invocation" in policy
-                                                 and not isinstance(policy["allow_implicit_invocation"], bool)):
+            if not isinstance(policy, dict) or set(policy) - {"allow_implicit_invocation", "products"}:
                 raise ValueError(f"Invalid Codex invocation policy: {openai}")
+            if "allow_implicit_invocation" in policy and not isinstance(policy["allow_implicit_invocation"], bool):
+                raise ValueError(f"Invalid Codex invocation policy: {openai}")
+            products = policy.get("products")
+            if products is not None and (not isinstance(products, list) or
+                                         any(not isinstance(product, str) or product not in {"CHAT", "CODEX"}
+                                             for product in products)):
+                raise ValueError(f"Invalid Codex product policy: {openai}")
         for markdown in skill.rglob("*.md"):
             for target in re.findall(r"\]\(([^\s)]+)\)", markdown.read_text()):
                 if "://" in target or target.startswith("#"):

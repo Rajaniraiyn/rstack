@@ -15,15 +15,41 @@ description: What the skill does, then when to use it. Name the exact requests t
 Describe the expected result and the decisions specific to this task.
 ```
 
-The `description` is the routing text that agents see before loading `SKILL.md`. Keep it concise, describe the task and when to use it, and include words users are likely to say. The [Agent Skills specification](https://agentskills.io/specification) defines `name`, `description`, and optional `license`, `compatibility`, `metadata`, and experimental `allowed-tools`. `metadata` is an arbitrary string-to-string map, not a standard routing mechanism. Do not duplicate trigger phrases there.
+The `description` is the routing text agents see before loading `SKILL.md`. Keep it concise, describe the task and when to use it, and include words users are likely to say. The [Agent Skills specification](https://agentskills.io/specification) defines `name`, `description`, and optional `license`, `compatibility`, `metadata`, and experimental `allowed-tools`. `metadata` is a string-to-string map. Provider extensions may use namespaced metadata keys when that host documents them, but do not invent trigger or description fields that no host reads.
 
-Keep canonical frontmatter to the specification's fields. Add host-specific metadata only when that skill needs the behavior. Codex's optional `agents/openai.yaml` can set UI text and `policy.allow_implicit_invocation`; it does not define a subagent. Claude Code has separate invocation fields, which are not portable and may be rejected by other Agent Skills upload paths. Its `disable-model-invocation` controls automatic invocation, while `user-invocable` controls the user command menu. Those settings are distinct. If a workflow needs subagent behavior, use the target host's agent definition or invocation feature. Do not add an adapter file to every skill by default.
+Use a frontmatter extension in the shared file when multiple target hosts implement the same behavior. Claude Code and Cursor both document `disable-model-invocation`; it prevents automatic selection while retaining explicit invocation in their standard skill flows. This field is a provider extension, not part of the Agent Skills core schema, so strict upload APIs may reject it. OpenCode v2's `metadata.opencode/autoinvoke` is a namespaced setting inside the standard `metadata` map. Keep its value as a string for compatibility with the core schema. Check each host's current documentation when relying on an extension.
+
+Use an adapter for settings that only one host supports and that cannot be expressed through its standard `SKILL.md` format. Codex reads optional interface text and `policy.allow_implicit_invocation` from `agents/openai.yaml`; it does not define a subagent. Claude Code's `user-invocable` controls the user command menu separately from automatic invocation. For subagent behavior, use the target host's agent definition or invocation feature. Do not add adapter files to skills that do not need them. Extend the R Stack validator when adopting another frontmatter extension, and record its supported hosts and type there.
+
+Use this as a field map, not a checklist. Add only fields that change the intended behavior or presentation:
+
+| Host | Skill metadata location | Examples |
+| --- | --- | --- |
+| Agent Skills | `SKILL.md` | `name`, `description`, `license`, `compatibility`, string-valued `metadata`; `allowed-tools` is experimental. |
+| Claude Code | `SKILL.md` frontmatter | `disable-model-invocation`, `user-invocable`, `argument-hint`, `context`, and `agent`. Its `when_to_use` adds routing context to `description`. |
+| Cursor | `SKILL.md` frontmatter | `disable-model-invocation`, `paths`, `icon`, and `color`. |
+| OpenCode | `SKILL.md` frontmatter | The v2 format uses namespaced values such as `metadata.opencode/autoinvoke` and `metadata.opencode/slash`. |
+| Codex | `agents/openai.yaml` | UI text, `policy.allow_implicit_invocation`, and supported tool dependencies. |
+
+The same concept may have different field names or effects. For instance, `description` routes a skill across hosts, while Codex `short_description` is UI text and Claude `when_to_use` extends routing text. Check the host docs before adding a field: [Claude Code](https://code.claude.com/docs/en/skills), [Cursor](https://cursor.com/docs/skills), [OpenCode v2](https://opencode.ai/v2/docs/skills), and [Codex](https://learn.chatgpt.com/docs/build-skills).
 
 The `license` field is optional metadata. Keep the applicable license notice in every distributed archive, including standalone skill archives. For executable helpers, prefer stdlib-only Python or plain markdown over shell scripts: Windows may not have bash, and a portable skill should not force one OS's shell. Put references, helpers, and output templates inside the skill directory, use relative links, and add directories only when needed.
 
-The specification defines one `description`, up to 1024 characters. Some hosts provide optional UI metadata with a shorter user-facing description; those fields do not replace the portable description and should be maintained in that host's adapter. Use `compatibility` only for real environment requirements, and keep it under 500 characters. Avoid invented metadata fields such as `long-description` unless a named consumer reads them.
+The specification defines one `description`, up to 1024 characters. It routes the skill; host UI fields serve a separate purpose. Codex `interface.short_description`, for example, is user-facing text and does not replace the skill description. There is no generic long-description field. Use `compatibility` only for real environment requirements, and keep it under 500 characters.
 
-The included `rstack-author-skill` can guide this process. Check a matching request and a nearby request that should not trigger the skill. Test executable helpers with representative inputs. In this package, `rstack-author-skill` and `factory` are explicit-only in Codex. `launch-video` has Codex display text and can be invoked explicitly or selected by its description. `clean-slop` and `stop-slop` use their portable descriptions for automatic selection and remain available for direct requests. Other hosts may need separate adapters to enforce the same choices. Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
+Availability, audience, invocation, and execution mode are separate choices. A skill can be public to install but aimed at a narrow audience. Automatic selection and user invocation are independent. A skill is not a subagent; isolation and agent definitions are host features.
+
+The current skills have distinct audiences and invocation roles:
+
+| Skill | Audience | Invocation intent |
+| --- | --- | --- |
+| `stop-slop` | Anyone using the package | The agent may select it for prose work; users can also invoke it directly. |
+| `clean-slop` | Anyone using the package | The agent may select it for an AI-slop cleanup pass; users can also invoke it directly. It is not a general code reviewer. |
+| `launch-video` | Anyone using the package | The agent may select it for video requests; users can also invoke it directly. Codex has a short UI description. |
+| `factory` | Users who explicitly request delegated work | Claude Code and Cursor read `disable-model-invocation`; OpenCode v2 reads its namespaced metadata; Codex reads its policy file. |
+| `rstack-author-skill` | R Stack maintainers and contributors | Explicitly invoked for R Stack authoring. It uses the same per-host controls as `factory`. |
+
+These are product choices, not universal defaults. A host that ignores an extension will not enforce its policy. The package is public; "opinionated" describes Rajaniraiyn's perspective, not an access restriction. This draws on the separation between user-invoked and model-invoked workflows in [Matt Pocock's skill suite](https://github.com/mattpocock/skills), and the composable skills and dedicated agents in [Cursor's pstack plugin](https://github.com/cursor/plugins/tree/main/plugins/pstack). Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
 
 ## Maintain the package
 
