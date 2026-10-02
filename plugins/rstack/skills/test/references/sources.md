@@ -41,3 +41,7 @@ bunx --bun skills add anomalyco/browser-control --list
 Search also by framework, runner, platform, and missing capability. Listing a repository does not install its skills. Read the selected upstream skill and executable docs before adopting it. Check license, freshness, host requirements, hidden service dependencies, cleanup behavior, and whether its assertions prove the desired behavior. Record the exact version when a tool is used in a durable test setup.
 
 For tools beyond browser/terminal exploration, use [tools.md](tools.md). Hardware and domain-specific authoritative sources live in their target references so they stay close to the decisions they support.
+
+## Models, simulation, and measurements
+
+Use [formal-models.md](formal-models.md) for official Lean proof/trust/build references and [simulation-fuzzing.md](simulation-fuzzing.md) for TigerBeetle VOPR, protocol-aware DST, TigerStyle, Loom, and native fuzzing documentation. Use [performance.md](performance.md) for profiling, tracing, workload models, and the USE method. These workflows have different evidence boundaries; listing them doesn't certify a model, prove a runtime, or execute a campaign.

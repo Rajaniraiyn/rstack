@@ -22,6 +22,12 @@ Use the project's vocabulary. A feature test needn't use a browser, and a unit n
 
 Functional correctness, security, accessibility, visual appearance, performance, recovery, compatibility, and resource use need different observations. A screenshot can't prove persistence; a role locator can't prove contrast; a functional pass can't prove deadlines. Compile/lint/static-analysis gates protect other contracts. Select dimensions from requirements instead of inventing one universal quality score.
 
+## Keep method and lifetime separate
+
+Property-based testing, fuzzing, deterministic simulation, differential checks, and formal proofs are methods, not extra execution layers. Select them for the failure mode. Lean proves an explicitly modeled proposition; validate the specification and implementation mapping through [formal-models.md](formal-models.md). Use [simulation-fuzzing.md](simulation-fuzzing.md) for controlled schedules and generated inputs.
+
+Temporary probes, retained regressions, scheduled campaigns, benchmarks, and profiles have different lifetimes and execution budgets. Use [test-lifecycle.md](test-lifecycle.md) to decide what belongs in the maintained suite. Use [performance.md](performance.md) to distinguish a diagnostic profile from a reproducible measurement or regression gate.
+
 ## Write around observable results
 
 Use a behavioral name, minimal credible input, explicit preconditions, the real action, and an independent expected outcome. Include rejected actions and absence of unwanted effects when they are part of the contract. Assert relevant state transitions rather than unrelated fields or incidental logs. Exact bytes/order are appropriate for documented wire formats and observable ordering requirements.

@@ -1,6 +1,6 @@
 ---
 name: test
-description: Design, run, debug, and maintain meaningful tests for software, services, and devices. Use for test strategy, feature validation, regressions, test-suite cleanup, and quality checks on the intended runtime. Fix failures when requested; choose useful coverage rather than generating redundant tests.
+description: Design, run, debug, and maintain meaningful tests for software, services, and devices. Use for test strategy, feature validation, regressions, suite cleanup, formal models, fuzzing, performance investigations, and quality checks on the intended runtime. Fix failures when requested; choose useful coverage rather than generating redundant tests.
 license: MIT
 ---
 
@@ -18,6 +18,10 @@ Read only the guidance needed for the task:
 - [test-design.md](references/test-design.md) when authoring tests or choosing layers and quality dimensions.
 - [suite-maintenance.md](references/suite-maintenance.md) for requested cleanup, slow/flaky suites, or duplicated coverage.
 - [security-quality.md](references/security-quality.md) for security requirements and trust boundaries.
+- [formal-models.md](references/formal-models.md) for Lean modeling, agreed specifications, proof checks, and implementation mapping.
+- [simulation-fuzzing.md](references/simulation-fuzzing.md) for deterministic simulation, fuzzing, replay, and invariant-driven testing.
+- [performance.md](references/performance.md) for benchmarks, load/soak tests, profiling, and performance regressions.
+- [test-lifecycle.md](references/test-lifecycle.md) for temporary probes, durable tests, and evidence retention.
 
 A hybrid system may need several target references. For an unlisted stack, identify its input, state, outputs, lifecycle, and actual host. Avoid forcing native behavior into a browser workflow.
 

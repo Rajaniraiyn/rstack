@@ -14,10 +14,8 @@ Test duplicate/delayed/out-of-order messages, lost responses after successful wr
 
 Classify flakes by evidence. Record attempt count, random seed, resource contention, and failures before rerunning. A retry pass does not erase the initial failure. Quarantine needs an owner, reason, and exit condition. Use bounded retries only when the runner or product contract calls for them; preserve the initial failure evidence. [Playwright retries](https://playwright.dev/docs/test-retries) distinguish a first-pass success from a flaky retry pass. Arbitrary sleeps and blanket retries are not repairs.
 
-## Load and performance
+## Simulation and performance routes
 
-Use the existing load runner, or a tool such as [k6](https://grafana.com/docs/k6/latest/using-k6/scenarios/) when sustained load is required. Define target, duration, rate/concurrency, data shape, thresholds, and abort criteria before running. Stay within the user's authorized environment. Keep CI test parallelism separate from load generation.
+When reproducibility requires control over clocks, scheduling, randomness, network, or storage, use [simulation-fuzzing.md](simulation-fuzzing.md). A seeded workload on an uncontrolled runtime isn't automatically deterministic simulation; preserve real-adapter checks.
 
-Concurrent users and request arrival rate are different models. Choose the model that represents the workload. Report offered and achieved rate, dropped work, latency percentiles, errors, and saturation. A slow load generator can hide overload. Include warmup and steady-state measurement; compare equivalent builds and environments.
-
-Synthetic journeys provide repeatability. Real-service smoke tests catch credentials, transport, deployment policy, and integration differences. Existing production telemetry can show actual traffic distributions without generating new load. State which evidence each result uses. Don't route synthetic orders, notifications, or emails to real users. Fault injection and expensive distributed load require an explicitly suitable target, never an inferred production target.
+Use [performance.md](performance.md) for workload models, arrival rate versus concurrency, generator saturation, latency, profiling, and comparable measurements. Keep load generation separate from CI worker parallelism. Synthetic journeys provide repeatability; real-service smoke checks and existing telemetry address different integration and traffic questions. Label their evidence and avoid delivering synthetic orders, notifications, or emails to real users.

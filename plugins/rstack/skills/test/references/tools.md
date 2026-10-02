@@ -17,6 +17,9 @@ Choose active maintenance, relevant host support, reproducible execution, diagno
 | Property/stateful cases | [fast-check](https://fast-check.dev/docs/introduction/), Hypothesis, language-native generators | Independent invariant, minimized failing input, reproducible seed |
 | Mutation/sensitivity | [Stryker](https://stryker-mutator.io/docs/) or targeted local mutation | Limit scope/cost; investigate equivalent mutants rather than chasing a score |
 | Load/reliability | k6 or the stack's existing maintained runner | Explicit workload, thresholds, budget, and suitable target |
+| Formal modeling/proofs | Lean with the project’s pinned toolchain | [formal-models.md](formal-models.md): accepted spec, assumptions, trust, and implementation mapping |
+| Fuzzing/schedule exploration | Native fuzz runner, AFL++, cargo-fuzz, Loom, or existing simulator | [simulation-fuzzing.md](simulation-fuzzing.md): distinct methods and controlled nondeterminism |
+| Profiling/benchmarks | Stack-native profiler and existing benchmark harness; Perfetto where suitable | [performance.md](performance.md): representative workloads and uninstrumented comparison |
 | Accessibility | [axe-core](https://www.deque.com/axe/core-documentation/) plus actual keyboard/assistive-technology checks | Automated findings cover only part of accessibility |
 | AI quality/evals | Existing deterministic harness or [promptfoo](https://www.promptfoo.dev/docs/intro/) where useful | Pin cases/providers; don't silently invoke paid models or trust judges as facts |
 | Firmware, HDL, kernel, games | Stack-native runners from the relevant target reference | A general browser tool doesn't replace a board, simulator, kernel, or engine runner |
