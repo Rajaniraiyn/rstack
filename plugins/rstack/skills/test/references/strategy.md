@@ -29,9 +29,11 @@ These are examples, not mandatory cases. Add a target only when it changes behav
 
 Choose a known expected value, a public contract, or an independently implemented model. Two implementations that share the same faulty helper can agree and still be wrong. Round trips alone may miss mutually compatible encoder/decoder defects. For invariants without a single expected output, use relationships such as equivalent input partitions, conservation, monotonicity, or state-transition rules only when the product contract supports them.
 
+For subtle invariants or ambiguous algorithm/state-machine behavior, use [formal-models.md](formal-models.md) to model an accepted specification and compare implementation traces. Use [performance.md](performance.md) for measured cost; keep temporary investigations according to [test-lifecycle.md](test-lifecycle.md).
+
 ## Strengthen coverage without padding the suite
 
-Use [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) or the stack's property runner to generate and shrink cases; [stateful tests](https://hypothesis.readthedocs.io/en/latest/stateful.html) can check sequences. Preserve seeds and minimized failures. For native parsers, [libFuzzer](https://llvm.org/docs/LibFuzzer.html) is one supported route. Bound time, memory, input size, and corpus growth; run on owned targets. Fuzzing without a correctness check may find crashes but miss invalid successful results.
+Use [Hypothesis](https://hypothesis.readthedocs.io/en/latest/) or the stack's property runner to generate and shrink cases; [stateful tests](https://hypothesis.readthedocs.io/en/latest/stateful.html) can check sequences. Preserve seeds and minimized failures. Use [simulation-fuzzing.md](simulation-fuzzing.md) for coverage-guided fuzzing, deterministic simulation, harness correctness, bounded campaigns, and minimized replay cases.
 
 Probe assertion sensitivity when it matters. Run a bug fixture, a deliberate wrong response, or a narrow mutation in an isolated copy and confirm the intended assertion fails. Distinguish an assertion failure from a broken setup. Never leave the mutation in user code or reinterpret a setup crash as proof of a useful test.
 

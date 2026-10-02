@@ -8,6 +8,8 @@ Read applicable repository instructions and the relevant tests, production paths
 
 For each proposed removal or consolidation, identify what failure it can catch and what retained test still catches that failure. Similar-looking tests may protect different OSs, transport paths, security guards, or migration versions. A failed test may expose a product defect. Don't delete it simply because the suite turns green afterward.
 
+Temporary probes and durable regressions need different retention decisions; use [test-lifecycle.md](test-lifecycle.md). Preserve useful minimized fuzz corpora, replay traces, accepted models, and stable performance requirements when consolidating their harnesses.
+
 ## Candidates to inspect
 
 - Assertions with expected values computed by the code under test, tautologies, and fixtures that inject the expected outcome before the action.
