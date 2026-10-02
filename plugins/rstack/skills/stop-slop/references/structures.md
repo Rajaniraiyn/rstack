@@ -1,6 +1,6 @@
 # Structures to break
 
-Each pattern below is a predictable AI shape. The fix keeps the meaning and drops the shape.
+Use these patterns to find repetitive or manufactured phrasing. They do not prove how a text was written. Preserve a deliberate rhetorical device when it fits the author's voice or requested format.
 
 ## Binary contrast
 
@@ -28,7 +28,7 @@ After: "The build is faster and more reliable."
 Forcing ideas into groups of three. Use the natural number. One tricolon can be fine; stacked tricolons are a pattern recognition failure.
 
 Before: "Simple to install, simple to configure, simple to maintain."
-After: "Simple to install and configure."
+After: "Simple to install, configure, and maintain."
 
 ## Synonym cycling
 
@@ -42,7 +42,7 @@ After: "The agent reviews the draft, scores it, and suggests fixes."
 "from X to Y" where X and Y aren't on a meaningful scale.
 
 Before: "From innovation to implementation to cultural transformation."
-After: "It covers innovation and implementation."
+After: "It covers innovation, implementation, and cultural transformation."
 
 ## Self-posed rhetorical question
 
@@ -117,4 +117,4 @@ After: "The build now fails on a column rename, before anything ships."
 
 ## Robotic rhythm
 
-Repeated sentence shapes, identical paragraph structures, stacked punchy fragments. Vary the shape only when it helps the point. Two items beat three. End paragraphs differently.
+Repeated sentence shapes, identical paragraph structures, stacked punchy fragments. Vary the shape only when it helps the point. Keep the number of items the meaning requires; do not remove a useful item to change the rhythm.

@@ -1,6 +1,6 @@
 # Contributing
 
-Use [uv](https://docs.astral.sh/uv/) for everything.
+Use [uv](https://docs.astral.sh/uv/) for repository tooling.
 
 ```sh
 uv sync                                          # install dependencies

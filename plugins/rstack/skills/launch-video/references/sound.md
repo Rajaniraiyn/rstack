@@ -33,9 +33,9 @@ Match each effect to what is on screen at that frame: typing under typing, a sen
 
 Keep the mix under control by construction: effects mostly −25 to −35 LUFS, music around −19 LUFS before mastering, the premix around −14 to −15 LUFS.
 
-## Measure, since you cannot listen
+## Review and measure
 
-Check the integrated loudness and look at the momentary curve for spikes or holes:
+Listen when playback is available to check harshness, masking, and timing. If listening is unavailable, disclose that limitation; loudness measurements cannot establish how the mix sounds. Check the integrated loudness and look at the momentary curve for spikes or holes:
 
 ```sh
 ffmpeg -hide_banner -i work/audio/soundtrack.wav -af ebur128=peak=true -f null - 2>&1 | tail -12

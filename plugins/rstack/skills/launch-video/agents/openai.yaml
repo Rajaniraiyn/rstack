@@ -1,4 +1,4 @@
 interface:
   display_name: "Launch video"
-  short_description: "Make polished launch videos with music and voiceover"
-  default_prompt: "Use $launch-video to make a 20-second launch video for this project."
+  short_description: "Create launch videos with a choice of renderers"
+  default_prompt: "Use $launch-video to create a launch video for this project in the requested format."

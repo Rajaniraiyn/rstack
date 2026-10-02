@@ -15,7 +15,7 @@
     "category": "Productivity",
     "capabilities": [],
     "defaultPrompt": [
-      "Help me author a portable skill."
+      "Use the appropriate R Stack skill for this project."
     ]
   }
 }

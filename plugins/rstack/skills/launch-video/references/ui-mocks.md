@@ -1,15 +1,15 @@
 # UI mocks
 
-When the video shows a phone, a chat app, an OS surface, or a third-party site, it must look and behave like the real thing. Viewers know these apps by heart; one wrong color or a notification that could never fire reads as fake. [../assets/templates/vertical-chat.html](../assets/templates/vertical-chat.html) implements everything below; start from it.
+When the video shows a phone, a chat app, an OS surface, or a third-party site, it must look and behave like the real thing. Viewers know these apps by heart; one wrong color or a notification that could never fire reads as fake. [../assets/templates/vertical-chat.html](../assets/templates/vertical-chat.html) provides the bundled phone/chat starting point; other surfaces need their own implementation.
 
-Before building any other app's UI, look up its current dark-mode tokens (published palettes, open-source clones, or a real screenshot) and write them down in `plan.md`.
+The dimensions and palettes below describe template starting points, not a current specification for every device or app version. Before depicting a surface, verify the target version, device, theme, and behavior against the product's own tokens or current screenshots. Treat third-party clones as leads, not authority. Record relevant decisions in `plan.md`.
 
 ## iPhone and iOS
 
 - Design in points on a 393 × 852 pt screen and scale the whole screen by one factor (a 686 px wide screen is ×1.745; a full-bleed 1080 px lock screen is ×2.748).
 - Device: ~108 px corner radius at 710 px wide, a dark titanium frame with a 2 px lighter edge, side buttons, soft drop shadow.
 - Status bar 54 pt: time left (SF semibold 17), signal, Wi-Fi, and battery right, Dynamic Island 125 × 37 pt centered at 11 pt from the top, home indicator 134 × 5 pt at the bottom.
-- Font `system-ui` (SF Pro). `-apple-system` alone falls back to a serif in headless Chrome.
+- `system-ui` resolves to the host platform’s font, which may not be SF Pro. Verify the rendered font; use an authorized bundled font when an exact match is required.
 - Lock screen: lock glyph, date (semibold ~20 pt), large time (bold ~104 pt), flashlight and camera buttons in the bottom corners, notifications as translucent cards (22 pt radius, app icon 38 pt, title bold, "now" at right, body two lines).
 
 ## WhatsApp, iOS dark

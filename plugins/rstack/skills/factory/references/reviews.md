@@ -1,54 +1,19 @@
 # Reviews
 
-Gate every handoff with a review pass from a different harness or model than the one that produced the work, run read-only, then hand back the final URL.
+Review the worker's artifact against its original brief and a fixed base commit. A different harness or model can add another perspective; it does not guarantee correctness. If only one route is available, run a separate review pass and report that limitation.
 
-## Why a second pass
+## Review contract
 
-The writer's own harness shares its blind spots: the model that wrote the code tends to approve it. A reviewer from a different family (for example Codex reviewing Claude-written code, or a Claude frontier model reviewing Codex output) catches real defects and style drift the writer missed.
+Give the reviewer the brief, diff or commits, relevant source, and check results. Ask for findings with file locations, the concrete failure, and evidence. Review correctness, regressions, missing validation, and scope drift. Keep stylistic preferences separate from defects.
 
-## Run the gate
+Enforce read-only execution using the supported sandbox or tool permissions. Use [harnesses.md](harnesses.md) to resolve the current commands. Inspect the review output yourself; process exit zero is not an approval of the code.
 
-1. Collect the artifact into a reviewable unit: a branch, a diff, a PR, or a directory.
-2. Review with a different harness or model at high effort, read-only. Examples:
+## Repair loop
 
-```sh
-# Claude Code, read-only review of the current diff
-claude -p "Review the diff against main for bugs and correctness. Read-only." \
-  --model sonnet --effort high --allowedTools "Bash(git diff),Bash(git log),Read"
+Fix confirmed defects within the task's scope. Run the affected checks and review the changed area again. The worker brief sets the retry and budget limits; stop and report unresolved findings when either limit is reached. Avoid repeating a full review after an unrelated wording edit or when no new concern remains.
 
-# Codex, read-only review in workspace
-codex exec "Review the uncommitted changes for correctness, tests, and edge cases." \
-  --sandbox read-only --ask-for-approval never -o review.txt
+Before integration, run the required checks on the combined changes. Worker checks alone do not cover interactions between branches. For consequential changes, include the failure modes and the evidence that addresses them in the handoff.
 
-# OpenCode review with a different model family
-opencode run "Review the current branch against main." -m openai/gpt-5.5#high
+## Handoff
 
-# Copilot with a dedicated review agent
-copilot -p "review the current diff" --agent code-review
-```
-
-3. Fix what the review finds: run the fix in the same worktree, then re-run the gate until it passes.
-4. For release-critical work, run a second gate with a frontier-tier model before final handoff.
-
-## Review scope
-
-- Correctness: does it do what the task said?
-- Regressions and edge cases the task did not mention.
-- Test coverage for changed behavior.
-- Style and slop: apply the `clean-slop` skill to generated code and prose before the gate, so the reviewer is not the only guard.
-
-## Guardrails
-
-- Keep review passes read-only unless the user asked for autonomous fixing. A review that edits is no longer a review.
-- Do not let the reviewer rewrite for taste. Flag, fix minimally, preserve the writer's ownership.
-- Never skip the gate for work that touches money, releases, security, or user data. Those get the frontier-tier pass.
-
-## Hand back the final URL
-
-End with the link the user can act on:
-
-- The pull request, for code.
-- A share link from the session (the harness's session share command) for long-running or review-output sessions.
-- The review report file for analysis-only runs.
-
-Summarize in one paragraph: what shipped, on which branch or worktree, what the gate found, and the cost tier used. That is the factory's accounting back to the user.
+Report completed outcomes, branch or worktree, checks, review findings, unresolved concerns, and known cost. Link the local artifact, or a PR when its creation was authorized. Publishing a transcript can expose task data and requires the user's request.

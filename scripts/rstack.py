@@ -33,7 +33,7 @@ def manifests(root):
         "shortDescription": config["description"],
         "longDescription": config["description"],
         "developerName": config["author"]["name"], "category": "Productivity",
-        "capabilities": [], "defaultPrompt": ["Help me author a portable skill."]}}
+        "capabilities": [], "defaultPrompt": ["Use the appropriate R Stack skill for this project."]}}
     skill_paths = [f"./skills/{path.name}" for path in sorted((root / "plugins/rstack/skills").iterdir())
                    if path.is_dir()]
     entry = {"name": "rstack", "source": "./plugins/rstack", "description": config["description"]}
@@ -131,10 +131,12 @@ def check(root):
         if not isinstance(description, str) or not 1 <= len(description.strip()) <= 1024:
             raise ValueError(f"Invalid description: {source}")
         compatibility = metadata.get("compatibility")
-        if compatibility is not None and (not isinstance(compatibility, str) or not 1 <= len(compatibility) <= 500):
+        if compatibility is not None and (not isinstance(compatibility, str) or not compatibility.strip()
+                                           or len(compatibility) > 500):
             raise ValueError(f"Invalid compatibility: {source}")
         fields = ("license", "allowed-tools")
-        if any(key in metadata and not isinstance(metadata[key], str) for key in fields):
+        if any(key in metadata and (not isinstance(metadata[key], str) or not metadata[key].strip())
+               for key in fields):
             raise ValueError(f"Invalid optional frontmatter field type: {source}")
         if "disable-model-invocation" in metadata and not isinstance(metadata["disable-model-invocation"], bool):
             raise ValueError(f"disable-model-invocation must be a boolean: {source}")
@@ -145,6 +147,16 @@ def check(root):
         if not body.strip() or "[TODO:" in body:
             raise ValueError(f"Unfinished skill: {source}")
         openai = skill / "agents/openai.yaml"
+        explicit_only = metadata.get("disable-model-invocation", False)
+        autoinvoke = extra_metadata.get("opencode/autoinvoke")
+        if autoinvoke is not None:
+            if autoinvoke not in {"true", "false"}:
+                raise ValueError(f"opencode/autoinvoke must be a true/false string: {source}")
+            if "disable-model-invocation" in metadata and (autoinvoke == "false") != explicit_only:
+                raise ValueError(f"Conflicting invocation settings: {source}")
+            explicit_only = autoinvoke == "false"
+        if explicit_only and not openai.exists():
+            raise ValueError(f"Explicit-only skill requires a Codex policy adapter: {skill}")
         if openai.exists():
             ui = yaml.safe_load(openai.read_text())
             if not isinstance(ui, dict):
@@ -158,11 +170,18 @@ def check(root):
             for key in ("display_name", "short_description", "default_prompt"):
                 if key in interface and (not isinstance(interface[key], str) or not interface[key].strip()):
                     raise ValueError(f"Invalid Codex interface field {key}: {openai}")
+            if not 25 <= len(interface["short_description"]) <= 64:
+                raise ValueError(f"Codex short_description must be 25–64 characters: {openai}")
+            prompt = interface.get("default_prompt")
+            if prompt is not None and not re.search(r"\$" + re.escape(skill.name) + r"(?![a-z0-9-])", prompt):
+                raise ValueError(f"Codex default_prompt must name ${skill.name}: {openai}")
             policy = ui.get("policy", {})
             if not isinstance(policy, dict) or set(policy) - {"allow_implicit_invocation", "products"}:
                 raise ValueError(f"Invalid Codex invocation policy: {openai}")
             if "allow_implicit_invocation" in policy and not isinstance(policy["allow_implicit_invocation"], bool):
                 raise ValueError(f"Invalid Codex invocation policy: {openai}")
+            if explicit_only and policy.get("allow_implicit_invocation") is not False:
+                raise ValueError(f"Explicit-only skill requires allow_implicit_invocation: false: {openai}")
             products = policy.get("products")
             if products is not None and (not isinstance(products, list) or
                                          any(not isinstance(product, str) or product not in {"CHAT", "CODEX"}

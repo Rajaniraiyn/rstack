@@ -1,76 +1,36 @@
 ---
 name: factory
-description: "Route software tasks to installed agent CLIs, select a model and effort level, run parallel work in isolated worktrees, and review the results. Use when the user asks to farm out issues, run agents in parallel, choose a harness or model, or configure factory setup."
+description: Delegate software tasks to installed agent CLIs, choose routes, isolate parallel writers, and review their results. Explicit workflow for factory setup, farming out issues, or running agent workers.
 license: MIT
-compatibility: Requires git and at least one installed agent CLI (Claude Code, Codex, OpenCode, Amp, or GitHub Copilot) reachable with a --version flag.
+compatibility: Requires git and at least one installed, authenticated agent CLI. The optional setup helper needs Python 3.10+.
 disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: "false"
 ---
 
 # Factory
 
-Run a software factory: intake work, route each task to the best harness and model for its effort level, provision cheap isolated worktrees, run agents headlessly, review the results, and hand back a final link.
+Use the user's available harnesses to complete delegated work. Invocation authorizes delegation for the requested task, not unrelated backlog work, publishing, or broader permissions.
 
-## Setup first
+## Prepare a worker brief
 
-Before routing work at scale, run the setup workflow. Ask the user which CLIs and models they have access to. They bring their own subscriptions and auth; you only detect, configure, and route. Probe what is installed, check each harness's current documentation, and record the configuration. See [references/setup.md](references/setup.md) for the exact questions, probes, and the no-auth rule.
+Inspect existing factory configuration and probe missing capabilities before asking setup questions. Use [references/setup.md](references/setup.md) for setup or [scripts/factory-setup.py](scripts/factory-setup.py) for a read-only installed-CLI report. Authentication remains the user's responsibility.
 
-Invoke setup as `factory setup`, `factory-setup`, or `/factory setup`. You can also run [scripts/factory-setup.py](scripts/factory-setup.py) to probe the machine and write a config file. The script never logs in and never stores credentials.
+Fetch only the work the user selected, using existing connections. Read [references/sources.md](references/sources.md) for issue intake. Give each worker:
 
-## Intake
+- The requested outcome, source issue or local evidence, and an observable completion condition.
+- Its base commit, worktree, owned files, and dependencies on other workers.
+- Required checks, output location, budget, and actions it may perform.
+- A stopping condition for failures, blocked input, or exhausted budget.
 
-Collect work from the sources the user points at, or the ones configured: GitHub issues with `gh`, Sentry with `sentry-cli`, Jira, Linear, or any MCP server the user has wired. When the user pastes a link, fetch it with the matching CLI or MCP instead of guessing. Classify each item by type, priority, and rough size before routing. See [references/sources.md](references/sources.md).
+## Route and run
 
-## Route
+Use the current model shortlist, task defaults, and reasoning settings in [references/routing.md](references/routing.md). Preserve the user's selected route and confirm actual harness support. Refresh the shortlist from official catalogs when requested; replace superseded entries rather than appending model history.
 
-For each task, pick a harness, a model, and an effort level. Rules of thumb:
+Choose the delegation mechanism using [references/subagents.md](references/subagents.md). Parallelize independent tasks; sequence tasks that share a dependency or need another worker's result. Shared-checkout subagents can edit disjoint owned files when their commands do not mutate shared outputs. Use separate worktrees for independent builds, overlapping writes, or headless workers. Worktrees prevent file overwrites during execution but do not prevent integration conflicts or provide a security sandbox. Read [references/worktrees.md](references/worktrees.md) when provisioning them.
 
-- Mechanical work (renames, small refactors, boilerplate): cheapest workhorse model, low effort.
-- Normal implementation: workhorse model, medium effort.
-- Hard architecture, debugging, or long-horizon work: frontier model, starting at low or medium effort and raising only when the task needs it.
-- Escalate to a frontier model (Fable 5.1, GPT-6 Astra, Opus 5) when the workhorse tried and failed, when the task is known-hard, or when its cost per finished task is lower.
+Confirm the installed CLI's help before constructing a headless command. Use [references/harnesses.md](references/harnesses.md) for entry points and vendor documentation. Retain the user's execution restrictions. Save logs, exit status, commits, and the worker's final result. Treat successful process exit as execution evidence, then check the artifact against the brief.
 
-Judge routes by cost per finished task, not token price: a model that finishes in fewer tool calls and less rework can be cheaper overall. GPT-6 Astra usually runs well at low effort and Fable 5.1 at low or medium; use high effort only when needed or asked. Trust measured cost and practitioner write-ups over benchmarks.
+## Integrate and review
 
-Match the harness to the machine: Claude Code for Claude models and rich tooling, Codex for OpenAI models, OpenCode for provider freedom or shareable sessions, Amp or Copilot when the user prefers them. See [references/routing.md](references/routing.md) for tiers, prices, and effort tables.
+Inspect each worker's diff, resolve integration conflicts, and run the combined repository checks. Review with an independent harness or model when one is available within the user's budget. Otherwise perform a separate read-only review pass and disclose that limitation. Use [references/reviews.md](references/reviews.md) for the review contract and bounded repair loop.
 
-## Provision
-
-Give each agent its own git worktree so agents run in parallel without merge conflicts. Reuse install and build caches between worktrees: symlinks or junctions for `node_modules` when lockfiles match, pnpm's global store, uv's shared cache, the cargo registry cache. Keep worktrees disposable and recycle them. See [references/worktrees.md](references/worktrees.md).
-
-## Run
-
-Invoke each harness headlessly from inside your own session, and collect results back. Claude Code: `claude -p`, Codex: `codex exec`, OpenCode: `opencode run`, Amp: `amp --execute`, Copilot: `copilot -p`. Pass the model, effort, thinking, and budget flags that harness understands. Pick the approval mode deliberately: auto-approve where available, bypass only where the user approved it in a disposable environment, and keep a sandbox on for runs that edit or execute. See [references/harnesses.md](references/harnesses.md) for the per-harness tables.
-
-The factory needs no separate runner: the harness you are already in is a running agent, so re-invoke its own binary headlessly instead of installing an orchestrator.
-
-Choose how a task reaches its worker before spawning: the host's built-in sub-agent tool for small in-session sub-tasks, a headless spawn for isolated work that needs full flag control, a session fork to retry or escalate with inherited context, or a fresh session when the old context is noise. See [references/subagents.md](references/subagents.md) for the routes and which CLI can fork.
-
-## Review
-
-Before handing work back, run a review gate with a different harness or model than the one that wrote the work, read-only. Fix what the review finds, then re-run the gate. See [references/reviews.md](references/reviews.md).
-
-## Hand back
-
-Report the final URL: the pull request, a session share link, or the review report. Summarize in one short paragraph what shipped and on which branch or worktree.
-
-## Guardrails
-
-- Never authenticate for the user. Setup detects and configures only. The user manages subscriptions, tokens, and logins.
-- Route only to harnesses that are installed and configured. Offer to install what is missing, but ask before installing anything that costs money.
-- Default to the cheapest workable routing. Escalate deliberately, and say when you did and why.
-- Prefer the built-in sub-agent tool for small in-session sub-tasks. Spawn or fork only when isolation, model freedom, budget control, or inherited context justifies a full session.
-- Share caches, never active state. Two agents writing the same build directory corrupt each other's work.
-- Helpers and examples in this skill are portable: stdlib-only Python and plain markdown, never shell that requires bash. Windows may not have bash.
-- Before handing back generated code or prose, review it for unnecessary or machine-like material. If `clean-slop` is installed, use it for that pass.
-
-## Reference files
-
-- [references/setup.md](references/setup.md)
-- [references/harnesses.md](references/harnesses.md)
-- [references/subagents.md](references/subagents.md)
-- [references/routing.md](references/routing.md)
-- [references/worktrees.md](references/worktrees.md)
-- [references/sources.md](references/sources.md)
-- [references/reviews.md](references/reviews.md)
+Preserve worker artifacts and user changes until they are reviewed. Report the branch or worktree, completed outcomes, validation, unresolved work, and route costs when known. Link a local result or an authorized PR. Share or publish a session only when the user requested it.

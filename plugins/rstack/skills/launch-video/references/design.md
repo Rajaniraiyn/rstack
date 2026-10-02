@@ -6,11 +6,11 @@ The goal is a video a designer would have made, not one a model generated. Most 
 
 - **Neutral ink** does the work: stage `#09090b`, app surfaces `#0f0f12` → `#1c1c20`, hairline borders at 8–14% white, text `#ededef`, secondary `#a1a1aa`, tertiary `#6b6b74`. These are the kit's defaults in [../assets/kit/kit.css](../assets/kit/kit.css).
 - **One restrained tint** from the brand: take the brand color and pull it toward the text color until it is calm (a saturated magenta became `#e2a6ec`). Set `--tint`. Use it on at most one word or one indicator per frame.
-- Even when the brand itself looks generic or loud, keep only that tint; the rest stays neutral.
+- Preserve an established brand palette when the brief calls for it. The neutral kit is a fallback, not a replacement for the product's identity.
 - Semantic colors only where the real UI uses them: green and red for diffs and passing tests, platform colors inside platform UI.
 - Light themes work the same way: paper, ink, one tint.
 
-## Never
+## Defaults to avoid
 
 - Emoji anywhere in ad copy, cards, or feature rows. Use icons. (Emoji inside a mocked chat are fine only if the real message would contain them; usually leave them out.)
 - Glow blobs, lens flares, colored radial gradients behind everything, pink flash frames, film grain as decoration.
@@ -21,14 +21,14 @@ The goal is a video a designer would have made, not one a model generated. Most 
 
 ## Type
 
-- Ad type: **Geist** 600, tight tracking (−0.04 em), line height ≈ 1. Kickers in **Geist Mono** 500 caps with +0.14 em tracking. Code in Geist Mono.
-- Inside a device, use the platform's system font (`system-ui` renders SF Pro in headless Chrome on macOS). Never ship a serif fallback; check stills.
+- For the bundled kit, ad type defaults to **Geist** 600, tight tracking (−0.04 em), line height ≈ 1. Kickers in **Geist Mono** 500 caps with +0.14 em tracking. Code in Geist Mono.
+- Inside a device, use the platform's system font and check the resolved font on the rendering machine. `system-ui` varies by platform; bundle a licensed font when exact metrics matter. Check stills for unintended fallback.
 - Sizes: landscape headlines 120–210 px; vertical headlines 90–150 px; body in UI at the UI's real size scaled by the device factor.
 - Left-aligned editorial headlines read more designed than centered ones; center only single short lines.
 
 ## Icons
 
-- **Lucide** (ISC) for every UI and feature icon, stroke 1.5–2, sized consistently, in the text color. `fetch_assets.py --icons name,…` pulls them; names at https://lucide.dev/icons.
+- **Lucide** (ISC) is the bundled default for UI and feature icons, stroke 1.5–2, sized consistently, in the text color. `fetch_assets.py --icons name,…` pulls them; names at https://lucide.dev/icons.
 - Brand glyphs (GitHub, WhatsApp, Telegram) from **simple-icons** (CC0), only where the real UI shows them.
 - The product's own logo from its source, drawn as SVG through `window.LOGO`.
 - Icon tiles: a 1 px bordered rounded square on a raised surface, icon centered. No colored icon backgrounds unless the real UI has them.
@@ -39,7 +39,7 @@ The goal is a video a designer would have made, not one a model generated. Most 
 - **Camera** on app windows: push toward the part that matters, hold while it is read, pull back. Ease in and out; never zoom past legibility.
 - **Hard cuts on the beat** between scenes. Where a transition is needed, stagger it (old content out, then new content in) or dip through the background; a plain crossfade between two busy layouts makes a muddy double exposure.
 - Typing at a believable speed with a caret; messages landing with a small rise; buttons pressed with a slight scale-down on click; a real cursor path.
-- Nothing moves while it is meant to be read.
+- Keep readable content settled long enough to read. Background motion can continue if it does not compete with the text.
 
 ## Layout checks
 

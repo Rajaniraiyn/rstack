@@ -7,7 +7,7 @@ Create `plugins/rstack/skills/your-skill/SKILL.md`:
 ```markdown
 ---
 name: your-skill
-description: What the skill does, then when to use it. Name the exact requests that should load it: user actions and phrases, in quotes.
+description: What the skill does, then when to use it. Describe the task and its matching user requests without a long synonym list.
 ---
 
 # Your workflow
@@ -17,7 +17,7 @@ Describe the expected result and the decisions specific to this task.
 
 The `description` is the routing text agents see before loading `SKILL.md`. Keep it concise, describe the task and when to use it, and include words users are likely to say. The [Agent Skills specification](https://agentskills.io/specification) defines `name`, `description`, and optional `license`, `compatibility`, `metadata`, and experimental `allowed-tools`. `metadata` is a string-to-string map. Provider extensions may use namespaced metadata keys when that host documents them, but do not invent trigger or description fields that no host reads.
 
-Use a frontmatter extension in the shared file when multiple target hosts implement the same behavior. Claude Code and Cursor both document `disable-model-invocation`; it prevents automatic selection while retaining explicit invocation in their standard skill flows. This field is a provider extension, not part of the Agent Skills core schema, so strict upload APIs may reject it. OpenCode v2's `metadata.opencode/autoinvoke` is a namespaced setting inside the standard `metadata` map. Keep its value as a string for compatibility with the core schema. Check each host's current documentation when relying on an extension.
+Use a frontmatter extension in the shared file when multiple target hosts implement the same behavior. Claude Code and Cursor both document `disable-model-invocation`; it prevents automatic selection while retaining explicit invocation in their standard skill flows. This field is a provider extension, not part of the Agent Skills core schema, so strict upload APIs may reject it. OpenCode v2 also recognizes `disable-model-invocation`, so R Stack uses the shared field instead of duplicating the setting in namespaced metadata. Check each host's current documentation when relying on an extension.
 
 Use an adapter for settings that only one host supports and that cannot be expressed through its standard `SKILL.md` format. Codex reads optional interface text and `policy.allow_implicit_invocation` from `agents/openai.yaml`; it does not define a subagent. Claude Code's `user-invocable` controls the user command menu separately from automatic invocation. For subagent behavior, use the target host's agent definition or invocation feature. Do not add adapter files to skills that do not need them. Extend the R Stack validator when adopting another frontmatter extension, and record its supported hosts and type there.
 
@@ -28,8 +28,10 @@ Use this as a field map, not a checklist. Add only fields that change the intend
 | Agent Skills | `SKILL.md` | `name`, `description`, `license`, `compatibility`, string-valued `metadata`; `allowed-tools` is experimental. |
 | Claude Code | `SKILL.md` frontmatter | `disable-model-invocation`, `user-invocable`, `argument-hint`, `context`, and `agent`. Its `when_to_use` adds routing context to `description`. |
 | Cursor | `SKILL.md` frontmatter | `disable-model-invocation`, `paths`, `icon`, and `color`. |
-| OpenCode | `SKILL.md` frontmatter | The v2 format uses namespaced values such as `metadata.opencode/autoinvoke` and `metadata.opencode/slash`. |
+| OpenCode | `SKILL.md` frontmatter | `disable-model-invocation`; optional `metadata.opencode/autoinvoke` overrides it when both are set. |
 | Codex | `agents/openai.yaml` | UI text, `policy.allow_implicit_invocation`, and supported tool dependencies. |
+
+R Stack validates matching names, descriptions, non-empty optional fields, string-valued metadata, and consistent invocation settings. Explicit-only skills must include the Codex policy adapter. UI prompts name their own skill, and picker descriptions follow the local 25–64 character convention.
 
 The same concept may have different field names or effects. For instance, `description` routes a skill across hosts, while Codex `short_description` is UI text and Claude `when_to_use` extends routing text. Check the host docs before adding a field: [Claude Code](https://code.claude.com/docs/en/skills), [Cursor](https://cursor.com/docs/skills), [OpenCode v2](https://opencode.ai/v2/docs/skills), and [Codex](https://learn.chatgpt.com/docs/build-skills).
 
@@ -46,10 +48,11 @@ The current skills have distinct audiences and invocation roles:
 | `stop-slop` | Anyone using the package | The agent may select it for prose work; users can also invoke it directly. |
 | `clean-slop` | Anyone using the package | The agent may select it for an AI-slop cleanup pass; users can also invoke it directly. It is not a general code reviewer. |
 | `launch-video` | Anyone using the package | The agent may select it for video requests; users can also invoke it directly. Codex has a short UI description. |
-| `factory` | Users who explicitly request delegated work | Claude Code and Cursor read `disable-model-invocation`; OpenCode v2 reads its namespaced metadata; Codex reads its policy file. |
+| `test` | Anyone testing application behavior | The agent may select it for testing and debugging; users can also invoke it directly. Conditional references cover each platform and tool choice. |
+| `factory` | Users who explicitly request delegated work | Claude Code and Cursor read `disable-model-invocation`; OpenCode v2 reads the shared field; Codex reads its policy file. |
 | `rstack-author-skill` | R Stack maintainers and contributors | Explicitly invoked for R Stack authoring. It uses the same per-host controls as `factory`. |
 
-These are product choices, not universal defaults. A host that ignores an extension will not enforce its policy. The package is public; "opinionated" describes Rajaniraiyn's perspective, not an access restriction. This draws on the separation between user-invoked and model-invoked workflows in [Matt Pocock's skill suite](https://github.com/mattpocock/skills), and the composable skills and dedicated agents in [Cursor's pstack plugin](https://github.com/cursor/plugins/tree/main/plugins/pstack). Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
+These are product choices, not universal defaults. A host that ignores an extension will not enforce its policy. The package is public; "opinionated" describes Rajaniraiyn's perspective, not an access restriction. This draws on the separation between user-invoked and model-invoked workflows in [Matt Pocock's skill suite](https://github.com/mattpocock/skills), and the composable skills and dedicated agents in [Cursor's pstack plugin](https://github.com/cursor/plugins/tree/main/pstack). Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
 
 ## Maintain the package
 
@@ -87,4 +90,20 @@ Keep credentials in client configuration. Document runtime and tool requirements
 
 The structure follows the [Agent Skills specification](https://agentskills.io/specification) and [portable plugin schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Native packaging follows [OpenAI](https://developers.openai.com/plugins/build/plugins), [Claude Code](https://code.claude.com/docs/en/plugins-reference), and [Cursor](https://cursor.com/docs/reference/plugins).
 
-[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI skills](https://github.com/openai/skills), and [Cursor's template](https://github.com/cursor/plugin-template) informed the original structure. No third-party skill content is copied, except `launch-video/references/brag/`, which vendors the MIT-licensed [/brag skills](https://github.com/latent-spaces/brag) with their license and source commit. The [skills CLI](https://github.com/vercel-labs/skills) owns agent discovery and installation paths.
+[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI plugins and skills](https://github.com/openai/plugins), and [Cursor's template](https://github.com/cursor/plugin-template) informed the original structure. No third-party skill content is copied, except `launch-video/references/brag/`, which vendors the MIT-licensed [/brag skills](https://github.com/latent-spaces/brag) with their license and source commit. The [skills CLI](https://github.com/vercel-labs/skills) owns agent discovery and installation paths.
+
+## Compare and evaluate
+
+Use the maintainer skill's [research guide](../plugins/rstack/skills/rstack-author-skill/references/research.md) for discovery and source selection, and its [evaluation guide](../plugins/rstack/skills/rstack-author-skill/references/evaluation.md) for routing and behavior checks. These guides are bundled so a standalone authoring-skill install remains usable.
+
+Keep the body focused on decisions that change the result. Give each conditional reference a reading condition. Preserve task scope, existing authorization, and invocation policy. Static validation does not establish routing accuracy or artifact quality; record which behavioral checks actually ran.
+
+The factory routing reference owns one dated current-model shortlist. Replace superseded entries during a refresh and verify actual harness support. Resolve CLI flags, package APIs, and prices from installed versions and current vendor sources; avoid parallel catalogs or accumulated generation histories.
+
+`launch-video` has optional routes for Remotion, fframes, and Hyperframes. These are local toolchain alternatives, not installed integrations or active services. The bundled renderer remains available. No MCP server or hook is needed for these routes; an engine-specific integration requires a real execution check before being advertised as tested.
+
+`test` documents optional CLI/SDK routes for Playwright, agent-browser, browser-control, tuistory, CUA, and platform runners. They are not package dependencies or active MCP connections. CUA OS actions use schema discovery and supported background delivery, with isolated desktops for foreground-dependent input. Never advertise universal focus-free host automation. A new executable driver or service integration needs runtime validation and explicit validation rules alongside its setup documentation.
+
+Its strategy reference selects coverage from changed contracts and risk, including property/stateful, differential, fuzz, and assertion-sensitivity checks where useful. Conditional target references include firmware/RTOS, HDL, robotics, protocols, libraries/toolchains, data/ML, games/media, and other plugin hosts. Host tests, emulation, simulation, bench hardware, and deployed checks remain distinct evidence. Listing a runner doesn't certify it or provision hardware, services, or credentials.
+
+Test design separates execution layers from quality dimensions and keeps new tests accountable to a behavior, credible regression, and coverage gap. Suite maintenance covers measured speed improvements, deduplication, coupled-test rewrites, and evidence before deletion. Prefer maintained supported tooling for new setups or justified migrations; preserve unique coverage when replacing a runner. Security checks follow applicable trust boundaries and explicitly scoped targets.

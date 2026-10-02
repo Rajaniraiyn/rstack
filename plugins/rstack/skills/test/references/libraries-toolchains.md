@@ -1,0 +1,15 @@
+# Libraries, SDKs, compilers, and systems code
+
+A library's interface includes import/link behavior, public types, errors, lifecycle, and packaging. Test with a small consumer outside the source tree so workspace aliases and undeclared dependencies cannot make a broken release look valid. Use the produced archive/package and intended installation method in a temporary consumer project. Avoid symlinks or workspace dependency resolution that bypass the artifact's published contents.
+
+Check supported runtime/compiler versions, OS/architectures, module formats, optional dependencies, feature flags, and prior supported consumers according to the compatibility promise. Include initialization, concurrent use, cancellation, resource disposal, and serialization when relevant. A type check doesn't prove runtime behavior; runtime success doesn't prove exported declarations or ABI compatibility.
+
+For generators and compilers, cover valid and invalid input, error location, incremental changes, deterministic generation, and generated code that builds/runs. Assert semantic behavior as well as output shape. Use an independent expected result; deriving the expected output with the same generator or algorithm only checks self-consistency. Compare to an independent implementation or supported baseline for replacements, and preserve minimized reproducers. Compiler diagnostics and executable output need separate checks.
+
+For native/FFI code, inspect ownership, lifetimes, callback threading, alignment, calling convention, buffers, and error translation. Use supported [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html), [ThreadSanitizer](https://clang.llvm.org/docs/ThreadSanitizer.html), or other relevant instrumentation. Keep incompatible sanitizer configurations separate. An instrumented host build cannot establish target timing, and clean sanitizer results don't prove every path safe.
+
+For WASM, test the actual runtime and host imports/capabilities. Browser, WASI, and component-model targets have different contracts. Exercise memory limits/growth, traps, cancellation, filesystem/network permissions where available, and language bindings. [Wasmtime CLI](https://docs.wasmtime.dev/cli.html) is one runtime route; a Wasmtime pass doesn't prove browser support.
+
+For kernel modules or privileged services, use an isolated VM/target kernel rather than loading experimental code into the user's running kernel. Match kernel/configuration and exercise unload/reload and failure recovery when relevant. [KUnit](https://docs.kernel.org/dev-tools/kunit/index.html) covers kernel unit testing; [kselftest](https://docs.kernel.org/dev-tools/kselftest.html) covers relevant kernel interfaces. Neither substitutes for missing device-specific integration.
+
+Preserve compatibility deliberately. Update a failing consumer expectation only when the requested change authorizes a contract break. See [strategy.md](strategy.md) for property, differential, and fuzz checks and [cli.md](cli.md) for compiler/build-tool process behavior.

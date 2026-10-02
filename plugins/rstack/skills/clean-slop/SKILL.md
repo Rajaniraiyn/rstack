@@ -1,97 +1,35 @@
 ---
 name: clean-slop
-description: Remove AI-generated clutter from changed code, documents, copy, and design work. Use as a cleanup pass after generated work or when asked to de-slop an artifact. Do not use for a general correctness, security, or code review.
+description: Remove unnecessary generated material from a scoped code diff, document, website copy, or design while preserving behavior and meaning. Use for artifact cleanup or a de-slop pass. Test-suite coverage and deduplication, general correctness, and security audits are separate workflows.
 license: MIT
 ---
 
-# Clean Slop
+# Clean slop
 
-Remove AI-generated slop from an artifact without changing what it does or says.
+Remove unnecessary material while preserving behavior, meaning, and the project's style. For prose drafting and sentence-level editing, use `stop-slop` if installed; the references here also work on their own.
 
-## When to use
+Cleaning wording or redundant code inside a test fits this scope. Deciding which tests to add, merge, or remove requires coverage and failure-detection evidence; use `test` if installed, or assess those behaviors directly. Do not delete a test because its setup looks repetitive.
 
-Reviewing a diff for unnecessary generated material, or cleaning generated documents, reports, website copy, and design output. Use after non-trivial generated work when an AI-slop pass is wanted.
+## Establish scope
 
-## Process
+Identify the artifact and the baseline before editing. Use the user's selected diff or revision. Otherwise inspect the repository's default branch and merge base rather than assuming `main`. Include working changes only when they are part of the request. For documents and design, use the brief and nearby examples.
 
-1. Establish the baseline. For code, the diff against main. For text and design, the project's existing style and the brief.
-2. Scan the artifact against the patterns below and in the reference files.
-3. Fix: remove cruft, keep behavior and meaning identical.
-4. Self-audit the result. Does it look like a person made it?
-5. Report what you changed in 1-3 sentences.
+Choose the relevant reference; do not load every mode:
 
-## Guardrails
+| Artifact | Read | Focus |
+| --- | --- | --- |
+| Code diff | [references/code.md](references/code.md) | Unnecessary comments, redundant checks, type escapes, dead code, premature abstraction |
+| Commit or PR | [references/commits-and-prs.md](references/commits-and-prs.md) | Concrete outcome, reviewer context, relevant validation |
+| Document or report | [references/documents.md](references/documents.md) | Repetition, filler, formatting, unsupported claims |
+| Website or marketing copy | [references/copy.md](references/copy.md) | Specific claims backed by real evidence |
+| Design output | [references/design.md](references/design.md) | Brief, hierarchy, brand, usable layout |
 
-- Keep behavior unchanged unless you are fixing a clear bug.
-- Make minimal, focused edits, not broad rewrites.
-- Match the surrounding file, codebase, or brand style.
-- Never invent facts, metrics, quotes, logos, or testimonials to replace slop. Use a labeled placeholder or cut the element.
-- Prefer the plainest correct implementation.
+## Edit and verify
 
-## Code
+Make the smallest useful cleanup. Match surrounding conventions. A single-use helper, popular font, gradient, or defensive check is a candidate to inspect, not proof of slop. Preserve boundary validation, accessibility, meaningful abstractions, and licensing notices.
 
-- Extra comments that are unnecessary or inconsistent with local style.
-- Defensive checks and try/catch blocks that are abnormal for trusted code paths.
-- Casts to `any` used only to bypass type issues.
-- Deeply nested code that should be simplified with early returns.
-- Unused variables, imports, parameters, and dead code.
-- Over-abstraction with a single call site, and reimplemented library functions.
-- Style drift: naming, spacing, and error handling that don't match the file.
+Keep claims grounded in supplied evidence. Cut an unsupported claim or flag it for the user; replacing it with an invented statistic, quote, logo, or testimonial creates another problem.
 
-See [references/code.md](references/code.md) for the full list.
+Keep behavior unchanged. Report a discovered bug separately unless the user's task also authorizes fixing it. Run the repository checks relevant to code changes. For visual changes, inspect the affected view at the relevant sizes. Review the final diff for accidental scope growth.
 
-## Commits and pull requests
-
-- Commit messages name the outcome, not the effort: "cut deploy time from 40 minutes to 4", not "improve performance".
-- A PR body is how the developer talks to the team, not how the agent reports back to the person who asked. Proof and verification stay in your reply in the chat; the PR holds a short title and a few outcome bullets.
-- Keep PR titles and bodies short: the title states the outcome, the body lists what changed in a few bullets. No paragraphs of rationale, no praise of the work, no "please review".
-- Add screenshots or illustrations only when the change is visual or the reviewer truly needs them, and label what to look at.
-- If a PR covers more than one coherent change, split it. GitHub supports stacked pull requests; use them instead of one giant PR.
-
-The prose in commit messages, titles, and PR bodies is writing. If `stop-slop` is installed, use it for that prose. Otherwise, apply the relevant writing rules in this skill's copy-side checklist.
-
-See [references/commits-and-prs.md](references/commits-and-prs.md) for the full guide.
-
-## Documents and reports
-
-- Restated sections: "as we saw above", a conclusion that repeats the body.
-- Formatting tells: bold-first bullets, emoji headings, headers over tiny sections.
-- Filler transitions: "it's worth noting", "importantly", "in conclusion".
-- Punctuation tells: em dashes, colon reveals, curly quotes.
-- Generic structure: every section the same shape.
-
-The language rules for prose live in `stop-slop`. If it is installed, use it when the document runs long. Otherwise, follow the relevant rules in this skill's document references.
-
-See [references/documents.md](references/documents.md).
-
-## Copy and website content
-
-- Vague claims without numbers or sources: "trusted by thousands".
-- Fabricated metrics, logos, testimonials, and case-study counts.
-- Buzzwords and fake-strong verbs: leverage, seamless, serves as.
-- Patronizing analogies: "think of it as", "it's like a".
-- Stacked tricolons and punchy fragments for manufactured emphasis.
-- Copy that could sit unchanged on any competitor's site.
-
-`stop-slop` covers prose style, while this skill covers claims and proof. Use both when `stop-slop` is installed.
-
-See [references/copy.md](references/copy.md).
-
-## Design
-
-- The gradient hero with white centered text.
-- One default font (Inter, Roboto, Open Sans) doing display and body work.
-- The icon-tile card grid as the default section shape.
-- Symmetric everything with no layout bias.
-- Fake browser chrome and device frames.
-- Fabricated metrics, logos, and testimonials.
-
-See [references/design.md](references/design.md).
-
-## Reference files
-
-- [references/code.md](references/code.md)
-- [references/commits-and-prs.md](references/commits-and-prs.md)
-- [references/documents.md](references/documents.md)
-- [references/copy.md](references/copy.md)
-- [references/design.md](references/design.md)
+Finish with a short account of what changed, what was checked, and any unresolved issue. A general review, dependency upgrade, redesign, or PR split needs its own task scope.

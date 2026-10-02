@@ -1,73 +1,31 @@
 # Commits and pull requests
 
-Keep commits and PRs short, concrete, and unpolished in the right ways. The goal is that a reviewer or future reader can orient in seconds, not that the agent explains itself.
+Follow the repository's commit convention and PR template. Write for a reviewer who has not seen the conversation. Keep accurate claims, the reason for the change, and relevant validation.
 
-The prose in these messages is writing: pair this reference with the `stop-slop` skill when drafting.
+## Commit message
 
-## Commit messages
+Name the concrete change in the summary. Use the project's casing and prefix convention. A body earns its place when it explains a non-obvious reason, compatibility constraint, or migration. Preserve required trailers and attribution.
 
-- One commit per coherent change. If a diff contains unrelated changes, split it.
-- The summary line names the outcome, not the effort: "cut deploy time from 40 minutes to 4", not "improve performance" or "update stuff".
-- Use the imperative, active voice: "support custom scopes", "require Node.js 22", "drop legacy token fallback". Passive voice reads like a report, not a change.
-- Lower case the summary unless a proper noun or identifier needs casing. No trailing period.
-- Wrap code identifiers in backticks: `--json`, `toSQL()`, `parser`.
-- The body is optional and only when the summary is not enough. Say why, not what. One or two sentences.
-- Footers only for metadata: `BREAKING CHANGE:`, `Reviewed-by:`.
+A measured improvement can be a useful summary, such as "cut deploy time from 40 minutes to 4". Use it only when the measurement exists. Otherwise name the mechanism, such as "reuse build artifacts during deploy".
 
-Conventional Commits shape when the project uses it:
+## PR description
 
-```text
-<type>[optional scope][optional !]: <description>
-```
+Lead with the problem and resulting behavior. Explain a consequential tradeoff when it affects review. Include checks that establish the change works and material limitations, such as an integration test that could not run. CI status complements this evidence; it does not replace context for the reviewer.
 
-Useful types: `feat` (user-facing capability), `fix` (user-facing correction), `refactor` (behavior-preserving), `perf` (measured change), `docs`, `test`, `chore`. Mark breaking changes with `!` before the colon or a `BREAKING CHANGE:` footer.
+Use a short paragraph for a simple change. For a larger change, group concrete outcomes and validation so reviewers can scan them. A fixed bullet count or mandatory format adds noise when the repository already has a template.
 
-Before:
-> feat: integrated comprehensive enhancements and optimizations across the platform to significantly improve overall system performance and robustness
+Cut effort narration, praise, generic claims, and requests to "please review". Link the issue without forcing the reviewer to reconstruct the implementation from it. Use screenshots for visual changes and label what changed.
 
-After:
-> perf: cut deploy time from 40 minutes to 4
+## Large changes
 
-## PR titles
+Keep each PR coherent. Recommend splitting independent work when it improves review, while preserving the user's requested scope. Creating, pushing, or rebasing a stack is a separate action from editing a PR description. Dependency-ordered PRs require compatible tooling and branch management; do not assume every host provides a native stacking workflow.
 
-- State the outcome in a few words. Same shape as a good commit summary, one level broader.
-- No framing as work done: no "Adds implementation for", no "Doing the needful", no "WIP on".
-
-Before: "Improvements to the build system"
-After: "Cut deploy time from 40 minutes to 4"
-
-## PR descriptions
-
-The PR body is how the developer talks to the rest of the team. It is not the agent's report back to the person who asked. The chat reply, the commit trail, and CI carry the proof. The PR body exists for reviewers and future readers to orient fast.
-
-- Keep a short summary plus 3-6 bullets of what the PR changes. Fewer bullets if they fit.
-- Bullets name concrete outcomes, not effort: "scheduler accepts plain-English schedules", "a column rename fails the build".
-- Proof stays out of the PR: what you tested, which checks you ran, what you verified. Those go in your reply in the chat and in the CI status.
-- No paragraphs of rationale. If a decision needs explanation, one sentence pointing at the issue or the code comment.
-- No self-justification: no "this improves developer experience",
-  no praise of the change.
-- No filler: no "please review", no "any feedback welcome", no "I hope this helps". Ask for something specific or stay silent.
-- Link the issue or ticket when there is one. Repeat the why only if the issue does not carry it.
+## Example
 
 Before:
-> This PR significantly enhances the overall performance of the build system, making it more robust and reliable. It leverages cutting-edge optimization techniques and I have thoroughly tested everything to ensure there are no regressions. Please review at your earliest convenience.
 
-After:
-> Build now deploys in minutes, not hours.
->
-> - runner downloads artifacts in parallel
-> - cache key includes lockfile hash, so cache misses are rare
-> - failure output prints the failing job first
+> This PR significantly enhances performance through comprehensive improvements. Please review.
 
-## Screenshots and illustrations
+After, when supported by the actual diff and test run:
 
-- Add them only when the change is visual (UI, layout, flow) or when a reviewer truly needs them.
-- Label each image with what to look at.
-- Add them when asked, even if you think they are not needed.
-
-## Large PRs and stacking
-
-- If a PR covers more than one coherent change, split it into one PR per change.
-- GitHub supports stacked pull requests: build each change on the previous branch and open the PRs in dependency order. They review and merge in order without rewrites.
-- Use a stacking workflow to create, push, rebase, sync, and merge the stack. When a base branch merges, retarget its dependents to the new base.
-- Stacked PRs keep every review small, so reviewers actually read them. A giant PR is harder to review than several small ones, even if the total diff is the same.
+> The deploy runner now downloads independent artifacts in parallel and keys its cache by the lockfile hash. The runner tests pass; production timing has not been measured.

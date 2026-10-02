@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test"
+  short_description: "Test software, devices, services, and native platforms"
+  default_prompt: "Use $test to exercise this project's important workflows, investigate failures, and verify any requested fixes."

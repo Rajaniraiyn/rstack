@@ -1,5 +1,7 @@
 # Deliver
 
+For an external renderer that already owns the final mix, verify its encoded output directly. Use the bundled mastering and mux steps only for separate video and audio intermediates.
+
 ## Master
 
 ```sh
@@ -8,7 +10,7 @@ python scripts/mix.py --music work/audio/stem-music.wav --fx work/audio/stem-fx.
 python scripts/mix.py --music work/audio/stem-music.wav --fx work/audio/stem-fx.wav --out work/final.wav   # music only
 ```
 
-Two-pass loudness normalization to −14 LUFS integrated with a −2 dB true-peak ceiling, 48 kHz stereo. AAC encoding can push the true peak up by up to about 1 dB; the ceiling leaves room so the delivered file stays at or below −1 dBFS.
+Two-pass loudness normalization to −14 LUFS integrated with a −2 dB true-peak ceiling, 48 kHz stereo. AAC encoding can increase true peak. The ceiling leaves headroom, but measure the final encode rather than assuming it stays below −1 dBFS.
 
 ## Poster and mux
 
@@ -19,7 +21,7 @@ python scripts/deliver.py --video work/video-wa.mp4 --audio work/final-wa.wav \
     --poster work/stills/t001.20.jpg --out launch-video/whatsapp/video.mp4
 ```
 
-The poster replaces frame 0 rather than adding a frame, so duration and sync stay the same and every platform's thumbnail shows it; it is also saved as `poster.jpg` beside the video. The script prints duration, size, loudness, and true peak, and warns when the peak is above −1 dBFS or the file is over 25 MB (raise `--crf`).
+The poster replaces frame 0 rather than adding a frame, so duration and sync stay the same; platform thumbnail selection varies. The delivered opening frame is encoded as a real JPEG in `poster.jpg`, including when the input poster is PNG. The script prints duration, size, loudness, and true peak, and warns when the peak is above −1 dBFS or the file is over 25 MB. The size warning is a heuristic, not a platform limit; check the destination’s current requirements before raising `--crf` or changing resolution.
 
 ## Share copy
 
@@ -33,5 +35,5 @@ Tell the user, briefly:
 - the creative angle in one sentence;
 - accuracy decisions that change how the video looks (for example why replies are on the right, or why a privacy line is worded carefully);
 - what was verified (stills reviewed, speech recognition on the voice, loudness) and that they should listen once before posting;
-- that the output folder is untracked;
-- one line offering the next useful iteration (another tone, format, platform, or voice).
+- the output folder's git tracking status, if checked;
+- material limitations, including any unavailable playback or listening check.

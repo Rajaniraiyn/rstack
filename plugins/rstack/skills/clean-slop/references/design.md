@@ -1,30 +1,23 @@
-# Design slop
+# Design cleanup
 
-Remove AI-generated design defaults from UI output without changing the brief.
+Start from the brief, existing brand, and design tokens. Repeated defaults can make generated output feel interchangeable, but a font, gradient, centered heading, or card grid is not inherently wrong.
 
-## The defaults every model reaches for
+## Inspect the choices
 
-- The purple-to-blue hero gradient with white centered text. Pick a single anchor hue. No gradient backgrounds on heroes.
-- One default sans (Inter, Roboto, Open Sans) doing display and body work. Pair a distinctive display face with a plain body face.
-- Centered everything: headline centered, body centered, button centered. Bias the layout: wide left, narrow right, or the reverse. Breaking symmetry once registers intent.
-- The icon-tile feature card as the default section shape. Use different shapes: a statement, a table, a quote, a stat row.
-- The same page rhythm every time: hero, three features, CTA, footer. Different pages should feel like different sites, not color swaps of one template.
+Look for hierarchy that leaves every element equally prominent, sections that repeat the same shape without helping comparison, decorative effects that compete with the content, and mock browser or device chrome that adds no useful context.
 
-## Detail
+Change a choice when it obstructs the brief, readability, or the user's flow. Preserve an intentional layout or brand treatment. A second display font is useful only when it improves hierarchy and remains readable; it is not a mandatory cure for a popular sans serif.
 
-- Fake browser chrome: URL pill with traffic-light dots, mock code windows with title bars, fake device frames. Use real screenshots in a plain figure, or nothing.
-- Italic headers. A reliable AI tell. Carry emphasis with weight, color, or an underline. Italic survives only in body copy.
-- Bold-first bullets in design docs. Remove the bold leads.
-- Stock iconography: the same gear, rocket, shield, bolt set. Use specific, drawn, or text-only markers.
-- Everything the same weight and size. Build a hierarchy with clear steps down from the hero size.
+## Preserve usability
 
-## Honesty
+Check text contrast, focus visibility, keyboard use, labels, responsive layout, and reduced-motion behavior where the changed view uses them. Keep real status and validation feedback. Decorative cleanup should not remove affordances or semantic colors.
 
-- Fabricated metrics, testimonials, logos, and case-study counts. Slop the moment they are invented. Use real numbers, a labeled placeholder ("metric to confirm"), or a layout that needs none.
-- Stat-led layouts with invented numbers. Same rule: real numbers, a placeholder, or a different macrostructure.
+Use real screenshots when they communicate the product more accurately than an invented mock. Keep required attribution and third-party marks in their proper context.
 
-## When cleaning an existing design
+## Check claims
 
-- Keep behavior and meaning unchanged.
-- Match the project's existing design direction and tokens unless the brief asks for a change.
-- Prefer minimal, focused edits over a redesign.
+Remove invented metrics, testimonials, logos, and case-study counts. Use verified source material or a clearly labeled placeholder when the user is reviewing an unfinished layout. Recheck labels and copy after layout changes.
+
+## Finish
+
+Make focused edits, inspect the affected view at relevant sizes, and compare against the original brief. A redesign, new component system, or accessibility audit exceeds a cleanup pass unless requested.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stop slop"
+  short_description: "Edit prose while preserving the writer's voice"
+  default_prompt: "Use $stop-slop to edit this prose while preserving its facts and voice."

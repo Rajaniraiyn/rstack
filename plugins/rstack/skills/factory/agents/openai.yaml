@@ -1,6 +1,6 @@
 interface:
   display_name: "Factory"
-  short_description: "Route software tasks across agent CLIs and worktrees"
-  default_prompt: "Use $factory when I ask you to delegate or route this task."
+  short_description: "Delegate tasks across installed agent harnesses"
+  default_prompt: "Use $factory to delegate this task using my configured agent routes."
 policy:
   allow_implicit_invocation: false
