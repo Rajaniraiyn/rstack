@@ -46,7 +46,7 @@ copilot skill add ./plugins/rstack/skills
 copilot skill list
 ```
 
-Directory registration keeps the collection in place, so retain the checkout. Avoid installing only `SKILL.md` because this skill also needs its bundled reference. See [Copilot's skill commands](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#managing-skills-non-interactively).
+Directory registration keeps the collection in place, so retain the checkout. Avoid installing only `SKILL.md` because skills can need bundled references, scripts, and assets. See [Copilot's skill commands](https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-command-reference#managing-skills-non-interactively).
 
 For a copied project install, GitHub CLI also provides skill installation:
 
@@ -95,7 +95,7 @@ An upload does not provide a local checkout, Python environment, or MCP connecti
 
 ## Shared fallback with skills.sh
 
-[Vercel's skills.sh](https://skills.sh/docs) provides the `skills` CLI. It discovers the same skill folders and installs them into each selected agent's supported location. Node.js with `npx` is required; [uv](https://docs.astral.sh/uv/) is only needed to develop or package R Stack.
+[Vercel's skills.sh](https://skills.sh/docs) provides the `skills` CLI. It discovers the same skill folders and installs them into each selected agent's supported location. Run it with Node.js and `npx`, or with Bun using `bunx --bun skills` in place of `npx skills`; [uv](https://docs.astral.sh/uv/) is only needed to develop or package R Stack.
 
 Install from this repository, listing or choosing skills and agents interactively:
 
@@ -130,4 +130,4 @@ All seven named clients accept the shared [Agent Skills format](https://agentski
 
 Checked on 2026-09-17 with `skills@1.6.0`: each of the seven agent targets installed the starter skill and its reference into an isolated temporary project. Native commands above were checked against official documentation or installed CLI help. Claude's plugin/catalog validators pass. These checks do not run the models or certify activation in every app.
 
-For shared CLI installs, use `npx skills check` and `npx skills update`. Native plugins update through their client marketplace. Rebuild and re-upload web skill ZIPs after changes.
+For shared CLI installs, inspect installed skills with `npx skills list` and refresh them with `npx skills update`. Checked current help with `bunx --bun skills -h` on 2026-10-03 (`skills@1.7.0`); this version has no `check` command. Consult installed help for scope and selection options. Native plugins update through their client marketplace. Rebuild and re-upload web skill ZIPs after changes.

@@ -1,11 +1,12 @@
 # Inspect
 
-Decide what the input is, then gather material. Only the source changes; everything after the brief questions is the same for every input.
+Decide what the input is, then gather material. Use the supplied brief and existing conversation before gathering missing material.
 
 | Input | Recognize it by | Material comes from |
 |---|---|---|
 | Project | no input, and the current directory is a project | the code |
 | Website | an `http(s)://` URL or a bare domain | the live site |
+| Brief or assets | supplied description, screenshots, brand kit, or recordings | supplied material, with claims verified against available product evidence |
 
 If neither fits, ask what the video is about.
 
@@ -42,4 +43,4 @@ Write these decisions into `plan.md` under an "Accuracy" heading so the next ite
 
 ## Brief questions
 
-Answer before planning: What is it, in one sentence? Who is it for, and what does it do for them? What sets it apart? What is the most impressive or funniest true thing? What is the visual hook? Which real UI or flow will be shown? What tone fits? What is the one-line share caption?
+Resolve these from supplied material and context before planning; ask only for consequential missing information: What is it, in one sentence? Who is it for, and what does it do for them? What sets it apart? What is the most impressive or funniest true thing? What is the visual hook? Which real UI or flow will be shown? What tone fits? What is the one-line share caption?

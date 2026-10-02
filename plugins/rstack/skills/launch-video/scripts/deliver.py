@@ -2,7 +2,7 @@
 """Mux the rendered video with the mastered audio, bake the poster in as frame 0, verify.
 
 Frame 0 is replaced (not prepended), so duration and sync are unchanged and
-every platform's auto-thumbnail shows the poster. Prints duration, size,
+the opening frame uses the poster. Platform thumbnail selection varies. Prints duration, size,
 loudness, and true peak so the report can state them.
 
 Usage:
@@ -47,12 +47,14 @@ def main():
     cmd = [ffmpeg(), "-y", "-v", "error", "-i", args.video]
     if args.poster:
         cmd += ["-i", args.poster, "-i", args.audio, "-filter_complex", "[1:v][0:v]scale2ref[p][v];[v][p]overlay=enable='eq(n,0)'[o]", "-map", "[o]", "-map", "2:a"]
-        shutil.copy(args.poster, out.parent / "poster.jpg")
     else:
         cmd += ["-i", args.audio, "-map", "0:v", "-map", "1:a"]
     cmd += ["-c:v", "libx264", "-crf", str(args.crf), "-preset", "slow", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", "-shortest", str(out)]
     subprocess.run(cmd, check=True)
+    if args.poster:
+        subprocess.run([ffmpeg(), "-y", "-v", "error", "-i", str(out),
+                        "-frames:v", "1", "-update", "1", str(out.parent / "poster.jpg")], check=True)
 
     dv, da, do = duration(args.video), duration(args.audio), duration(str(out))
     if abs(dv - da) > 0.05:
@@ -65,7 +67,7 @@ def main():
     if float(peak) > -1.0:
         print("note: true peak above -1 dBFS after AAC; re-master with mix.py --tp -2.5.", file=sys.stderr)
     if size > 25:
-        print("note: over 25 MB; some chat apps reject it. Re-run with a higher --crf.", file=sys.stderr)
+        print("note: output exceeds 25 MB; verify the destination limit before adjusting --crf.", file=sys.stderr)
 
 
 if __name__ == "__main__":

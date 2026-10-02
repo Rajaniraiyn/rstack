@@ -1,0 +1,4 @@
+interface:
+  display_name: "Clean slop"
+  short_description: "Remove generated clutter from scoped artifacts"
+  default_prompt: "Use $clean-slop to clean this artifact while preserving its behavior and meaning."

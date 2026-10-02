@@ -1,22 +1,39 @@
 ---
 name: rstack-author-skill
-description: Create or revise a portable skill in R Stack, for this repository's own authors only. Use when adding a new reusable agent workflow, writing or editing SKILL.md, or structuring a skill for this repository.
+description: Create, compare, or revise self-contained portable skills in R Stack. Maintainer workflow for skill authoring, frontmatter, resource structure, and validation.
 license: MIT
 disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: "false"
 ---
 
 # Author a skill
 
-Identify the repeatable task, the requests that should trigger it, and the expected result. Use the user's examples when available. Ask only for missing decisions that would change the skill's behavior.
+Start from the repeatable task and the decisions an agent needs help making. In R Stack, canonical skills live in `plugins/rstack/skills/<skill-name>/`. Read the repository instructions and an existing skill before editing.
 
-Inspect the target repository's authoring instructions and an existing skill before choosing a location. In R Stack, use `plugins/rstack/skills/<skill-name>/`.
+## Establish the need
 
-Write a `SKILL.md` with a matching lowercase, hyphenated name and a description that helps hosts route matching requests. Name the task and the user requests that should load it. Keep the body focused on decisions an agent would otherwise get wrong. Preserve the user's scope and avoid introducing extra approval steps.
+Identify the user's matching requests, a nearby request outside scope, and the expected artifact. Inspect existing skills before adding another. Merge overlapping branches when they share an outcome and invocation policy; keep independently useful workflows separate. Preserve installed names unless a migration is intentional.
 
-Use [the portability checklist](references/portability.md) when the skill must work across clients. Put supporting references, executable helpers, and output templates inside the skill directory. Link references where the agent needs them. Do not require another installed skill unless that dependency is intentional and documented.
+For a comparison or update, read [references/research.md](references/research.md). Discover comparable skills in several ways, inspect their actual source, and check current official docs. Borrow a useful design principle without inheriting another package's services, approvals, scheduler, or tool names.
 
-In an R Stack checkout, run `uv run scripts/rstack.py check` and package the skill with `uv run scripts/rstack.py package`. In another repository, use its own checks. Exercise any new script with a representative input. Check a realistic matching request and a nearby request that should not trigger the skill.
+## Write the smallest complete workflow
 
-Report the skill's location, intended trigger, validation results, and any host-specific limitation.
+Keep `name` and `description` in valid YAML. The description tells the host what the skill does and when it applies. The body states the outcome, essential decisions, constraints, and completion conditions. Remove instructions that repeat host behavior or can be obtained from one local lookup.
+
+Inline what every branch needs. Put substantial branch-specific details in a bundled reference and link it with a condition for reading it. Put deterministic repeated operations in scripts and output material in assets. Add a file only when the workflow uses it. Keep independently installed skills self-contained.
+
+Read [references/portability.md](references/portability.md) for frontmatter and host boundaries. New skills use automatic discovery unless the user requests explicit-only invocation; preserve existing policy unless the user requests a change. Provider-specific settings belong in the documented adapter, not a portable workflow's prose.
+
+## Validate and hand off
+
+Use [references/evaluation.md](references/evaluation.md) to check routing and task behavior. Static validation proves structure, not task quality. Exercise changed helpers with representative inputs and include an error or boundary case where it matters.
+
+In this checkout, run:
+
+```sh
+uv run scripts/rstack.py sync
+uv run scripts/rstack.py check
+uv run python -m unittest discover -s tests
+uv run scripts/rstack.py package
+```
+
+Edit shared identity in `plugins/rstack/plugin.json` before syncing. In another repository, use its own checks. Report the skill location, intended scope, changes, checks actually run, and host or runtime limitations. Separate a proposed evaluation from a completed run.

@@ -10,11 +10,12 @@ Reusable skills for Claude Code, Codex, Cursor, GitHub Copilot, Amp, OpenCode, a
 
 ## Skills
 
-- [stop-slop](plugins/rstack/skills/stop-slop/SKILL.md): cut AI tells from anything you write or say.
-- [clean-slop](plugins/rstack/skills/clean-slop/SKILL.md): remove AI slop from code, diffs, documents, copy, and design output.
+- [stop-slop](plugins/rstack/skills/stop-slop/SKILL.md): draft and edit prose while preserving the writer's voice.
+- [clean-slop](plugins/rstack/skills/clean-slop/SKILL.md): clean generated clutter from scoped diffs, documents, copy, and design output.
 - [factory](plugins/rstack/skills/factory/SKILL.md): route work across agent harnesses, models, and worktrees, and run them headlessly.
-- [launch-video](plugins/rstack/skills/launch-video/SKILL.md): make polished launch and promo videos (landscape, vertical, square) with motion, music, and an optional voiceover.
-- [rstack-author-skill](plugins/rstack/skills/rstack-author-skill/SKILL.md): create or revise a portable skill for this repository.
+- [test](plugins/rstack/skills/test/SKILL.md): choose and run meaningful tests for apps, services, terminals, extensions, devices/firmware, robotics, libraries, data/ML, games, and media.
+- [launch-video](plugins/rstack/skills/launch-video/SKILL.md): make polished launch and promo videos (landscape, vertical, square) with motion, music, and optional voiceover using bundled HTML, Remotion, fframes, or Hyperframes.
+- [rstack-author-skill](plugins/rstack/skills/rstack-author-skill/SKILL.md): compare, author, and validate portable skills for this repository.
 
 ## Install
 

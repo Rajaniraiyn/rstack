@@ -35,14 +35,14 @@ Look at every scene and every transition midpoint. Common failures:
 
 | Symptom | Cause and fix |
 |---|---|
-| serif text in a phone or lock screen | `-apple-system` does not resolve headless; use `system-ui` |
+| serif text in a phone or lock screen | the requested font is unavailable; bundle an authorized font or choose and verify an intentional fallback |
 | headline runs off the frame | measure with `offsetWidth` (unaffected by transforms) and split to two lines |
 | caption words laid out side by side oddly | a flex container turned inline spans into flex items; wrap the content in one block element |
 | text from one scene shows in another | a child `visibility` overriding its hidden scene; gate by time |
 | code overflows a chat bubble | shorten lines, or summarize the change |
 | muddy frame during a transition | stagger out then in, or dip through the background |
 | layout changes after fonts load | measure inside `window.ready`, not at script start |
-| emoji render as boxes | the machine lacks a color emoji font; there should be no emoji anyway |
+| emoji render as boxes | the machine lacks the required glyphs; use a suitable font when the real UI or brief requires emoji |
 
 ## Render
 
@@ -51,4 +51,4 @@ python scripts/render.py video work/landscape.html --duration 22.5 --out work/vi
 python scripts/render.py video work/vertical-chat.html --size 1080x1920 --query "?p=tg" --duration 22.5 --out work/video-tg.mp4
 ```
 
-The renderer is stdlib Python: it starts headless Chrome (`CHROME` overrides the path), drives it over the DevTools protocol, and pipes JPEG frames to ffmpeg (`FFMPEG` overrides the path). Expect roughly 10–15 frames per second. Several cuts can render in parallel. The intermediate is high quality (`--crf 15`); `deliver.py` makes the final encode.
+The renderer is stdlib Python: it starts headless Chrome (`CHROME` overrides the path), drives it over the DevTools protocol, and pipes JPEG frames to ffmpeg (`FFMPEG` overrides the path). Measure rendering speed on this host before estimating completion. Render independent cuts in parallel only within available CPU and memory, with separate output paths. The intermediate is high quality (`--crf 15`); `deliver.py` makes the final encode.

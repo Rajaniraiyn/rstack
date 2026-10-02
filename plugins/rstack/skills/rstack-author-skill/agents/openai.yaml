@@ -1,6 +1,6 @@
 interface:
   display_name: "Author an R Stack skill"
-  short_description: "Create or revise skills for the R Stack repository"
-  default_prompt: "Use $rstack-author-skill to add a reusable workflow to R Stack."
+  short_description: "Compare, author, and validate portable skills"
+  default_prompt: "Use $rstack-author-skill to compare and revise a reusable R Stack workflow."
 policy:
   allow_implicit_invocation: false

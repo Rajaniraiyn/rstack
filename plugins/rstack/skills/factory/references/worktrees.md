@@ -1,6 +1,6 @@
 # Worktrees
 
-Give each parallel writer its own git worktree. Separate working copies prevent agents from overwriting each other's files during execution, but their changes can still conflict when merged. Worktrees share git objects and repository configuration; they are not a security sandbox. Reduce install costs with package-manager caches, not shared writable dependency trees.
+Use separate worktrees when parallel workers build independently, run mutating tools, or cannot safely share a checkout. For built-in subagents making disjoint file edits, explicit ownership can suffice; include generated files and outputs in the ownership check. Separate working copies prevent agents from overwriting each other's files during execution, but their changes can still conflict when merged. Worktrees share git objects and repository configuration; they are not a security sandbox. Reduce install costs with package-manager caches, not shared writable dependency trees.
 
 ## Create
 

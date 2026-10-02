@@ -1,61 +1,44 @@
-# Routing
+# Model routing
 
-Route each task to a harness, a model, and an effort level. The lowest cost per finished task wins; escalate only when the workhorse tier fails or the task is known-hard.
+Verified against official provider documentation on 3 October 2026. Replace this shortlist when the recommended lineup changes; keep one current table rather than appending generations. Confirm the installed harness and account expose a model before dispatching it. API availability does not establish subscription or CLI availability.
 
-## Effort levels
+## Current shortlist
 
-Effort selects how much reasoning the model spends. Treat the scale as transitive across harnesses:
+| Provider | Model | API ID | Starting role |
+| --- | --- | --- | --- |
+| OpenAI | GPT-6.1 Sol | `gpt-6.1-sol` | Balanced implementation and ordinary coding |
+| OpenAI | GPT-6 Astra | `gpt-6-astra` | Demanding reasoning, coding, and long-running work |
+| OpenAI | GPT-6 Luna | `gpt-6-luna` | Focused, high-volume, cost-sensitive tasks |
+| Anthropic | Claude Opus 5.5 | `claude-opus-5-5` | General starting point and long-running coding |
+| Anthropic | Claude Sonnet 5.5 | `claude-sonnet-5-5` | Faster implementation route |
+| Anthropic | Claude Fable 5.1 | `claude-fable-5-1` | Demanding reasoning and long-horizon work |
+| Anthropic | Claude Haiku 4.5 | `claude-haiku-4-5-20251001` | Fast, inexpensive focused tasks |
+| Google | Gemini 3.8 Flash | `gemini-3.8-flash` | Current stable general route through a configured provider |
+| Google | Gemini 3.5 Flash-Lite | `gemini-3.5-flash-lite` | Current stable cost-sensitive route through a configured provider |
 
-- `low`: mechanical edits, renames, boilerplate, simple factual answers.
-- `medium`: normal implementation, tests, conventional refactors.
-- `high`: architecture, tricky bugs, multi-step plans, reviews.
-- `xhigh` / `max` / `ultracode` (Claude) or `max` (OpenCode `provider/model#variant`): frontier problems, long-horizon agent work.
+Roles follow the [OpenAI catalog](https://developers.openai.com/api/docs/models), [Claude lineup](https://platform.claude.com/docs/en/models/overview), and [Gemini catalog](https://ai.google.dev/gemini-api/docs/models). They are starting choices, not a measured ranking on this repository. Haiku 4.5 remains the listed Haiku generation; its smaller version number does not make it a retired model. Restricted-access and preview models are excluded from the default shortlist.
 
-Match the knob per harness: Claude Code `--effort`, OpenCode variants via `provider/model#variant` (for example `openai/gpt-5.5#high`), Codex reasoning via its model or profile settings, Amp and Copilot through their model and mode settings. Do not quote level names across harnesses; translate the intent. Low or medium effort is the default on frontier models; see [Cost per task, not per token](#cost-per-task-not-per-token).
+## Defaults and escalation
 
-Always-on thinking models (for example Claude Fable) cannot disable thinking, so they are wrong for high-volume cheap work even when their price is fine.
+Preserve the user's explicit model or saved route. Without an existing choice, start ordinary implementation with GPT-6.1 Sol on an available OpenAI route or Opus 5.5 on an available Claude route. Use Luna, Haiku, Sonnet, or Flash-Lite for a representative focused task before dispatching a large inexpensive batch. Use Gemini 3.8 Flash when that configured provider fits the task.
 
-## Model tiers
+For demanding work, choose Astra or Fable when available. Escalate an ordinary route after a demonstrated capability failure, or choose the stronger route up front when the problem warrants it. A new release alone does not justify overriding the user's choice, switching providers, or claiming lower cost.
 
-The exact model list changes every few months. The tiers are the durable part:
+Review with an independent available route within budget. Collect elapsed time, retries, accepted outputs, and actual billed cost when available. Subscription runs still have quotas. Update defaults from those results rather than leaderboards.
 
-- **Cheap tier**: high-volume, mechanical work. Haiku-class models, or the cheapest family member of the provider in use. Low effort. Good for bulk triage, summaries, renames.
-- **Workhorse tier**: normal implementation. Sonnet-class models on Claude, the standard GPT model in the provider's harness (for example the GPT family served by Codex). Medium effort. This is the default for most tasks.
-- **Frontier tier**: hard reasoning, long-horizon agentic work, adversarial review, rare bugs. Top models (Claude Fable 5.1, GPT-6 Astra, Opus-class) at the effort the task needs, often low or medium; raise only when the task needs it or the user asked. Use it when the workhorse failed, the task is known-hard, or its cost per finished task is lower; see [Cost per task](#cost-per-task-not-per-token).
+## Reasoning settings
 
-## Cost per task, not per token
+Use the user's setting or the model and harness default. Translate intent through current installed help; provider effort names are not equivalent.
 
-Price per token is not cost. A model that finishes a task in fewer tool calls and less rework can be cheaper overall than a model with a lower token price that wanders, over-thinks, or fails and needs a rerun. Judge routes by what a finished task costs, not by the price list.
+- [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) supports API effort `low`, `medium`, `high`, `xhigh`, and `max`, with `medium` as default. It does not support `none` or `minimal`.
+- [GPT-6 Astra](https://developers.openai.com/api/docs/models/gpt-6-astra) supports API effort `low`, `medium`, `high`, `xhigh`, and `max`.
+- [GPT-6 Luna](https://developers.openai.com/api/docs/models/gpt-6-luna) also supports `none`; its API default is `medium`.
+- Claude's current model table lists default effort `medium` for Opus 5.5 and `high` for Sonnet 5.5 and Fable 5.1. Haiku 4.5 has no effort parameter. Opus and Fable use always-on adaptive thinking. Check [Claude Code model configuration](https://code.claude.com/docs/en/model-config) for CLI aliases and supported controls.
 
-Defaults that usually win on cost:
+API settings are not CLI arguments. OpenCode provider prefixes and variants depend on its configured provider; Amp and Copilot can expose different selections. Resolve them through [harnesses.md](harnesses.md) rather than manufacturing a command from an API ID.
 
-- Frontier models at low or medium effort. GPT-6 Astra usually runs well at low effort; Fable 5.1 usually at low or medium. Raise effort only when the task needs it or the user asked.
-- Workhorse models at medium effort for normal implementation.
-- Cheap models at low effort for mechanical batches.
+## Budgets and refresh
 
-Pick routes from practice, not leaderboards. Benchmarks rarely predict agentic cost or completion on your repo. Practitioner write-ups, other routing skills, and your own measured cost per task are better evidence. Track what each route actually spends per finished task and adjust the defaults from that record.
+Put the retry and spend limits in the worker brief. Enforce a native cost cap only when supported; a timeout limits wall time, not dollars. Inspect logs and artifacts before retrying. Fix setup failures, narrow a vague brief, or escalate a demonstrated reasoning failure. Stop at the configured limit and retain partial work.
 
-## Routing rules
-
-1. Classify the task: mechanical, normal, or hard.
-2. Assign the route with the lowest likely cost per finished task, not the lowest token price.
-3. Run. If the result is wrong, stuck, or the task turns out harder than classified, escalate one tier and rerun that step, usually at low or medium effort first. Prefer forking the failed session at the higher tier where the harness supports it instead of restarting cold; see [subagents.md](subagents.md).
-4. For work that has to be right (releases, security, user-facing copy), spend one extra tier up front: run the review gate from [reviews.md](reviews.md) with a different harness or model at high effort.
-5. Parallelize independent tasks across worktrees so cheap models finish batches while one frontier model handles the hard core. See [worktrees.md](worktrees.md).
-
-## Cost controls
-
-- Set a dollar cap wherever the harness supports it (Claude Code `--max-budget-usd`; Codex and others via profiles or limits).
-- Prefer cheap tier for the bulk of a batch; a few frontier calls should not dominate the bill.
-- Re-run reduced: when a task fails, retry with the same or one tier higher, never max effort by default.
-- Watch auto-compact and thinking budgets: long context pushes cost even on cheap models. Shorten the task text before escalating models.
-
-## Escalation ladder example
-
-Mechanical bugfix on an unfamiliar codebase:
-
-1. Workhorse, medium effort, one worktree.
-2. If diagnosis is wrong: frontier tier at low or medium effort first, same worktree; raise effort only if the retry also fails.
-3. If the fix is risky: add a review gate with a second harness at high effort before handing back.
-
-Report the route you took and why, so the user sees the cost decision and can change the defaults.
+During factory setup or a requested model refresh, fetch the official catalogs, check actual harness support, replace superseded rows and examples, and update the verification date. Keep current supported family members; remove retired and obsolete default choices. Record any approved change to saved routes. Preserve credentials and unrelated configuration. Fetch current pricing when a budget decision requires it rather than maintaining another price table here.

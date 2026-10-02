@@ -34,6 +34,10 @@ just, literally, honestly, simply, actually, truly, fundamentally, importantly, 
 
 highlighting, underscoring, reflecting, showcasing, contributing to, fostering. These tack fake significance onto a fact. Replace with the actual consequence: "The launch adds file search, so users can find old drafts without leaving the editor."
 
+## Abstract metaphor nouns
+
+Substrate, nexus, locus, north star, flywheel, scaffolding, and similar metaphors often obscure the actual mechanism. Replace a metaphor with the concrete component or action when it carries no technical meaning. Keep precise terms such as "vector" or "primitive" when they are used in their domain.
+
 ## Business buzzwords
 
 ecosystem (abstract), landscape, synergy, circle back, move the needle, low-hanging fruit, best-in-class, world-class, mission-critical, bandwidth (as capacity), touch base, drill down, key takeaway, actionable, pivot, holistic, granular, next-generation, industry-leading. Cut them or name the actual thing.

@@ -55,6 +55,21 @@ def probe(name: str, command: list[str]) -> dict:
     return {"installed": True, "path": path, "version": version}
 
 
+def save_report(path: Path, report: dict) -> None:
+    """Refresh detection without discarding saved routes or user settings."""
+    config = json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(config, dict) or not isinstance(config.get("harnesses", {}), dict):
+        raise ValueError("factory config must be an object with a harnesses object")
+    harnesses = config.setdefault("harnesses", {})
+    for name, detected in report.items():
+        existing = harnesses.get(name, {})
+        if not isinstance(existing, dict):
+            raise ValueError(f"factory harness {name} must be an object")
+        harnesses[name] = {**existing, **detected}
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(config, indent=2) + "\n")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -77,11 +92,11 @@ def main() -> int:
 
     print("\nfactory config: " + str(CONFIG_FILE))
     if args.write:
-        CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
-        CONFIG_FILE.write_text(
-            json.dumps({"harnesses": {n: r for n, r in report.items()}}, indent=2)
-            + "\n"
-        )
+        try:
+            save_report(CONFIG_FILE, report)
+        except (OSError, ValueError) as exc:
+            print(f"could not update factory config: {exc}", file=sys.stderr)
+            return 1
         print("written.")
     else:
         print("not written; pass --write to save.")

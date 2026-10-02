@@ -2,12 +2,12 @@
 
 Wire the factory once, before routing work at scale. The goal is a decided configuration: which harnesses and models the user can reach, which sources feed the factory, and any cost limits. The user owns authentication; you never log in, create tokens, or store credentials.
 
-## Ask first
+## Inspect before asking
 
 Ask the user for what the machine cannot tell you:
 
 - Which harnesses they use or want: Claude Code, Codex, OpenCode, Amp, GitHub Copilot.
-- Which models they can reach: Claude Opus or Sonnet, Fable 5.1, Haiku, GPT-6 Astra, the GPT-5.x family, or other providers through their subscriptions.
+- Which current routes they can reach: check the shortlist in [routing.md](routing.md) against the installed providers and subscriptions. Preserve an explicitly selected model; refresh old saved defaults only when the user requested migration.
 - Which sources feed the factory: GitHub issues, Sentry, Jira via `acli`, Linear, or MCP servers they already wired.
 - Any budget or effort preferences: a per-task or per-session dollar cap, and when to escalate to a frontier model.
 
@@ -28,18 +28,18 @@ sentry-cli --version
 acli --version
 ```
 
-Or run the portable helper, which probes all of these and prints versions:
+Or run the portable helper, which probes all of these and prints versions. Resolve its path from the installed skill directory, not the project's working directory:
 
 ```sh
 python3 scripts/factory-setup.py        # read-only report
 python3 scripts/factory-setup.py --write  # save the report to user config
 ```
 
-It writes `~/.config/rstack/factory.json` (or the platform equivalent), never touches auth state, and works on macOS, Linux, and Windows.
+It updates the detected harness records in `~/.config/rstack/factory.json` (or the platform equivalent), never touches auth state, and works on macOS, Linux, and Windows.
 
 ## Verify harness documentation
 
-Flags and model names change fast. Before relying on a harness flag in this skill, confirm it against the harness's own docs or `--help`, and note the version you verified. See [harnesses.md](harnesses.md) for the per-harness invocation tables, each with a checked date.
+Flags and model names change fast. Before relying on a harness flag in this skill, confirm it against the harness's own docs or `--help`, and note the version you verified. See [harnesses.md](harnesses.md) for the headless entry points and authoritative documentation.
 
 ## Decide and record
 

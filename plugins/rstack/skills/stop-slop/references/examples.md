@@ -1,5 +1,7 @@
 # Before and after
 
+These illustrative rewrites assume the stated product behavior and measurements are verified. In a real edit, preserve the source's facts and qualifications. Do not infer a measurement, audit result, or product capability from a vague original.
+
 ## Chat reply
 
 Before:

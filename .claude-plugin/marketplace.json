@@ -16,7 +16,8 @@
         "./skills/factory",
         "./skills/launch-video",
         "./skills/rstack-author-skill",
-        "./skills/stop-slop"
+        "./skills/stop-slop",
+        "./skills/test"
       ]
     }
   ]

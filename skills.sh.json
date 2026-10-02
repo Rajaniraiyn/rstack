@@ -30,6 +30,13 @@
       "skills": [
         "launch-video"
       ]
+    },
+    {
+      "title": "Testing",
+      "description": "Test applications, services, terminals, and native platforms.",
+      "skills": [
+        "test"
+      ]
     }
   ]
 }
