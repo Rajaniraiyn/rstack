@@ -71,3 +71,5 @@ Pass the selected engine the storyboard, real assets and claim sources, aspect r
 If the engine already mixes and masters audio, verify that output directly. Otherwise render a silent intermediate and use the bundled mix and delivery helpers. Never mux a second soundtrack over an already mixed one by accident. Keep a settled poster beside the video; replacing frame zero is optional and does not control every platform's thumbnail selection.
 
 Record engine version, commands, checks, and limitations in the plan. A documented route is not an end-to-end certification of every machine or backend.
+
+For onetake and character-directed comparison sources, use [upstream-workflows.md](upstream-workflows.md). They inform production choices; they do not silently replace the chosen renderer or establish a supported generation service.

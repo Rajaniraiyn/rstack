@@ -37,7 +37,7 @@ The goal is a video a designer would have made, not one a model generated. Most 
 
 - **Masked line reveals** for headlines (each line rises out of a clip), **stamps** for words on the beat (appear at full size with a two-frame settle), **enter** (short rise and fade) for cards and rows.
 - **Camera** on app windows: push toward the part that matters, hold while it is read, pull back. Ease in and out; never zoom past legibility.
-- **Hard cuts on the beat** between scenes. Where a transition is needed, stagger it (old content out, then new content in) or dip through the background; a plain crossfade between two busy layouts makes a muddy double exposure.
+- Choose deliberate cuts or a meaningful visual handoff between scenes. Align emphasis with the beat when it helps the story. Use [motion-direction.md](motion-direction.md) for continuity and camera review; a plain crossfade between busy layouts can create muddy double exposure.
 - Typing at a believable speed with a caret; messages landing with a small rise; buttons pressed with a slight scale-down on click; a real cursor path.
 - Keep readable content settled long enough to read. Background motion can continue if it does not compete with the text.
 
