@@ -2,7 +2,7 @@
 
 ## Angle and hook
 
-Pick one angle a stranger gets in one viewing, then plan the hook before anything else. Strong hooks, in order of how often they worked:
+Pick one angle a stranger gets in one viewing, then plan the hook before anything else. Useful hook options:
 
 - **The product's own funny truth.** A real UI string, a real behavior, a real number. ("Committing at 2am?" from the app's own late-night greeting; "Ship it and sleep." from its night greeting.)
 - **The payoff first, then rewind.** Open on the finished result (a merged PR, a sent reply), then "Here's how." and rewind the UI.
@@ -54,4 +54,4 @@ Same story, different framing: the vertical cut is not the landscape cut shrunk.
 
 ## Plan file
 
-Write `plan.md`: what it is, who it is for, angle, hook, highlights, punchline, tone, formats, accuracy decisions, the real material used, and a storyboard table with start times per scene. For a round of feedback, add a "What changed" section at the top.
+Write `plan.md`: what it is, who it is for, angle, hook, highlights, punchline, tone, formats, accuracy decisions, the real material used, and a storyboard table with scene start/end times, purpose, focus/action, readable hold, audio, and the intended handoff or cut. Use [motion-direction.md](motion-direction.md) for continuity planning and [generated-sequences.md](generated-sequences.md) when shots are generated independently. For a round of feedback, add a "What changed" section at the top.

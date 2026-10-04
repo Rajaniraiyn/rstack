@@ -1,6 +1,6 @@
 ---
 name: launch-video
-description: Create a finished product launch, demo, or promo video with a storyboard, motion, sound, poster, and share copy. Use for launch videos, /brag requests, or social cuts for Reels, TikTok, and Shorts.
+description: Create a finished product launch, demo, or promo video with a storyboard, motion, sound, poster, and share copy. Use for launch videos, animated product explainers, /brag requests, or social cuts for Reels, TikTok, and Shorts.
 license: MIT
 compatibility: Rendering needs a chosen local toolchain. Bundled renderer needs Python 3.10+, Chrome or Chromium, and ffmpeg; Remotion needs its JS toolchain; fframes needs Rust and native libraries. Optional local voice checks need uv and model downloads.
 ---
@@ -25,6 +25,8 @@ Respect the user's engine and an existing project's toolchain. Otherwise choose 
 - Hyperframes for an existing Hyperframes composition or the user's requested route.
 
 These alternatives are optional. Installing this skill does not install them. Keep a working engine unless a demonstrated requirement justifies migration. Benchmark a representative scene before claiming a speed advantage.
+
+For continuous-camera motion or disconnected scene changes, read [references/motion-direction.md](references/motion-direction.md). For character explainers, generated clip sequences, prompt-only packages, or localization, read [references/generated-sequences.md](references/generated-sequences.md). [references/upstream-workflows.md](references/upstream-workflows.md) records comparable workflows and their integration limits.
 
 ## Build and review
 
