@@ -2,6 +2,14 @@
 
 Write the music and effects as one piece: effects in the same key and the same space as the music, blended in rather than laid on top. Effects sit softly under the music, nothing harsh or spiky, and repeated small sounds stay in the background.
 
+## Stock audio and cue timing
+
+Use supplied or properly licensed music/SFX when the brief calls for them; synthesis and intentional silence remain valid choices. Record source, permitted use, and required credit. Copy only selected assets into the composition’s own asset directory with renderer-compatible paths. A track licensed for a finished film may not permit redistributing its source file.
+
+For an existing track, identify the useful excerpt and mark musical accents, rests, and reveal opportunities on its actual timeline. Use the selected engine’s supported beat analysis or an existing audio tool when available. Inspect installed help rather than assuming a command or cue schema. Detector outputs are timing suggestions: verify against the track, watch for half/double-time estimates and shifting tempo, and keep readable holds and story timing ahead of beat alignment. If analysis or listening is unavailable, disclose that limitation and avoid claiming verified beat sync.
+
+Amplitude/frequency envelopes can drive restrained audio-reactive motion when the engine supports it. Extract data once, then sample it deterministically at composition time. Account for trims, offsets, looping, and sample rates. Loudness changes are not necessarily beats; avoid pulsing text, strobing, or modulation that obscures the subject. The bundled renderer does not supply automatic beat extraction or audio-reactive helpers.
+
 ## Song spec
 
 `scripts/synth.py` builds the track from a JSON spec; every field is shown in [../assets/examples/song.json](../assets/examples/song.json).

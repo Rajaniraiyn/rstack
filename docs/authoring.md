@@ -90,7 +90,7 @@ Keep credentials in client configuration. Document runtime and tool requirements
 
 The structure follows the [Agent Skills specification](https://agentskills.io/specification) and [portable plugin schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Native packaging follows [OpenAI](https://developers.openai.com/plugins/build/plugins), [Claude Code](https://code.claude.com/docs/en/plugins-reference), and [Cursor](https://cursor.com/docs/reference/plugins).
 
-[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI plugins and skills](https://github.com/openai/plugins), and [Cursor's template](https://github.com/cursor/plugin-template) informed the original structure. No third-party skill content is copied, except `launch-video/references/brag/`, which vendors the MIT-licensed [/brag skills](https://github.com/latent-spaces/brag) with their license and source commit. The [skills CLI](https://github.com/vercel-labs/skills) owns agent discovery and installation paths.
+[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI plugins and skills](https://github.com/openai/plugins), and [Cursor's template](https://github.com/cursor/plugin-template) informed the original structure. Compare external skills as sources, then integrate useful decisions into original instructions and focused references. Do not bundle whole upstream skills, parallel routers, or copied helpers merely for reference. The video skill records its comparison sources in its bundled provenance index. The [skills CLI](https://github.com/vercel-labs/skills) owns agent discovery and installation paths.
 
 ## Compare and evaluate
 

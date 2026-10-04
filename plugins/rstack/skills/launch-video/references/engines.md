@@ -60,7 +60,7 @@ Open strips and full-size frames to check them. Inspection catches some missing 
 
 ## Hyperframes and the bundled path
 
-Use [Hyperframes upstream](https://github.com/heygen-com/hyperframes) when that engine is selected. The [vendored /brag route](brag/README.md) supplies historical planning context; current framework docs govern its API and commands. Hyperframes and fframes are separate projects.
+Use [Hyperframes upstream](https://github.com/heygen-com/hyperframes) when that engine is selected. Current framework docs govern its composition, validation, asset paths, and rendering commands. Pass it the same storyboard and delivery contract used for other engines; no second planning workflow is required. Hyperframes and fframes are separate projects.
 
 For bundled HTML, follow [render.md](render.md). Its deterministic `render(t)` contract is specific to that renderer and should not be forced onto an external framework.
 

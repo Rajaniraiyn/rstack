@@ -50,4 +50,4 @@ Report paths, the angle, checks actually performed, and material limitations. Re
 
 Use verified product facts and properly licensed media. Preserve voice consent and applicable watermark requirements. Follow existing authorization for paid services; an API key alone does not authorize spending. Keep local tools and existing connections available as alternatives.
 
-For stock cue analysis, use [scripts/brag/analyze_music_cues.py](scripts/brag/analyze_music_cues.py). The original MIT-licensed /brag pathways remain in [references/brag/README.md](references/brag/README.md); their missing upstream assets are not bundled dependencies.
+Use [references/sound.md](references/sound.md) for licensed stock audio, cue timing, and optional audio-reactive motion. Source comparisons stay in [references/upstream-workflows.md](references/upstream-workflows.md); no external skill is bundled.

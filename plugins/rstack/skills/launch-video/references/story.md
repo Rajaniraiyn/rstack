@@ -19,7 +19,7 @@ Put the name, a clear one-line claim, and where to get it (URL, "free", license)
 
 ## Beat grid
 
-Pick a tempo first (120 bpm makes a beat every 0.5 s and a bar every 2 s) and snap scene cuts, word stamps, message arrivals, and card entrances to beats. Put the drop where the product first appears, usually 3–4 s in, and plan the music's downbeats around it. Record every time in the storyboard; the song spec and the voiceover script reuse them.
+For synthesized music, choose a tempo (120 bpm makes a beat every 0.5 s and, in 4/4, a bar every 2 s). For a supplied track, follow its actual cue timing using [sound.md](sound.md). Align emphasis with suitable beats without forcing every action onto the grid. Put the drop where the product first appears, usually 3–4 s in, and plan the music's downbeats around it. Record every time in the storyboard; the song spec and the voiceover script reuse them.
 
 ## Tones
 

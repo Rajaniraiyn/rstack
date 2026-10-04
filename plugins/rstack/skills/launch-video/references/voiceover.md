@@ -16,6 +16,7 @@ The script format is [../assets/examples/vo-script.json](../assets/examples/vo-s
 ## Engines
 
 - **Local, default:** Chatterbox (Resemble AI, MIT). `uv run scripts/vo_gen.py script.json --out work/vo` writes `<id>_t<k>.wav` takes. It uses Apple Silicon MPS, CUDA, or CPU; the first run downloads a few GB. It embeds an imperceptible Perth watermark; leave it on. If it fails with `pkg_resources` errors, the pinned `setuptools<81` in the script header is missing.
+- **Optional local alternative:** [Kokoro](https://github.com/hexgrad/kokoro) when its language/voice support and runtime fit the task. Follow current upstream setup and asset licenses; this skill does not bundle a Kokoro generator. Export line takes as `<id>_t<k>.wav` for the same wording/timing checks and review the final mix.
 - **API, when authorized:** ElevenLabs, OpenAI, or another TTS service. Use existing spending authorization or obtain it when missing, check the provider's current docs for model and voice names, and write takes with the same naming (`<id>_t<k>.wav`) so the checker can pick them.
 - Use a stock or designed voice. Do not clone a real person's voice without their consent.
 
