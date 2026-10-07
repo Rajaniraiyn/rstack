@@ -1,8 +1,6 @@
 # R Stack
 
-<!-- skills.sh badge, shown once the repo is listed with install counts:
 [![skills.sh](https://skills.sh/b/Rajaniraiyn/rstack)](https://skills.sh/Rajaniraiyn/rstack)
--->
 
 Opinionated skills and workflows by Rajaniraiyn, published for anyone using coding agents.
 
