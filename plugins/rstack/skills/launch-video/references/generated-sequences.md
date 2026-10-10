@@ -1,6 +1,6 @@
 # Character sequences and generated clips
 
-Use this for stick-figure explainers, character-led product metaphors, or a requested video-generation prompt package. It is a production mode, not another rendering engine. Keep source facts and the requested output explicit: a storyboard, prompts, and a finished video are different deliverables.
+Use this for stick-figure explainers, character-led product metaphors, or a requested video-generation prompt package. Specify source facts and whether to deliver a storyboard, prompts, or a finished video.
 
 ## Establish a visual contract
 
@@ -36,4 +36,4 @@ For multilingual versions, share the composition and content structure where pra
 
 For a prompt-only request, deliver the ordered prompt package, references, intended clip connections, and assembly notes; label it unrendered. For a finished-video request, use the selected available tools through assembly and verification. Existing spending authorization governs generation; ask only when required authorization or a consequential specification is missing.
 
-[Stickman Video Director](https://github.com/kaomei/stickman-video-director) informed the comparison of character-directed planning and clip handoff. This reference uses original instructions and does not copy its prompt templates, character, fixed timing, or approval gates. See [upstream-workflows.md](upstream-workflows.md).
+[Stickman Video Director](https://github.com/kaomei/stickman-video-director) informed character-directed planning and clip handoff. See [upstream-workflows.md](upstream-workflows.md) for provenance and licensing.

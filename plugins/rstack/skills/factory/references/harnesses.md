@@ -1,6 +1,6 @@
 # Harnesses
 
-Resolve provider details at execution time. Capture `<cli> --version`, the relevant subcommand's `--help`, and the selected model before composing a worker command. These are entry points to investigate, not a version-independent flag contract.
+Capture `<cli> --version`, the relevant subcommand's `--help`, and the selected model before composing a worker command. Verify the entry points below against the installed version.
 
 | Harness | Headless entry point | Official reference |
 | --- | --- | --- |

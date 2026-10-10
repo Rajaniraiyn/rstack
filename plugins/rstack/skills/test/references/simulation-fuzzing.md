@@ -1,6 +1,6 @@
 # Simulation, fuzzing, and invariant-driven testing
 
-Use these methods for parsers, protocols, storage, schedulers, retry logic, resource ownership, and stateful systems where examples miss combinations. Start with a concrete contract and observable failure. Existing runners, narrow injected dependencies, and a small harness usually beat building a simulator for an unrelated feature. Agree unresolved domain semantics before making them the oracle.
+Use these methods for parsers, protocols, storage, schedulers, retry logic, resource ownership, and stateful systems where examples miss combinations. Start with a concrete contract and observable failure. Reuse existing runners and narrowly injected dependencies before building a simulator. Agree unresolved domain semantics before making them the oracle.
 
 ## Deterministic simulation testing (DST)
 
@@ -10,7 +10,7 @@ Generate operations and faults together: partitions, duplication, delayed acknow
 
 Keep replay records containing seed, source revision, harness/toolchain versions, configuration, initial state, operations, fault decisions, event order, and failed invariant. A seed alone may stop reproducing after implementation changes. Minimize the failing trace while preserving its preconditions and violation; retain both the original and reduced reproducer. Fix the local defect, rerun the reproducer, then explore additional seeds. Promote the smallest meaningful case into an owned regression.
 
-For an idempotent writer, one useful scenario is: persist a write, lose its acknowledgement, restart, then retry the same key. Check one committed effect and the specified reply. This makes the failure actionable rather than reporting merely that a random run crashed.
+For an idempotent writer, persist a write, lose its acknowledgement, restart, then retry the same key. Check one committed effect and the specified reply.
 
 Finite simulation campaigns provide bounded evidence, not proof. Validate real adapters and environmental assumptions separately; [TigerBeetle's Vortex](https://tigerbeetle.com/blog/2025-02-13-a-descent-into-the-vortex/) tests actual infrastructure. For narrower concurrency exploration, [Loom](https://docs.rs/loom/latest/loom/) explores schedules through its instrumented Rust primitives; it does not automatically control arbitrary OS I/O or replace full-system DST.
 

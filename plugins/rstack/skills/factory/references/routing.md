@@ -1,6 +1,6 @@
 # Model routing
 
-Verified against official provider documentation on 3 October 2026. Replace this shortlist when the recommended lineup changes; keep one current table rather than appending generations. Confirm the installed harness and account expose a model before dispatching it. API availability does not establish subscription or CLI availability.
+Replace this shortlist when the recommended lineup changes; keep one current table rather than appending generations. Confirm the installed harness and account expose a model before dispatching it. API availability does not establish subscription or CLI availability.
 
 ## Current shortlist
 
@@ -16,7 +16,7 @@ Verified against official provider documentation on 3 October 2026. Replace this
 | Google | Gemini 3.8 Flash | `gemini-3.8-flash` | Current stable general route through a configured provider |
 | Google | Gemini 3.5 Flash-Lite | `gemini-3.5-flash-lite` | Current stable cost-sensitive route through a configured provider |
 
-Roles follow the [OpenAI catalog](https://developers.openai.com/api/docs/models), [Claude lineup](https://platform.claude.com/docs/en/models/overview), and [Gemini catalog](https://ai.google.dev/gemini-api/docs/models). They are starting choices, not a measured ranking on this repository. Haiku 4.5 remains the listed Haiku generation; its smaller version number does not make it a retired model. Restricted-access and preview models are excluded from the default shortlist.
+Sources: [OpenAI catalog](https://developers.openai.com/api/docs/models), [Claude lineup](https://platform.claude.com/docs/en/models/overview), and [Gemini catalog](https://ai.google.dev/gemini-api/docs/models). The shortlist excludes restricted-access and preview models.
 
 ## Defaults and escalation
 
@@ -41,4 +41,4 @@ API settings are not CLI arguments. OpenCode provider prefixes and variants depe
 
 Put the retry and spend limits in the worker brief. Enforce a native cost cap only when supported; a timeout limits wall time, not dollars. Inspect logs and artifacts before retrying. Fix setup failures, narrow a vague brief, or escalate a demonstrated reasoning failure. Stop at the configured limit and retain partial work.
 
-During factory setup or a requested model refresh, fetch the official catalogs, check actual harness support, replace superseded rows and examples, and update the verification date. Keep current supported family members; remove retired and obsolete default choices. Record any approved change to saved routes. Preserve credentials and unrelated configuration. Fetch current pricing when a budget decision requires it rather than maintaining another price table here.
+During factory setup or a requested model refresh, fetch the official catalogs, check actual harness support, and replace superseded rows and examples. Keep current supported family members; remove retired and obsolete default choices. Record any approved change to saved routes. Preserve credentials and unrelated configuration. Fetch current pricing when a budget decision requires it rather than maintaining another price table here.

@@ -1,11 +1,9 @@
 # Design
 
-The goal is a video a designer would have made, not one a model generated. Most "AI slop" in video comes from the same handful of habits; avoid them by default.
-
 ## Palette
 
-- **Neutral ink** does the work: stage `#09090b`, app surfaces `#0f0f12` → `#1c1c20`, hairline borders at 8–14% white, text `#ededef`, secondary `#a1a1aa`, tertiary `#6b6b74`. These are the kit's defaults in [../assets/kit/kit.css](../assets/kit/kit.css).
-- **One restrained tint** from the brand: take the brand color and pull it toward the text color until it is calm (a saturated magenta became `#e2a6ec`). Set `--tint`. Use it on at most one word or one indicator per frame.
+- The [kit palette](../assets/kit/kit.css) uses stage `#09090b`, app surfaces `#0f0f12` to `#1c1c20`, borders at 8–14% white, text `#ededef`, secondary `#a1a1aa`, and tertiary `#6b6b74`.
+- Mix the brand color toward the text color to reduce saturation, then set `--tint`. Use it on at most one word or indicator per frame.
 - Preserve an established brand palette when the brief calls for it. The neutral kit is a fallback, not a replacement for the product's identity.
 - Semantic colors only where the real UI uses them: green and red for diffs and passing tests, platform colors inside platform UI.
 - Light themes work the same way: paper, ink, one tint.
@@ -24,7 +22,7 @@ The goal is a video a designer would have made, not one a model generated. Most 
 - For the bundled kit, ad type defaults to **Geist** 600, tight tracking (−0.04 em), line height ≈ 1. Kickers in **Geist Mono** 500 caps with +0.14 em tracking. Code in Geist Mono.
 - Inside a device, use the platform's system font and check the resolved font on the rendering machine. `system-ui` varies by platform; bundle a licensed font when exact metrics matter. Check stills for unintended fallback.
 - Sizes: landscape headlines 120–210 px; vertical headlines 90–150 px; body in UI at the UI's real size scaled by the device factor.
-- Left-aligned editorial headlines read more designed than centered ones; center only single short lines.
+- Left-align editorial headlines; center only single short lines.
 
 ## Icons
 

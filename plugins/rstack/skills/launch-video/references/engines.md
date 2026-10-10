@@ -1,6 +1,6 @@
 # Video engines
 
-Checked against the linked upstream documentation and skills on 3 October 2026. Resolve current package versions, flags, and native requirements before setup. This reference is routing and handoff guidance, not a bundled implementation of those frameworks.
+Resolve current package versions, flags, and native requirements before setup.
 
 ## Choose from requirements
 
@@ -21,7 +21,7 @@ Use the [official skills](https://www.remotion.dev/docs/ai/skills) and [source r
 bunx --bun skills add remotion-dev/skills --list
 ```
 
-If installation is part of the task, select the relevant upstream skill through the CLI. R Stack does not copy Remotion's APIs or router into this directory. If no skill is installed, the official docs remain sufficient.
+If installation is part of the task, select the relevant upstream skill through the CLI. Otherwise use the official docs.
 
 In an existing project, use its package manager and pinned CLI. Model scenes as compositions with explicit dimensions, fps, frame duration, and props. Drive motion from frame state with Remotion primitives rather than wall-clock timers. Keep packages on compatible versions and wait for fonts and media.
 
@@ -70,6 +70,6 @@ Pass the selected engine the storyboard, real assets and claim sources, aspect r
 
 If the engine already mixes and masters audio, verify that output directly. Otherwise render a silent intermediate and use the bundled mix and delivery helpers. Never mux a second soundtrack over an already mixed one by accident. Keep a settled poster beside the video; replacing frame zero is optional and does not control every platform's thumbnail selection.
 
-Record engine version, commands, checks, and limitations in the plan. A documented route is not an end-to-end certification of every machine or backend.
+Record engine version, commands, checks, and limitations in the plan.
 
-For onetake and character-directed comparison sources, use [upstream-workflows.md](upstream-workflows.md). They inform production choices; they do not silently replace the chosen renderer or establish a supported generation service.
+For onetake and character-directed comparison sources, use [upstream-workflows.md](upstream-workflows.md).

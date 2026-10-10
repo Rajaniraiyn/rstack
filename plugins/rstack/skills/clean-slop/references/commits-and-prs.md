@@ -4,7 +4,7 @@ Follow the repository's commit convention and PR template. Write for a reviewer 
 
 ## Commit message
 
-Name the concrete change in the summary. Use the project's casing and prefix convention. A body earns its place when it explains a non-obvious reason, compatibility constraint, or migration. Preserve required trailers and attribution.
+Name the concrete change in the summary. Use the project's casing and prefix convention. Add a body for a non-obvious reason, compatibility constraint, or migration. Preserve required trailers and attribution.
 
 A measured improvement can be a useful summary, such as "cut deploy time from 40 minutes to 4". Use it only when the measurement exists. Otherwise name the mechanism, such as "reuse build artifacts during deploy".
 

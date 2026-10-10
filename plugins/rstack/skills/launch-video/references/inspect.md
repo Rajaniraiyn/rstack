@@ -12,12 +12,12 @@ If neither fits, ask what the video is about.
 
 ## Project
 
-Read the README, the main page or entry screen, styles (exact colors and fonts), routes, key components, locale files, and recent history. The best material is the product **in use**: find its two or three beats, entry → key action → result.
+Read the README, entry screen, styles, routes, key components, locale files, and recent history. Identify the entry, key action, and result of the product flow to show.
 
-- **Copy:** take UI strings from the locale or component files verbatim: onboarding titles, empty states, greetings, button labels, toasts. Apps often hide gold in them (a greeting that says "Committing at 2am" at night became a whole hook).
-- **Identity:** the logo component or SVG, the CSS tokens, the fonts. Use the real mark, not the app-store PNG, when a vector exists.
-- **Real data beats plausible data.** Pull a real diff from history, real test output by running the tests, a real PR title and its +/− counts, real release notes. The video can then show numbers without inventing any.
-- **Reuse over rebuild.** If the app renders in a browser without its backend, render its real components. If it cannot (Electron preload APIs, auth walls), rebuild the screens in HTML from its tokens, strings, and assets, and say so in the plan.
+- Take UI strings verbatim from locale or component files, including onboarding titles, empty states, button labels, and toasts.
+- Use the logo component or SVG, CSS tokens, and fonts. Prefer a vector mark over an app-store PNG when available.
+- Use actual diffs, test results, PR titles and counts, and release notes rather than invented data.
+- Render the app's components when they work without the backend. Otherwise rebuild the screens from its tokens, strings, and assets and record the substitution in the plan.
 
 ## Website
 

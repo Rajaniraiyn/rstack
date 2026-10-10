@@ -1,6 +1,6 @@
 # Security and quality checks by requirement
 
-Identify relevant trust boundaries, data sensitivity, identities/roles, supported clients, and externally supplied inputs. Select checks from the actual feature and its failure modes. Use [OWASP ASVS](https://owasp.org/projects/asvs) for applicable application requirements and [MASVS](https://mas.owasp.org/MASVS/) for mobile requirements. Neither is a universal checklist for every development task.
+Identify relevant trust boundaries, data sensitivity, identities/roles, supported clients, and externally supplied inputs. Select checks from the feature and its failure modes. Apply relevant [OWASP ASVS](https://owasp.org/projects/asvs) application requirements and [MASVS](https://mas.owasp.org/MASVS/) mobile requirements.
 
 ## Check the boundary that enforces the rule
 
@@ -22,4 +22,4 @@ For web exposure, [ZAP baseline](https://www.zaproxy.org/docs/docker/baseline-sc
 
 Keep secrets and private captures out of shared artifacts. Record the requirement, target, actual evidence, confirmed finding, and residual limits. Distinguish a control test, scan result, and penetration test. Do not claim compliance/certification or exhaustive security coverage from a selected automated suite.
 
-For other quality dimensions, use [test-design.md](test-design.md), [games-media.md](games-media.md), and [concurrency.md](concurrency.md). Security scanning does not replace their requirements or evidence.
+For other quality dimensions, use [test-design.md](test-design.md), [games-media.md](games-media.md), and [concurrency.md](concurrency.md).

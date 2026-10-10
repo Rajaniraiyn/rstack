@@ -1,6 +1,6 @@
 # Custom tooling when the stack needs it
 
-First establish what the available drivers can observe and control. Missing accessibility nodes, a closed shadow tree, canvas input, a native bridge, or an embedded engine can justify a small app-specific helper. Do not add a framework simply because the skill lists it.
+First establish what the available drivers can observe and control. Add a small app-specific helper only for missing capabilities, such as inaccessible nodes, a closed shadow tree, canvas input, a native bridge, or an embedded engine.
 
 Choose the smallest reusable approach:
 
@@ -16,4 +16,4 @@ Keep test hooks and debug ports out of production builds unless they are an inte
 
 Validate the helper against an actual failing case and a passing case. Check timeout, missing target, stale handle, teardown, and malformed input. Reuse existing error/result conventions. Don't create an always-on MCP server, service, hook, or remote account if a command or temporary process can do the job.
 
-When the host is unavailable, continue with useful logic, contract, or renderer checks and report the exact native checks that remain blocked. Building a mock host is a valid intermediate test, but it doesn't remove that limitation.
+When the host is unavailable, continue with logic, contract, or renderer checks, including mock-host checks. Report the exact native checks that remain blocked.

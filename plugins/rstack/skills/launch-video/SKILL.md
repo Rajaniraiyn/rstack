@@ -1,13 +1,13 @@
 ---
 name: launch-video
-description: Create a finished product launch, demo, or promo video with a storyboard, motion, sound, poster, and share copy. Use for launch videos, animated product explainers, /brag requests, or social cuts for Reels, TikTok, and Shorts.
+description: Creates finished product launch, demo, or promo videos with a storyboard, sound, poster, and share copy. Use for launch videos, animated product explainers, /brag requests, or social cuts for Reels, TikTok, and Shorts.
 license: MIT
 compatibility: Rendering needs a chosen local toolchain. Bundled renderer needs Python 3.10+, Chrome or Chromium, and ffmpeg; Remotion needs its JS toolchain; fframes needs Rust and native libraries. Optional local voice checks need uv and model downloads.
 ---
 
 # Launch video
 
-Deliver a video that shows the real product, communicates one angle, and fits the requested channel. Keep ownership of the story, factual accuracy, review, and deliverables whichever renderer is used.
+Show the real product, communicate one angle, and fit the requested channel. Verify facts and review deliverables with any renderer.
 
 ## Resolve the brief
 
@@ -24,7 +24,7 @@ Respect the user's engine and an existing project's toolchain. Otherwise choose 
 - The bundled HTML renderer for a small deterministic clip when Python, Chrome, and ffmpeg are already available.
 - Hyperframes for an existing Hyperframes composition or the user's requested route.
 
-These alternatives are optional. Installing this skill does not install them. Keep a working engine unless a demonstrated requirement justifies migration. Benchmark a representative scene before claiming a speed advantage.
+Install the selected engine separately if needed. Keep a working engine unless a requirement justifies migration. Benchmark a representative scene before claiming a speed advantage.
 
 For continuous-camera motion or disconnected scene changes, read [references/motion-direction.md](references/motion-direction.md). For character explainers, generated clip sequences, prompt-only packages, or localization, read [references/generated-sequences.md](references/generated-sequences.md). [references/upstream-workflows.md](references/upstream-workflows.md) records comparable workflows and their integration limits.
 
@@ -49,5 +49,3 @@ Report paths, the angle, checks actually performed, and material limitations. Re
 ## Constraints
 
 Use verified product facts and properly licensed media. Preserve voice consent and applicable watermark requirements. Follow existing authorization for paid services; an API key alone does not authorize spending. Keep local tools and existing connections available as alternatives.
-
-Use [references/sound.md](references/sound.md) for licensed stock audio, cue timing, and optional audio-reactive motion. Source comparisons stay in [references/upstream-workflows.md](references/upstream-workflows.md); no external skill is bundled.

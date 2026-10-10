@@ -24,7 +24,7 @@ Choose active maintenance, relevant host support, reproducible execution, diagno
 | AI quality/evals | Existing deterministic harness or [promptfoo](https://www.promptfoo.dev/docs/intro/) where useful | Pin cases/providers; don't silently invoke paid models or trust judges as facts |
 | Firmware, HDL, kernel, games | Stack-native runners from the relevant target reference | A general browser tool doesn't replace a board, simulator, kernel, or engine runner |
 
-Treat the shortlist as candidates, not an install list. Maintained stdlib, pytest, Go/Rust native runners, and framework-native tooling can remain the best fit. Legacy means unsupported or unsuitable here, not merely old. Prefer semantic locators, condition waits, structured results, and isolated fixtures over brittle coordinate scripts or fixed sleeps, while retaining host checks those newer abstractions cannot reach.
+Install only tooling needed for the task. Keep maintained stdlib, pytest, Go/Rust native runners, or framework-native tooling when they fit. Replace unsupported or unsuitable tools, not merely old ones. Prefer semantic locators, condition waits, structured results, and isolated fixtures over coordinate scripts or fixed sleeps. Retain host checks those abstractions cannot reach.
 
 ## Replace tooling deliberately
 

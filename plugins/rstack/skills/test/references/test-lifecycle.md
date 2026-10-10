@@ -1,6 +1,6 @@
 # Durable tests, temporary probes, and evidence
 
-Execution layer, test purpose, and retention are separate decisions. A temporary integration probe can be valuable without joining every CI run. A benchmark can be durable but run only on a controlled host. Choose retention from future failure risk and maintenance cost, not filename or line count.
+Choose retention from future failure risk and maintenance cost, not execution layer, purpose, filename, or line count. Temporary integration probes need not join CI; durable benchmarks may run only on a controlled host.
 
 ## Decide what should remain
 
@@ -13,7 +13,7 @@ Execution layer, test purpose, and retention are separate decisions. A temporary
 | Performance harness/baseline | Keep when representative and reproducible enough for an agreed decision or supported gate |
 | Profiles, captures, huge traces, random campaign outputs | Share relevant evidence paths; avoid committing sensitive or bulky artifacts by default |
 
-Follow repository conventions and the user's requested deliverable. Temporary doesn't mean assertion-free or disposable before diagnosis. Don't add a second permanent runner just to preserve a one-off experiment.
+Follow repository conventions and the user's requested deliverable. Include assertions in temporary probes and retain them through diagnosis. Don't add a second permanent runner for a one-off experiment.
 
 ## Make a temporary probe trustworthy
 

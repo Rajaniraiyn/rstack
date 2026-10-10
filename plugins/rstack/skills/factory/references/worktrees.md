@@ -20,8 +20,6 @@ Keep a small pool of recycled worktrees when tasks are short. Before reuse, stop
 
 Share anything reproducible: package caches, build caches, registry downloads. Never share active state two agents write at once: build output directories inside a worktree, `.git` internals, or the worktree's own dependency tree when a task mutates it.
 
-Isolation boundaries matter more than disk savings. Wrong sharing breaks builds silently; keep correctness on the side of isolation.
-
 ## node_modules
 
 Install a separate dependency tree in each worktree using the package manager's shared cache. Matching lockfiles alone do not make a shared `node_modules` safe: install scripts, native builds, workspace links, and tools that write caches there can depend on the working directory.
@@ -68,5 +66,3 @@ Do not point `CARGO_TARGET_DIR` at one shared directory across parallel agents: 
 - macOS and Linux: `ln -s` for symlinks; hard links only within the same filesystem.
 - Windows: use directory junctions (`mklink /J`) or copies; plain symlinks need privileges.
 - Keep the strategy in a shared recipe per repo (package manager + language) instead of re-solving it per task.
-
-The factory setup decides the recipe once; provisioning just applies it.

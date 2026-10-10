@@ -1,6 +1,6 @@
 # Structures to break
 
-Use these patterns to find repetitive or manufactured phrasing. They do not prove how a text was written. Preserve a deliberate rhetorical device when it fits the author's voice or requested format.
+Use these patterns to find repetitive or manufactured phrasing. Preserve deliberate rhetorical devices that fit the author's voice or requested format.
 
 ## Binary contrast
 
@@ -25,7 +25,7 @@ After: "The build is faster and more reliable."
 
 ## Rule of three
 
-Forcing ideas into groups of three. Use the natural number. One tricolon can be fine; stacked tricolons are a pattern recognition failure.
+Use the number of items the meaning requires rather than forcing ideas into groups of three.
 
 Before: "Simple to install, simple to configure, simple to maintain."
 After: "Simple to install, configure, and maintain."

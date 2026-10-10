@@ -22,4 +22,4 @@ If rapid travel strobes, first reconsider distance, speed, output fps, and wheth
 
 Render a representative draft before expensive final settings. Use requested delivery dimensions and frame rate rather than an automatic 4K/60 upgrade. Recheck critical motion on the final encode, where compression and frame-rate conversion can change it. Human playback remains necessary for judging rhythm; report unavailable playback clearly.
 
-[onetake](https://github.com/feitangyuan/onetake) prompted this comparison of continuity, procedural motion, and review methods. Its implementation and thresholds are not bundled; see [upstream-workflows.md](upstream-workflows.md) for provenance and licensing. These are original R Stack instructions, applied through the selected engine.
+[onetake](https://github.com/feitangyuan/onetake) informed continuity, procedural motion, and review methods. See [upstream-workflows.md](upstream-workflows.md) for provenance and licensing.

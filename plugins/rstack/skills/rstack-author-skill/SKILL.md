@@ -1,6 +1,6 @@
 ---
 name: rstack-author-skill
-description: Create, compare, or revise self-contained portable skills in R Stack. Maintainer workflow for skill authoring, frontmatter, resource structure, and validation.
+description: Creates, compares, and revises R Stack skills. Use for skill authoring, frontmatter, bundled resources, and validation in this repository.
 license: MIT
 disable-model-invocation: true
 ---
@@ -13,7 +13,7 @@ Start from the repeatable task and the decisions an agent needs help making. In 
 
 Identify the user's matching requests, a nearby request outside scope, and the expected artifact. Inspect existing skills before adding another. Merge overlapping branches when they share an outcome and invocation policy; keep independently useful workflows separate. Preserve installed names unless a migration is intentional.
 
-For a comparison or update, read [references/research.md](references/research.md). Discover comparable skills in several ways, inspect their actual source, and check current official docs. Borrow a useful design principle without inheriting another package's services, approvals, scheduler, or tool names.
+For a comparison or update, read [references/research.md](references/research.md). Inspect comparable skills and current official docs. Adopt only the dependencies and host-specific behavior the task needs.
 
 ## Write the smallest complete workflow
 
@@ -25,7 +25,7 @@ Read [references/portability.md](references/portability.md) for frontmatter and 
 
 ## Validate and hand off
 
-Use [references/evaluation.md](references/evaluation.md) to check routing and task behavior. Static validation proves structure, not task quality. Exercise changed helpers with representative inputs and include an error or boundary case where it matters.
+Use [references/evaluation.md](references/evaluation.md) to check routing and task behavior alongside static validation. Exercise changed helpers with representative inputs and relevant error or boundary cases.
 
 In this checkout, run:
 

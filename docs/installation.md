@@ -25,7 +25,7 @@ codex plugin add rstack@rstack
 codex plugin list
 ```
 
-If `codex plugin add` is unavailable, register the marketplace and install R Stack through the app's plugin directory, or use the shared skills installer below. Start a new conversation after installation. See [OpenAI's plugin guide](https://developers.openai.com/plugins/build/plugins). The `add` syntax was also checked against the local Codex CLI help.
+If `codex plugin add` is unavailable, register the marketplace and install R Stack through the app's plugin directory, or use the shared skills installer below. Start a new conversation after installation. See [OpenAI's plugin guide](https://developers.openai.com/plugins/build/plugins).
 
 ## Cursor
 
@@ -122,12 +122,10 @@ npx skills add Rajaniraiyn/rstack --agent claude-code codex cursor github-copilo
 
 Add `--global` to install across projects, `--skill rstack-author-skill` for one skill, or `--copy` to copy instead of symlink. You can also pass the full GitHub URL or, from a checkout, the path to `plugins/rstack`.
 
-Other installer targets include Cline, Continue, Gemini CLI, Goose, and Windsurf. Use interactive selection or the [maintained agent list](https://github.com/vercel-labs/skills#supported-agents); R Stack does not duplicate that registry.
+Other installer targets include Cline, Continue, Gemini CLI, Goose, and Windsurf. Use interactive selection or the [maintained agent list](https://github.com/vercel-labs/skills#supported-agents).
 
-## Compatibility and verification
+## Compatibility and updates
 
-All seven named clients accept the shared [Agent Skills format](https://agentskills.io/specification). The R Stack skill content needs no client-specific copy. Skill installation does not install plugin hooks or configure MCP connections; those remain host-specific. R Stack ships native plugin metadata for Claude Code, Codex, and Cursor.
+All seven named clients accept the [Agent Skills format](https://agentskills.io/specification). R Stack includes native plugin metadata for Claude Code, Codex, and Cursor. Configure hooks and MCP connections separately in the host.
 
-Checked on 2026-09-17 with `skills@1.6.0`: each of the seven agent targets installed the starter skill and its reference into an isolated temporary project. Native commands above were checked against official documentation or installed CLI help. Claude's plugin/catalog validators pass. These checks do not run the models or certify activation in every app.
-
-For shared CLI installs, inspect installed skills with `npx skills list` and refresh them with `npx skills update`. Checked current help with `bunx --bun skills -h` on 2026-10-03 (`skills@1.7.0`); this version has no `check` command. Consult installed help for scope and selection options. Native plugins update through their client marketplace. Rebuild and re-upload web skill ZIPs after changes.
+For shared CLI installs, inspect installed skills with `npx skills list` and refresh them with `npx skills update`. Consult installed help for available commands, scope, and selection options. Native plugins update through their client marketplace. Rebuild and re-upload web skill ZIPs after changes.

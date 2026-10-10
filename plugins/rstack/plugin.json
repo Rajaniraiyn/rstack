@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "rstack",
   "version": "0.1.0",
-  "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents.",
+  "description": "Reusable workflows for coding agents.",
   "author": {
     "name": "Rajaniraiyn"
   },

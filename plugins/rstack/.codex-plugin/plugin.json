@@ -1,7 +1,7 @@
 {
   "name": "rstack",
   "version": "0.1.0",
-  "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents.",
+  "description": "Reusable workflows for coding agents.",
   "author": {
     "name": "Rajaniraiyn"
   },
@@ -9,8 +9,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "R Stack",
-    "shortDescription": "Opinionated skills and workflows by Rajaniraiyn for coding agents.",
-    "longDescription": "Opinionated skills and workflows by Rajaniraiyn for coding agents.",
+    "shortDescription": "Reusable workflows for coding agents.",
+    "longDescription": "Reusable workflows for coding agents.",
     "developerName": "Rajaniraiyn",
     "category": "Productivity",
     "capabilities": [],

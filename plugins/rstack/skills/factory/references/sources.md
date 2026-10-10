@@ -38,11 +38,11 @@ Use the Linear CLI or MCP the user has installed. List open issues or a single i
 
 ## MCP servers
 
-If the user pointed at an MCP server for a source, use its tools directly. MCP is the escape hatch for sources without a CLI here: Notion, Slack, internal trackers. Prefer the configured or named source over probing for one.
+Use the configured MCP tools for sources such as Notion, Slack, or internal trackers. Prefer the user's named source over probing for another.
 
 ## More sources
 
-The factory is not limited to the sources above. Users install and manage their own CLIs; route to whatever is installed and authenticated on their machine (more issue trackers, more reporters, team-specific tools). Probe with `--version` or `--help`, confirm the list and view commands against its docs, and treat it like any other source: fetch raw, classify, route. When no CLI reaches a source, say so instead of fabricating.
+For other sources, use an installed, authenticated CLI or MCP connection. Confirm list and view commands with `--help` or official docs, fetch the item, and classify it. Report inaccessible sources rather than inventing their contents.
 
 ## Open-ended intake
 

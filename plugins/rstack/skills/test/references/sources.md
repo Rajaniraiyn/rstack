@@ -1,6 +1,6 @@
 # Comparable skills and upstream references
 
-Consult this index when choosing a tool or refreshing guidance, not on every test run. Sources were checked on 2026-10-03. Commands and platform support can change; installed help and current upstream docs govern execution. These are references, not installed dependencies. The skill's instructions are original; no third-party skill is bundled.
+Consult this index when choosing a tool or refreshing guidance. Verify commands and platform support against installed help and current upstream docs.
 
 ## Skills worth comparing
 
@@ -21,7 +21,7 @@ Consult this index when choosing a tool or refreshing guidance, not on every tes
 | [trycua/cua](https://github.com/trycua/cua) | Background desktop delivery, platform refusals, CLI/SDK usage, and isolated desktops. |
 | [Flutter agent plugins](https://github.com/flutter/agent-plugins) | Flutter-specific workflows to compare with the official integration runner. |
 
-Popularity helps discovery, not technical validation. Inspect smaller tools for the boundary they solve. Don't add a dependency based only on install counts, a skill title, or a claim of universal platform support.
+Evaluate tools against the required boundary, not install counts, skill titles, or claims of universal platform support.
 
 ## Discovery without installation
 
@@ -40,8 +40,8 @@ bunx --bun skills add anomalyco/browser-control --list
 
 Search also by framework, runner, platform, and missing capability. Listing a repository does not install its skills. Read the selected upstream skill and executable docs before adopting it. Check license, freshness, host requirements, hidden service dependencies, cleanup behavior, and whether its assertions prove the desired behavior. Record the exact version when a tool is used in a durable test setup.
 
-For tools beyond browser/terminal exploration, use [tools.md](tools.md). Hardware and domain-specific authoritative sources live in their target references so they stay close to the decisions they support.
+For tools beyond browser/terminal exploration, use [tools.md](tools.md). Find hardware and domain-specific sources in the target references.
 
 ## Models, simulation, and measurements
 
-Use [formal-models.md](formal-models.md) for official Lean proof/trust/build references and [simulation-fuzzing.md](simulation-fuzzing.md) for TigerBeetle VOPR, protocol-aware DST, TigerStyle, Loom, and native fuzzing documentation. Use [performance.md](performance.md) for profiling, tracing, workload models, and the USE method. These workflows have different evidence boundaries; listing them doesn't certify a model, prove a runtime, or execute a campaign.
+Use [formal-models.md](formal-models.md) for official Lean proof/trust/build references and [simulation-fuzzing.md](simulation-fuzzing.md) for TigerBeetle VOPR, protocol-aware DST, TigerStyle, Loom, and native fuzzing documentation. Use [performance.md](performance.md) for profiling, tracing, workload models, and the USE method.
