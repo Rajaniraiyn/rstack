@@ -17,11 +17,11 @@ Describe the expected result and the decisions specific to this task.
 
 The `description` is the routing text agents see before loading `SKILL.md`. Keep it concise, describe the task and when to use it, and include words users are likely to say. The [Agent Skills specification](https://agentskills.io/specification) defines `name`, `description`, and optional `license`, `compatibility`, `metadata`, and experimental `allowed-tools`. `metadata` is a string-to-string map. Provider extensions may use namespaced metadata keys when that host documents them, but do not invent trigger or description fields that no host reads.
 
-Use a frontmatter extension in the shared file when multiple target hosts implement the same behavior. Claude Code and Cursor both document `disable-model-invocation`; it prevents automatic selection while retaining explicit invocation in their standard skill flows. This field is a provider extension, not part of the Agent Skills core schema, so strict upload APIs may reject it. OpenCode v2 also recognizes `disable-model-invocation`, so R Stack uses the shared field instead of duplicating the setting in namespaced metadata. Check each host's current documentation when relying on an extension.
+Use a shared frontmatter extension when multiple target hosts implement the same behavior. Claude Code, Cursor, and OpenCode v2 recognize `disable-model-invocation`, which prevents automatic selection while retaining explicit invocation. Strict Agent Skills upload APIs may reject this extension. Check each host's current documentation.
 
 Use an adapter for settings that only one host supports and that cannot be expressed through its standard `SKILL.md` format. Codex reads optional interface text and `policy.allow_implicit_invocation` from `agents/openai.yaml`; it does not define a subagent. Claude Code's `user-invocable` controls the user command menu separately from automatic invocation. For subagent behavior, use the target host's agent definition or invocation feature. Do not add adapter files to skills that do not need them. Extend the R Stack validator when adopting another frontmatter extension, and record its supported hosts and type there.
 
-Use this as a field map, not a checklist. Add only fields that change the intended behavior or presentation:
+Add only fields needed for behavior or presentation:
 
 | Host | Skill metadata location | Examples |
 | --- | --- | --- |
@@ -33,26 +33,13 @@ Use this as a field map, not a checklist. Add only fields that change the intend
 
 R Stack validates matching names, descriptions, non-empty optional fields, string-valued metadata, and consistent invocation settings. Explicit-only skills must include the Codex policy adapter. UI prompts name their own skill, and picker descriptions follow the local 25–64 character convention.
 
-The same concept may have different field names or effects. For instance, `description` routes a skill across hosts, while Codex `short_description` is UI text and Claude `when_to_use` extends routing text. Check the host docs before adding a field: [Claude Code](https://code.claude.com/docs/en/skills), [Cursor](https://cursor.com/docs/skills), [OpenCode v2](https://opencode.ai/v2/docs/skills), and [Codex](https://learn.chatgpt.com/docs/build-skills).
+Check host fields against [Claude Code](https://code.claude.com/docs/en/skills), [Cursor](https://cursor.com/docs/skills), [OpenCode v2](https://opencode.ai/v2/docs/skills), and [Codex](https://learn.chatgpt.com/docs/build-skills).
 
-The `license` field is optional metadata. Keep the applicable license notice in every distributed archive, including standalone skill archives. For executable helpers, prefer stdlib-only Python or plain markdown over shell scripts: Windows may not have bash, and a portable skill should not force one OS's shell. Put references, helpers, and output templates inside the skill directory, use relative links, and add directories only when needed.
+Keep the applicable license notice in every distributed archive, including standalone skill archives. Prefer stdlib-only Python or plain markdown over shell scripts for Windows compatibility. Put references, helpers, and output templates inside the skill directory and use relative links.
 
-The specification defines one `description`, up to 1024 characters. It routes the skill; host UI fields serve a separate purpose. Codex `interface.short_description`, for example, is user-facing text and does not replace the skill description. There is no generic long-description field. Use `compatibility` only for real environment requirements, and keep it under 500 characters.
+Limit `description` to 1024 characters and `compatibility` to 500. Use `compatibility` for runtime requirements. Codex `interface.short_description` is picker text, separate from the routing description.
 
-Availability, audience, invocation, and execution mode are separate choices. A skill can be public to install but aimed at a narrow audience. Automatic selection and user invocation are independent. A skill is not a subagent; isolation and agent definitions are host features.
-
-The current skills have distinct audiences and invocation roles:
-
-| Skill | Audience | Invocation intent |
-| --- | --- | --- |
-| `stop-slop` | Anyone using the package | The agent may select it for prose work; users can also invoke it directly. |
-| `clean-slop` | Anyone using the package | The agent may select it for an AI-slop cleanup pass; users can also invoke it directly. It is not a general code reviewer. |
-| `launch-video` | Anyone using the package | The agent may select it for video requests; users can also invoke it directly. Codex has a short UI description. |
-| `test` | Anyone testing application behavior | The agent may select it for testing and debugging; users can also invoke it directly. Conditional references cover each platform and tool choice. |
-| `factory` | Users who explicitly request delegated work | Claude Code and Cursor read `disable-model-invocation`; OpenCode v2 reads the shared field; Codex reads its policy file. |
-| `rstack-author-skill` | R Stack maintainers and contributors | Explicitly invoked for R Stack authoring. It uses the same per-host controls as `factory`. |
-
-These are product choices, not universal defaults. A host that ignores an extension will not enforce its policy. The package is public; "opinionated" describes Rajaniraiyn's perspective, not an access restriction. This draws on the separation between user-invoked and model-invoked workflows in [Matt Pocock's skill suite](https://github.com/mattpocock/skills), and the composable skills and dedicated agents in [Cursor's pstack plugin](https://github.com/cursor/plugins/tree/main/pstack). Skills may be discovered from a plugin-specific `skills/` directory, but registry listings and install counts depend on each registry's indexing and telemetry rules.
+Skills allow automatic selection unless marked explicit-only. Set `disable-model-invocation` for Claude Code, Cursor, and OpenCode v2, and the Codex policy adapter for Codex. Hosts that ignore an extension will not enforce it.
 
 ## Maintain the package
 
@@ -90,24 +77,14 @@ Keep credentials in client configuration. Document runtime and tool requirements
 
 The structure follows the [Agent Skills specification](https://agentskills.io/specification) and [portable plugin schema](https://agent-plugins.org/schemas/1.0.0/plugin.schema.json). Native packaging follows [OpenAI](https://developers.openai.com/plugins/build/plugins), [Claude Code](https://code.claude.com/docs/en/plugins-reference), and [Cursor](https://cursor.com/docs/reference/plugins).
 
-[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI plugins and skills](https://github.com/openai/plugins), and [Cursor's template](https://github.com/cursor/plugin-template) informed the original structure. Compare external skills as sources, then integrate useful decisions into original instructions and focused references. Do not bundle whole upstream skills, parallel routers, or copied helpers merely for reference. The video skill records its comparison sources in its bundled provenance index. The [skills CLI](https://github.com/vercel-labs/skills) owns agent discovery and installation paths.
+[Matt Pocock's skills](https://github.com/mattpocock/skills), [Anthropic skills](https://github.com/anthropics/skills), [OpenAI plugins and skills](https://github.com/openai/plugins), [Cursor's template](https://github.com/cursor/plugin-template), and [pstack](https://github.com/cursor/plugins/tree/main/pstack) informed the structure and invocation policies. Record upstream revisions and licenses when adapting material. Use the [skills CLI](https://github.com/vercel-labs/skills) for agent discovery and installation paths.
 
 ## Compare and evaluate
 
-Use the maintainer skill's [research guide](../plugins/rstack/skills/rstack-author-skill/references/research.md) for discovery and source selection, and its [evaluation guide](../plugins/rstack/skills/rstack-author-skill/references/evaluation.md) for routing and behavior checks. These guides are bundled so a standalone authoring-skill install remains usable.
+Use the maintainer skill's [research guide](../plugins/rstack/skills/rstack-author-skill/references/research.md) for source selection and [evaluation guide](../plugins/rstack/skills/rstack-author-skill/references/evaluation.md) for routing and behavior checks.
 
-Keep the body focused on decisions that change the result. Give each conditional reference a reading condition. Preserve task scope, existing authorization, and invocation policy. Static validation does not establish routing accuracy or artifact quality; record which behavioral checks actually ran.
+Give each conditional reference a reading condition. Preserve task scope, authorization, and invocation policy. Test routing and task behavior separately from static validation and report which checks ran.
 
-The factory routing reference owns one dated current-model shortlist. Replace superseded entries during a refresh and verify actual harness support. Resolve CLI flags, package APIs, and prices from installed versions and current vendor sources; avoid parallel catalogs or accumulated generation histories.
+Update model shortlists in place and verify harness support. Resolve CLI flags, APIs, and prices from installed versions and current vendor sources.
 
-`launch-video` has optional routes for Remotion, fframes, and Hyperframes. These are local toolchain alternatives, not installed integrations or active services. The bundled renderer remains available. No MCP server or hook is needed for these routes; an engine-specific integration requires a real execution check before being advertised as tested.
-
-`test` documents optional CLI/SDK routes for Playwright, agent-browser, browser-control, tuistory, CUA, and platform runners. They are not package dependencies or active MCP connections. CUA OS actions use schema discovery and supported background delivery, with isolated desktops for foreground-dependent input. Never advertise universal focus-free host automation. A new executable driver or service integration needs runtime validation and explicit validation rules alongside its setup documentation.
-
-Its strategy reference selects coverage from changed contracts and risk, including property/stateful, differential, fuzz, and assertion-sensitivity checks where useful. Conditional target references include firmware/RTOS, HDL, robotics, protocols, libraries/toolchains, data/ML, games/media, and other plugin hosts. Host tests, emulation, simulation, bench hardware, and deployed checks remain distinct evidence. Listing a runner doesn't certify it or provision hardware, services, or credentials.
-
-Test design separates execution layers from quality dimensions and keeps new tests accountable to a behavior, credible regression, and coverage gap. Suite maintenance covers measured speed improvements, deduplication, coupled-test rewrites, and evidence before deletion. Prefer maintained supported tooling for new setups or justified migrations; preserve unique coverage when replacing a runner. Security checks follow applicable trust boundaries and explicitly scoped targets.
-
-The test skill also separates temporary probes from maintained regressions, campaigns, benchmarks, and profiles. Optional Lean modeling starts from an accepted specification or a user-confirmed unresolved decision, reviews model fidelity and proof assumptions, and requires implementation evidence before claiming a local bug is fixed. Deterministic simulation and fuzzing retain reproducible counterexamples; TigerStyle informs invariants and bounded resources without imposing TigerBeetle’s coding conventions. Performance guidance distinguishes profiling from comparable measurements and stable regression gates. These are conditional workflows, not mandatory dependencies or proof of unmodeled production behavior.
-
-The video skill includes original motion-direction and character-sequence guidance informed by onetake and Stickman Video Director. Its bundled provenance reference records inspected revisions and licenses. No new renderer, generation service, upstream implementation, or asset is bundled; external license terms and model capabilities are checked before actual use.
+Exercise integrations on their actual runtime. For a renderer, inspect its output; for a driver or service, execute a scoped call. Configure external tools separately and preserve authorization for execution, attachment, extraction, interception, and device changes. Use supported background input or an isolated desktop for foreground-dependent controls. Distinguish host, simulated, emulated, bench, and deployed results. Check external licenses and capabilities before use.

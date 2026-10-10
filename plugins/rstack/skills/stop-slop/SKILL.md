@@ -6,7 +6,7 @@ license: MIT
 
 # Stop slop
 
-Keep the meaning, facts, and writer's voice. Remove filler, manufactured emphasis, vague claims, and repeated sentence shapes. These rules describe R Stack's prose style; they are not a detector of who wrote a text.
+Keep the meaning, facts, and writer's voice. Remove filler, manufactured emphasis, vague claims, and repeated sentence shapes.
 
 ## Edit
 
@@ -30,4 +30,4 @@ Compare the edit with the source. Preserve qualifications that affect the claim,
 
 Read the result once for repeated rhythm, generic praise, and an ending that restates the body. End at the last useful point or next action. Return the requested text; explain changes only when the user asked or an unresolved claim needs attention.
 
-For generated code or a broader artifact cleanup, `clean-slop` has a separate scope if installed. This skill works on its own for prose.
+For generated code or a broader artifact cleanup, use `clean-slop` if installed.

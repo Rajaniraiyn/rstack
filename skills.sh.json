@@ -37,6 +37,13 @@
       "skills": [
         "test"
       ]
+    },
+    {
+      "title": "Reverse engineering",
+      "description": "Recover shipped app, binary, format, and protocol behavior.",
+      "skills": [
+        "reverse-engineering"
+      ]
     }
   ]
 }

@@ -1,6 +1,6 @@
 # Setup
 
-Wire the factory once, before routing work at scale. The goal is a decided configuration: which harnesses and models the user can reach, which sources feed the factory, and any cost limits. The user owns authentication; you never log in, create tokens, or store credentials.
+Configure available harnesses, models, issue sources, and cost limits before dispatching workers. Leave authentication to the user.
 
 ## Inspect before asking
 
@@ -11,7 +11,7 @@ Ask the user for what the machine cannot tell you:
 - Which sources feed the factory: GitHub issues, Sentry, Jira via `acli`, Linear, or MCP servers they already wired.
 - Any budget or effort preferences: a per-task or per-session dollar cap, and when to escalate to a frontier model.
 
-Only ask for decisions that change behavior. Do not ask a dozen setup questions when probing answers most of them.
+Probe available capabilities and ask only for missing decisions.
 
 ## Probe
 
@@ -53,7 +53,7 @@ Record the decisions where the agent can read them next time: the user config wr
 
 ## No-auth rule
 
-Never run login or auth commands on the user's behalf: no `gh auth login`, no `claude /login`, no writing tokens into env files, no creating API keys. If a harness is installed but not authenticated, report that it needs the user's login and move on. Users bring their own subscriptions; the factory only routes to what is already reachable.
+Never run login or auth commands on the user's behalf, write tokens into env files, or create API keys. If a harness is installed but not authenticated, report that it needs the user's login and move on.
 
 ## Hand off
 

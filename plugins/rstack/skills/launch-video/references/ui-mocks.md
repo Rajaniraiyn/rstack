@@ -1,6 +1,6 @@
 # UI mocks
 
-When the video shows a phone, a chat app, an OS surface, or a third-party site, it must look and behave like the real thing. Viewers know these apps by heart; one wrong color or a notification that could never fire reads as fake. [../assets/templates/vertical-chat.html](../assets/templates/vertical-chat.html) provides the bundled phone/chat starting point; other surfaces need their own implementation.
+When the video shows a phone, a chat app, an OS surface, or a third-party site, match its appearance and behavior. [../assets/templates/vertical-chat.html](../assets/templates/vertical-chat.html) provides the bundled phone/chat starting point; implement other surfaces separately.
 
 The dimensions and palettes below describe template starting points, not a current specification for every device or app version. Before depicting a surface, verify the target version, device, theme, and behavior against the product's own tokens or current screenshots. Treat third-party clones as leads, not authority. Record relevant decisions in `plan.md`.
 

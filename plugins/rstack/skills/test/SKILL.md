@@ -1,6 +1,6 @@
 ---
 name: test
-description: Design, run, debug, and maintain meaningful tests for software, services, and devices. Use for test strategy, feature validation, regressions, suite cleanup, formal models, fuzzing, performance investigations, and quality checks on the intended runtime. Fix failures when requested; choose useful coverage rather than generating redundant tests.
+description: Design, run, debug, and maintain tests for software, services, and devices. Use for test strategy, feature validation, regressions, suite cleanup, formal models, fuzzing, performance investigations, and quality checks on the intended runtime. Fix failures when requested.
 license: MIT
 ---
 

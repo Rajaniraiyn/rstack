@@ -4,13 +4,13 @@
     "name": "Rajaniraiyn"
   },
   "metadata": {
-    "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents."
+    "description": "Reusable workflows for coding agents."
   },
   "plugins": [
     {
       "name": "rstack",
       "source": "./plugins/rstack",
-      "description": "Opinionated skills and workflows by Rajaniraiyn for coding agents."
+      "description": "Reusable workflows for coding agents."
     }
   ]
 }

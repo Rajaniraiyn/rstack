@@ -1,0 +1,4 @@
+interface:
+  display_name: "Reverse engineering"
+  short_description: "Recover app, binary, format, and protocol behavior"
+  default_prompt: "Use $reverse-engineering to investigate the supplied target, explain its behavior with evidence, and verify a reconstruction if requested."

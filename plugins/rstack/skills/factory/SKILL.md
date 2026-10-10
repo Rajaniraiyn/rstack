@@ -1,6 +1,6 @@
 ---
 name: factory
-description: Delegate software tasks to installed agent CLIs, choose routes, isolate parallel writers, and review their results. Explicit workflow for factory setup, farming out issues, or running agent workers.
+description: Delegates software tasks to installed agent CLIs and reviews their results. Use when explicitly asked to set up a factory, farm out issues, or run agent workers.
 license: MIT
 compatibility: Requires git and at least one installed, authenticated agent CLI. The optional setup helper needs Python 3.10+.
 disable-model-invocation: true
@@ -31,6 +31,6 @@ Confirm the installed CLI's help before constructing a headless command. Use [re
 
 ## Integrate and review
 
-Inspect each worker's diff, resolve integration conflicts, and run the combined repository checks. Review with an independent harness or model when one is available within the user's budget. Otherwise perform a separate read-only review pass and disclose that limitation. Use [references/reviews.md](references/reviews.md) for the review contract and bounded repair loop.
+Inspect each worker's diff, resolve integration conflicts, and run the combined repository checks. Review with an independent harness or model within budget, or perform a separate read-only pass and report the route used. Use [references/reviews.md](references/reviews.md) for the review contract and bounded repair loop.
 
 Preserve worker artifacts and user changes until they are reviewed. Report the branch or worktree, completed outcomes, validation, unresolved work, and route costs when known. Link a local result or an authorized PR. Share or publish a session only when the user requested it.

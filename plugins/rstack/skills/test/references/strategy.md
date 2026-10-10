@@ -11,7 +11,7 @@ Keep a small working matrix in the conversation, scaled to the task:
 | Retry a timed-out write | One durable operation despite duplicate requests | Client, API, actual datastore | Controlled timeout plus real datastore | Overlap/retry and inspect outcome |
 | Power fails during a settings update | Prior or new valid settings after reboot | Firmware, persistent storage | Emulation and bench device | Interrupt selected write phases |
 
-These are examples, not mandatory cases. Add a target only when it changes behavior or is part of the support promise. Use representative combinations for independent factors; explicitly test interacting factors such as OS plus plugin ABI or firmware plus board revision. An indiscriminate Cartesian product wastes execution without identifying risk.
+Adapt the example cases to the task. Add a target only when it changes behavior or is part of the support promise. Use representative combinations for independent factors. Explicitly test interacting factors such as OS plus plugin ABI or firmware plus board revision rather than running an indiscriminate Cartesian product.
 
 ## Pick the strongest economical check
 

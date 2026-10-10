@@ -1,6 +1,6 @@
 # Reviews
 
-Review the worker's artifact against its original brief and a fixed base commit. A different harness or model can add another perspective; it does not guarantee correctness. If only one route is available, run a separate review pass and report that limitation.
+Review the worker's artifact against its original brief and a fixed base commit. Use an independent harness or model when available; otherwise run a separate review pass. Report the route used.
 
 ## Review contract
 

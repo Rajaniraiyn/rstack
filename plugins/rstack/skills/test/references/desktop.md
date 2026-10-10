@@ -2,7 +2,7 @@
 
 Identify native framework, packaged binary, OS/architecture, window model, and embedded engine. A Chromium renderer, WebView2, WKWebView, and WebKitGTK do not share one universal driver. Test native controls and host integration separately from document logic.
 
-For native OS interaction, read [os-automation.md](os-automation.md). That reference owns background-delivery checks, focus constraints, and isolated-desktop setup.
+For background-delivery checks, focus constraints, and isolated-desktop setup, read [os-automation.md](os-automation.md).
 
 ## Pick the actual host route
 

@@ -15,4 +15,4 @@ Use the installed help and [harnesses.md](harnesses.md) to resolve commands. Pre
 
 Give workers the smallest complete brief, verified findings, and required resources. Avoid passing entire transcripts when a scoped handoff is enough. Keep nested delegation within the parent's concurrency and spend limits. Workers should return blockers to the parent rather than start additional unbudgeted harnesses.
 
-The factory orchestrates from the current host. It does not require installing Noodle, a scheduler, or another service. Such systems can support persistent queues, but adopt one only for a requested queueing or recurring workflow and document its separate requirements.
+Add a scheduler or persistent queue only for a requested queueing or recurring workflow. Document its requirements separately.

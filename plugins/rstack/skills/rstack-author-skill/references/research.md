@@ -39,8 +39,8 @@ Official skill repositories are examples, not the shared specification. A Noodle
 
 For each local skill, compare trigger, outcome, instruction cost, resource completeness, dependencies, host assumptions, licensing, and validation. Record one of keep, rewrite, extend, merge, replace, or remove, with the evidence that supports it.
 
-A merge earns its place when users get the same outcome with fewer overlapping routes. A replacement earns its place when a maintained upstream tool covers the current requirements and migration preserves outputs. Keep a working fallback until the replacement succeeds on a representative task.
+Merge workflows that produce the same outcome through overlapping routes. Replace a tool when a maintained alternative meets current requirements and preserves outputs. Keep a working fallback until the replacement succeeds on a representative task.
 
-For additions, show the recurring use case and why an existing skill or a small reference extension does not cover it. Prefer an optional upstream skill for a fast-moving vendor API. Active MCPs, hooks, scheduler services, and credentials require a concrete workflow and their own validation.
+Extend an existing skill when it covers the use case; add one for a distinct recurring task. Prefer an upstream skill for a fast-moving vendor API. Add MCPs, hooks, or services only for a concrete workflow and validate them.
 
 Report source dates, commits, decisions, and material uncertainty in the user's requested format. Use the conversation unless they requested a saved report. Keep source links in the references that need them, and date a version-sensitive shortlist when its freshness affects routing. Copy third-party files only with compatible licensing and preserved attribution. Summarize principles in original prose when vendoring would create avoidable maintenance.
